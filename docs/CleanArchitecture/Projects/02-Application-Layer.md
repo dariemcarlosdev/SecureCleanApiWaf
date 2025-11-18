@@ -1,21 +1,21 @@
 # SecureCleanApiWaf.Application Project
 
 > *"The application layer is thin. It does not contain business rules or knowledge, but only coordinates tasks and delegates work to collaborations of domain objects in the next layer down."*  
-> � **Eric Evans**, Domain-Driven Design
+> � **Eric Evans**, Domain-Driven Design
 
 ---
 
-**?? New to Clean Architecture or DDD?**  
+**📚 New to Clean Architecture or DDD?**  
 Read **[Architecture Patterns Explained](../ARCHITECTURE_PATTERNS_EXPLAINED.md)** first to understand how Clean Architecture and Domain-Driven Design work together in this project.
 
 ---
 
-## ?? Overview
+## 📖 Overview
 The **Application Layer** contains all application business logic and orchestrates the flow of data to and from the Domain layer. It implements use cases through CQRS patterns using MediatR and defines interfaces for infrastructure services.
 
 ---
 
-## ?? Purpose
+## 🎯 Purpose
 - Define use cases as Commands and Queries (CQRS)
 - Orchestrate domain objects to fulfill business requirements
 - Define interfaces for infrastructure dependencies (abstractions)
@@ -25,68 +25,68 @@ The **Application Layer** contains all application business logic and orchestrat
 
 ---
 
-## ?? Project Structure
+## 📁 Project Structure
 
 ```
 SecureCleanApiWaf.Application/
-??? Common/
-?   ??? Behaviors/                    # MediatR Pipeline Behaviors
-?   ?   ??? CachingBehavior.cs       # Response caching
-?   ?   ??? LoggingBehavior.cs       # Request/response logging
-?   ?   ??? ValidationBehavior.cs    # FluentValidation
-?   ?   ??? PerformanceBehavior.cs   # Performance monitoring
+📖? Common/
+?   📖? Behaviors/                    # MediatR Pipeline Behaviors
+?   ?   📖? CachingBehavior.cs       # Response caching
+?   ?   📖? LoggingBehavior.cs       # Request/response logging
+?   ?   📖? ValidationBehavior.cs    # FluentValidation
+?   ?   📖? PerformanceBehavior.cs   # Performance monitoring
 ?   ?
-?   ??? Interfaces/                   # Abstractions for Infrastructure
-?   ?   ??? IApplicationDbContext.cs # Database abstraction
-?   ?   ??? IApiIntegrationService.cs # External API abstraction
-?   ?   ??? ICacheService.cs         # Caching abstraction
-?   ?   ??? IDateTime.cs             # Time abstraction (for testing)
-?   ?   ??? IEmailService.cs         # Email sending abstraction
+?   📖? Interfaces/                   # Abstractions for Infrastructure
+?   ?   📖? IApplicationDbContext.cs # Database abstraction
+?   ?   📖? IApiIntegrationService.cs # External API abstraction
+?   ?   📖? ICacheService.cs         # Caching abstraction
+?   ?   📖? IDateTime.cs             # Time abstraction (for testing)
+?   ?   📖? IEmailService.cs         # Email sending abstraction
 ?   ?
-?   ??? Models/                       # Shared models and results
-?   ?   ??? Result.cs                # Result<T> pattern
-?   ?   ??? PaginatedList.cs         # Pagination wrapper
-?   ?   ??? ErrorDetails.cs          # Error response model
+?   📖? Models/                       # Shared models and results
+?   ?   📖? Result.cs                # Result<T> pattern
+?   ?   📖? PaginatedList.cs         # Pagination wrapper
+?   ?   📖? ErrorDetails.cs          # Error response model
 ?   ?
-?   ??? Mappings/                     # AutoMapper profiles
-?   ?   ??? MappingProfile.cs        # Entity to DTO mappings
+?   📖? Mappings/                     # AutoMapper profiles
+?   ?   📖? MappingProfile.cs        # Entity to DTO mappings
 ?   ?
-?   ??? Exceptions/                   # Application exceptions
-?       ??? ValidationException.cs
-?       ??? NotFoundException.cs
-?       ??? BadRequestException.cs
+?   📖? Exceptions/                   # Application exceptions
+?       📖? ValidationException.cs
+?       📖? NotFoundException.cs
+?       📖? BadRequestException.cs
 ?
-??? Features/                         # Feature-based organization (Vertical Slices)
-?   ??? SampleData/
-?   ?   ??? Commands/
-?   ?   ?   ??? CreateSampleData/
-?   ?   ?   ?   ??? CreateSampleDataCommand.cs
-?   ?   ?   ?   ??? CreateSampleDataCommandHandler.cs
-?   ?   ?   ?   ??? CreateSampleDataCommandValidator.cs
-?   ?   ?   ??? UpdateSampleData/
-?   ?   ?       ??? UpdateSampleDataCommand.cs
-?   ?   ?       ??? UpdateSampleDataCommandHandler.cs
+📖? Features/                         # Feature-based organization (Vertical Slices)
+?   📖? SampleData/
+?   ?   📖? Commands/
+?   ?   ?   📖? CreateSampleData/
+?   ?   ?   ?   📖? CreateSampleDataCommand.cs
+?   ?   ?   ?   📖? CreateSampleDataCommandHandler.cs
+?   ?   ?   ?   📖? CreateSampleDataCommandValidator.cs
+?   ?   ?   📖? UpdateSampleData/
+?   ?   ?       📖? UpdateSampleDataCommand.cs
+?   ?   ?       📖? UpdateSampleDataCommandHandler.cs
 ?   ?   ?
-?   ?   ??? Queries/
-?   ?       ??? GetApiData/
-?   ?       ?   ??? GetApiDataQuery.cs        # Implements ICacheable
-?   ?       ?   ??? GetApiDataQueryHandler.cs
-?   ?       ?   ??? SampleDataDto.cs          # Response DTO
-?   ?       ??? GetApiDataById/
-?   ?           ??? GetApiDataByIdQuery.cs
-?   ?           ??? GetApiDataByIdQueryHandler.cs
+?   ?   📖? Queries/
+?   ?       📖? GetApiData/
+?   ?       ?   📖? GetApiDataQuery.cs        # Implements ICacheable
+?   ?       ?   📖? GetApiDataQueryHandler.cs
+?   ?       ?   📖? SampleDataDto.cs          # Response DTO
+?   ?       📖? GetApiDataById/
+?   ?           📖? GetApiDataByIdQuery.cs
+?   ?           📖? GetApiDataByIdQueryHandler.cs
 ?   ?
-?   ??? [OtherFeatures]/
-?       ??? Commands/
-?       ??? Queries/
+?   ?📖 [OtherFeatures]/
+?       📖? Commands/
+?       📖? Queries/
 ?
-??? DependencyInjection.cs            # Extension method: AddApplication()
+📖? DependencyInjection.cs            # Extension method: AddApplication()
 
 ```
 
 ---
 
-## ?? Key Concepts
+## 🔑 Key Concepts
 
 ### 1. **CQRS Pattern with MediatR**
 
@@ -510,7 +510,7 @@ public record Result<T>
 
 ---
 
-## ?? Dependencies
+## 📦 Dependencies
 
 ### **NuGet Packages**
 ```xml
@@ -541,7 +541,7 @@ public record Result<T>
 
 ---
 
-## ?? Dependency Injection Setup
+## 🔧 Dependency Injection Setup
 
 ```csharp
 /// <summary>
@@ -578,7 +578,7 @@ public static class DependencyInjection
 
 ---
 
-## ?? Testing Strategy
+## 🧪 Testing Strategy
 
 ### **Unit Tests**
 ```csharp
@@ -642,7 +642,7 @@ public class GetApiDataQueryHandlerTests
 
 ---
 
-## ? Application Layer Checklist
+## 📦 Application Layer Checklist
 
 - [ ] CQRS implemented with MediatR
 - [ ] Commands for write operations
@@ -657,7 +657,7 @@ public class GetApiDataQueryHandlerTests
 
 ---
 
-## ?? Best Practices
+## ✅ Best Practices
 
 ### ? DO
 - Use CQRS to separate reads from writes
@@ -678,18 +678,18 @@ public class GetApiDataQueryHandlerTests
 
 ---
 
-## ?? Migration from Current Structure
+## 📖 Migration from Current Structure
 
 ```
-Current Structure ? Clean Architecture Application Layer
+Current Structure 🏛️ Clean Architecture Application Layer
 
 Features/GetData/Queries/
-??? GetApiDataQuery.cs          ? Application/Features/SampleData/Queries/GetApiData/
-??? GetApiDataQueryHandler.cs   ? Application/Features/SampleData/Queries/GetApiData/
+📖? GetApiDataQuery.cs          ? Application/Features/SampleData/Queries/GetApiData/
+📖? GetApiDataQueryHandler.cs   ? Application/Features/SampleData/Queries/GetApiData/
 
 PipelineBehaviors/
-??? CachingBehavior.cs          ? Application/Common/Behaviors/
-??? ICacheable.cs               ? Application/Common/Behaviors/
+📖? CachingBehavior.cs          ? Application/Common/Behaviors/
+📖? ICacheable.cs               ? Application/Common/Behaviors/
 
 Services/Result.cs              ? Application/Common/Models/Result.cs
 
@@ -698,7 +698,7 @@ Models/SampleModel.cs           ? Application/Features/SampleData/Queries/GetApi
 
 ---
 
-## ?? Summary
+## 📝 Summary
 
 The Application Layer:
 - **Orchestrates** use cases via CQRS

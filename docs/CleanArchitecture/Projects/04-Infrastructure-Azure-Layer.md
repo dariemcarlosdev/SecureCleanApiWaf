@@ -1,21 +1,21 @@
 # SecureCleanApiWaf.Infrastructure.Azure Project
 
 > *"Cloud platforms abstract away infrastructure concerns, allowing developers to focus on what truly matters: delivering value to users."*  
-> � **Scott Guthrie**, Executive Vice President, Microsoft Cloud + AI
+> � **Scott Guthrie**, Executive Vice President, Microsoft Cloud + AI
 
 ---
 
-**?? New to Clean Architecture or DDD?**  
+**📚 New to Clean Architecture or DDD?**  
 Read **[Architecture Patterns Explained](../ARCHITECTURE_PATTERNS_EXPLAINED.md)** first to understand how Clean Architecture and Domain-Driven Design work together in this project.
 
 ---
 
-## ?? Overview
+## 📖 Overview
 The **Azure Infrastructure Layer** is an optional specialized infrastructure project focused on Azure-specific implementations and integrations. This separation allows you to keep Azure-specific code isolated and makes it easier to swap cloud providers if needed.
 
 ---
 
-## ?? Purpose
+## 🎯 Purpose
 - Implement Azure-specific services (Key Vault, Blob Storage, Service Bus)
 - Manage Azure resource integrations
 - Configure Azure App Configuration
@@ -25,41 +25,41 @@ The **Azure Infrastructure Layer** is an optional specialized infrastructure pro
 
 ---
 
-## ?? Project Structure
+## 📁 Project Structure
 
 ```
 SecureCleanApiWaf.Infrastructure.Azure/
-??? KeyVault/                         # Azure Key Vault integration
-?   ??? KeyVaultSecretProvider.cs    # Secret management
-?   ??? KeyVaultConfigurationExtensions.cs
+📖? KeyVault/                         # Azure Key Vault integration
+?   📖? KeyVaultSecretProvider.cs    # Secret management
+?   📖? KeyVaultConfigurationExtensions.cs
 ?
-??? Storage/                          # Azure Blob Storage
-?   ??? BlobStorageService.cs        # File storage implementation
-?   ??? BlobContainerFactory.cs
+📖? Storage/                          # Azure Blob Storage
+?   📖? BlobStorageService.cs        # File storage implementation
+?   📖? BlobContainerFactory.cs
 ?
-??? ServiceBus/                       # Azure Service Bus
-?   ??? ServiceBusPublisher.cs       # Message publishing
-?   ??? ServiceBusConsumer.cs        # Message consumption
+📖? ServiceBus/                       # Azure Service Bus
+?   📖? ServiceBusPublisher.cs       # Message publishing
+?   📖? ServiceBusConsumer.cs        # Message consumption
 ?
-??? ApplicationInsights/              # Telemetry and monitoring
-?   ??? TelemetryService.cs
-?   ??? CustomTelemetryInitializer.cs
+📖? ApplicationInsights/              # Telemetry and monitoring
+?   📖? TelemetryService.cs
+?   📖? CustomTelemetryInitializer.cs
 ?
-??? AppConfiguration/                 # Azure App Configuration
-?   ??? AppConfigurationProvider.cs
-?   ??? FeatureFlagManager.cs
+📖? AppConfiguration/                 # Azure App Configuration
+?   📖? AppConfigurationProvider.cs
+?   📖? FeatureFlagManager.cs
 ?
-??? Identity/                         # Azure AD / Entra ID
-?   ??? AzureAdAuthenticationService.cs
-?   ??? ManagedIdentityTokenProvider.cs
+📖? Identity/                         # Azure AD / Entra ID
+?   📖? AzureAdAuthenticationService.cs
+?   📖? ManagedIdentityTokenProvider.cs
 ?
-??? DependencyInjection.cs            # Extension method: AddAzureInfrastructure()
+📖? DependencyInjection.cs            # Extension method: AddAzureInfrastructure()
 
 ```
 
 ---
 
-## ?? Key Azure Implementations
+## ☁️ Key Azure Implementations
 
 ### 1. **Azure Key Vault Integration**
 
@@ -184,7 +184,7 @@ public class BlobStorageService : IFileStorageService
         ILogger<BlobStorageService> logger)
     {
         var connectionString = configuration["AzureStorage:ConnectionString"];
-        _containerName = configuration["AzureStorage:ContainerName"] ?? "files";
+        _containerName = configuration["AzureStorage:ContainerName"] 📖 "files";
         
         // Use Managed Identity in Azure (preferred)
         // var credential = new DefaultAzureCredential();
@@ -510,10 +510,10 @@ public class CustomTelemetryInitializer : ITelemetryInitializer
         
         // Add custom properties to all telemetry
         telemetry.Context.GlobalProperties["Environment"] = 
-            _configuration["Environment"] ?? "Unknown";
+            _configuration["Environment"] 📖 "Unknown";
         
         telemetry.Context.GlobalProperties["ApplicationName"] = 
-            _configuration["ApplicationName"] ?? "SecureCleanApiWaf";
+            _configuration["ApplicationName"] 📖 "SecureCleanApiWaf";
     }
 }
 ```
@@ -591,7 +591,7 @@ public class FeatureFlagManager : IFeatureFlagManager
 
 ---
 
-## ??? Dependency Injection Setup
+## 🔧 Dependency Injection Setup
 
 ```csharp
 /// <summary>
@@ -636,7 +636,7 @@ public static class DependencyInjection
 
 ---
 
-## ?? Dependencies
+## 📦 Dependencies
 
 ### **NuGet Packages**
 ```xml
@@ -671,7 +671,7 @@ public static class DependencyInjection
 
 ---
 
-## ?? Configuration (appsettings.json)
+## ⚙️ Configuration (appsettings.json)
 
 ```json
 {
@@ -699,7 +699,7 @@ public static class DependencyInjection
 
 ---
 
-## ? Managed Identity Configuration
+## 🔐 Managed Identity Configuration
 
 ### **Enable Managed Identity in Azure App Service**
 1. Navigate to your App Service in Azure Portal
@@ -737,7 +737,7 @@ az role assignment create \
 
 ---
 
-## ?? Testing Strategy
+## 🧪 Testing Strategy
 
 ### **Integration Tests with Azure**
 ```csharp
@@ -773,7 +773,7 @@ public class BlobStorageServiceIntegrationTests : IClassFixture<AzureTestFixture
 
 ---
 
-## ? Azure Infrastructure Checklist
+## ☁️ Azure Infrastructure Checklist
 
 - [ ] Key Vault configured with Managed Identity
 - [ ] Blob Storage configured with appropriate access
@@ -787,7 +787,7 @@ public class BlobStorageServiceIntegrationTests : IClassFixture<AzureTestFixture
 
 ---
 
-## ?? Best Practices
+## ✅ Best Practices
 
 ### ? DO
 - Use Managed Identity for authentication (no secrets!)
@@ -809,7 +809,7 @@ public class BlobStorageServiceIntegrationTests : IClassFixture<AzureTestFixture
 
 ---
 
-## ?? Migration from Current Structure
+## 📖 Migration from Current Structure
 
 ```
 Current Structure ? Azure Infrastructure Layer
@@ -822,7 +822,7 @@ Current Structure ? Azure Infrastructure Layer
 
 ---
 
-## ?? Summary
+## 📝 Summary
 
 The Azure Infrastructure Layer:
 - **Isolates** Azure-specific implementations

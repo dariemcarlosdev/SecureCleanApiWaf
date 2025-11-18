@@ -1,6 +1,9 @@
-# ?? Docker Quick Reference - SecureCleanApiWaf
+# 📋 Docker Quick Reference - SecureCleanApiWaf
 
-## ?? Table of Contents
+> *"Quick references are the lighthouses in the sea of commands."*  
+> — Developer's Wisdom
+
+## 📑 Table of Contents
 
 ### **Quick Navigation**
 1. [Quick Commands](#quick-commands)
@@ -195,12 +198,12 @@ chmod +x docker-build-push.sh
 
 ## Before Publishing
 
-1. ? Update Docker Hub username in all files
-2. ? Test build locally: `docker build -t SecureCleanApiWaf:latest .`
-3. ? Test run locally: `docker run -d -p 8080:8080 SecureCleanApiWaf:latest`
-4. ? Verify app works: http://localhost:8080
-5. ? Login to Docker Hub: `docker login`
-6. ? Push image: `docker push yourdockerhubusername/SecureCleanApiWaf:latest`
+1. ✅ Update Docker Hub username in all files
+2. ✅ Test build locally: `docker build -t SecureCleanApiWaf:latest .`
+3. ✅ Test run locally: `docker run -d -p 8080:8080 SecureCleanApiWaf:latest`
+4. ✅ Verify app works: http://localhost:8080
+5. ✅ Login to Docker Hub: `docker login`
+6. ✅ Push image: `docker push yourdockerhubusername/SecureCleanApiWaf:latest`
 
 ## Security Checklist
 
@@ -228,10 +231,10 @@ chmod +x docker-build-push.sh
 
 **Need Help?**
 
-- ?? **Documentation:** Start with the deployment guides above
-- ?? **Issues:** [GitHub Issues](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues)
-- ?? **Email:** softevolutionsl@gmail.com
-- ?? **GitHub:** [@dariemcarlosdev](https://github.com/dariemcarlosdev)
+- 📖 **Documentation:** Start with the deployment guides above
+- 🐛 **Issues:** [GitHub Issues](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues)
+- 📧 **Email:** softevolutionsl@gmail.com
+- 🐙 **GitHub:** [@dariemcarlosdev](https://github.com/dariemcarlosdev)
 
 **Before asking for help:**
 1. Check the troubleshooting sections REF: above
@@ -241,7 +244,7 @@ chmod +x docker-build-push.sh
 
 ---
 
-** Enjoying SecureCleanApiWaf? ?? Star the repo on GitHub to support continued development! **
+** Enjoying SecureCleanApiWaf? ⭐ Star the repo on GitHub to support continued development! **
 
 ---
 

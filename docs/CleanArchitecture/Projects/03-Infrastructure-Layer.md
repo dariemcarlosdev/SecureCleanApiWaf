@@ -1,47 +1,47 @@
 # SecureCleanApiWaf.Infrastructure Project
 
 > *"The infrastructure layer provides generic technical capabilities that support the higher layers: message sending for the application, persistence for the domain, drawing widgets for the UI, and so on."*  
-> — **Eric Evans**, Domain-Driven Design
+> ï¿½ **Eric Evans**, Domain-Driven Design
 
 ---
 
-**?? New to Clean Architecture or DDD?**  
+**ğŸ“š New to Clean Architecture or DDD?**  
 Read **[Architecture Patterns Explained](../ARCHITECTURE_PATTERNS_EXPLAINED.md)** first to understand how Clean Architecture and Domain-Driven Design work together in this project.
 
 ---
 
-## ?? Table of Contents
+## ğŸ“‘ Table of Contents
 
-1. [?? Overview](#-overview)
-2. [?? Purpose](#-purpose)
-3. [?? Project Structure](#-project-structure)
-4. [?? Key Implementations](#-key-implementations)
+1. [ğŸ“– Overview](#-overview)
+2. [ğŸ“– Purpose](#-purpose)
+3. [ğŸ“– Project Structure](#-project-structure)
+4. [ğŸ“– Key Implementations](#-key-implementations)
    - [1. Database Context (EF Core)](#1-database-context-ef-core--implemented)
    - [2. Entity Configuration (Fluent API)](#2-entity-configuration-fluent-api--implemented)
    - [3. Repository Pattern Implementation](#3-repository-pattern-implementation--implemented)
    - [4. Database Configuration Class](#4-database-configuration-class--implemented)
    - [5. API Integration Service](#5-api-integration-service--implemented)
    - [6. Dependency Injection Setup](#6-dependency-injection-setup--implemented)
-5. [?? Database Migrations](#-database-migrations)
+5. [ğŸ“– Database Migrations](#-database-migrations)
    - [Creating Migrations](#creating-migrations)
    - [Migration Commands with Project/Startup Paths](#migration-commands-with-projectstartup-paths)
-6. [?? Dual-Service Architecture Pattern](#-dual-service-architecture-pattern)
+6. [ğŸ“– Dual-Service Architecture Pattern](#-dual-service-architecture-pattern)
    - [Why Two Services?](#why-two-services)
    - [Handler Usage Example](#handler-usage-example)
-7. [? Infrastructure Layer Checklist](#-infrastructure-layer-checklist)
-8. [?? Best Practices](#-best-practices)
+7. [ğŸ”§ Infrastructure Layer Checklist](#-infrastructure-layer-checklist)
+8. [ğŸ“– Best Practices](#-best-practices)
    - [? DO](#-do)
    - [? DON'T](#-dont)
-9. [?? Summary](#-summary)
+9. [ğŸ“– Summary](#-summary)
 
 ---
 
-## ?? Overview
+## ğŸ“– Overview
 The **Infrastructure Layer** implements all external concerns and dependencies. This layer contains concrete implementations of interfaces defined in the Application layer, including data persistence, external API integrations, file systems, email services, and more.
 
 ---
 
-## ?? Purpose
+## ğŸ¯ Purpose
 - Implement Application layer interfaces
 - Handle data persistence (EF Core, Dapper, etc.)
 - Integrate with external APIs
@@ -53,40 +53,40 @@ The **Infrastructure Layer** implements all external concerns and dependencies. 
 
 ---
 
-## ?? Project Structure
+## ğŸ“ Project Structure
 
 ```
 SecureCleanApiWaf.Infrastructure/
 +-- Data/                             # Database and Entity Framework Core
-¦   +-- ApplicationDbContext.cs      # EF Core DbContext
-¦   +-- DatabaseSettings.cs          # Configuration class
-¦   +-- Configurations/              # Entity configurations
-¦       +-- ApiDataItemConfiguration.cs
-¦
+ï¿½   +-- ApplicationDbContext.cs      # EF Core DbContext
+ï¿½   +-- DatabaseSettings.cs          # Configuration class
+ï¿½   +-- Configurations/              # Entity configurations
+ï¿½       +-- ApiDataItemConfiguration.cs
+ï¿½
 +-- Repositories/                     # Repository pattern implementations
-¦   +-- ApiDataItemRepository.cs     # IApiDataItemRepository implementation
-¦
+ï¿½   +-- ApiDataItemRepository.cs     # IApiDataItemRepository implementation
+ï¿½
 +-- Services/                         # Service implementations
-¦   +-- ApiIntegrationService.cs     # IApiIntegrationService implementation
-¦   +-- TokenBlacklistService.cs     # ITokenBlacklistService implementation
-¦
+ï¿½   +-- ApiIntegrationService.cs     # IApiIntegrationService implementation
+ï¿½   +-- TokenBlacklistService.cs     # ITokenBlacklistService implementation
+ï¿½
 +-- Caching/                          # Caching implementations
-¦   +-- CacheService.cs              # ICacheService implementation
-¦   +-- SampleCache.cs               # Legacy cache (to be migrated)
-¦
+ï¿½   +-- CacheService.cs              # ICacheService implementation
+ï¿½   +-- SampleCache.cs               # Legacy cache (to be migrated)
+ï¿½
 +-- Security/                         # Security implementations
-¦   +-- JwtTokenGenerator.cs         # JWT token creation
-¦
+ï¿½   +-- JwtTokenGenerator.cs         # JWT token creation
+ï¿½
 +-- Handlers/                         # HTTP message handlers
-¦   +-- ApiKeyHandler.cs             # DelegatingHandler for API keys
-¦
+ï¿½   +-- ApiKeyHandler.cs             # DelegatingHandler for API keys
+ï¿½
 +-- Middleware/                       # Custom middleware
     +-- JwtBlacklistValidationMiddleware.cs
 ```
 
 ---
 
-## ?? Key Implementations
+## ğŸ”‘ Key Implementations
 
 ### 1. **Database Context (EF Core)** ? IMPLEMENTED
 
@@ -243,7 +243,7 @@ public class ApiDataItemConfiguration : IEntityTypeConfiguration<ApiDataItem>
             .HasConversion(
                 v => JsonSerializer.Serialize(v, (JsonSerializerOptions?)null),
                 v => JsonSerializer.Deserialize<Dictionary<string, object>>(v, (JsonSerializerOptions?)null) 
-                     ?? new Dictionary<string, object>(),
+                     ğŸ“– new Dictionary<string, object>(),
                 new ValueComparer<IReadOnlyDictionary<string, object>>(
                     (c1, c2) => c1 != null && c2 != null && c1.SequenceEqual(c2),
                     c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
@@ -309,7 +309,7 @@ public class ApiDataItemRepository : IApiDataItemRepository
 
     public ApiDataItemRepository(ApplicationDbContext context)
     {
-        _context = context ?? throw new ArgumentNullException(nameof(context));
+        _context = context ğŸ“– throw new ArgumentNullException(nameof(context));
     }
 
     // ===== QUERY METHODS =====
@@ -462,7 +462,7 @@ public class ApiDataItemRepository : IApiDataItemRepository
 - ? **Parallel Queries** - GetStatisticsAsync executes queries concurrently
 - ? **Unit of Work** - SaveChangesAsync called separately
 
-**?? Query Performance Table:**
+**ğŸ“– Query Performance Table:**
 
 | Method | Index Used | Performance |
 |--------|-----------|-------------|
@@ -628,7 +628,7 @@ public static IServiceCollection AddInfrastructureServices(
 
 ---
 
-## ?? Database Migrations
+## ğŸ—„ï¸ Database Migrations
 
 ### **Creating Migrations**
 ```bash
@@ -661,7 +661,7 @@ dotnet ef database update \
 
 ---
 
-## ?? Dual-Service Architecture Pattern
+## ğŸ”„ Dual-Service Architecture Pattern
 
 **Key Insight:** This project demonstrates proper separation between **Repository** (data persistence) and **Integration Service** (external APIs).
 
@@ -669,20 +669,20 @@ dotnet ef database update \
 
 ```
 +--------------------------------------------------------------+
-¦                    CQRS Query Handler                        ¦
-¦                  (Application Layer)                         ¦
+ï¿½                    CQRS Query Handler                        ï¿½
+ï¿½                  (Application Layer)                         ï¿½
 +-------------------------------------------------------------+
-                     ¦                  ¦
+                     ï¿½                  ï¿½
                      ?                  ?
        +---------------------+  +----------------------+
-       ¦  IApiDataItemRepo   ¦  ¦ IApiIntegrationSvc   ¦
-       ¦  (Infrastructure)   ¦  ¦  (Infrastructure)    ¦
+       ï¿½  IApiDataItemRepo   ï¿½  ï¿½ IApiIntegrationSvc   ï¿½
+       ï¿½  (Infrastructure)   ï¿½  ï¿½  (Infrastructure)    ï¿½
        +---------------------+  +----------------------+
-                  ¦                         ¦
+                  ï¿½                         ï¿½
                   ?                         ?
           +---------------+        +---------------+
-          ¦   Database    ¦        ¦  External API ¦
-          ¦   (SQL Server)¦        ¦  (Third-party)¦
+          ï¿½   Database    ï¿½        ï¿½  External API ï¿½
+          ï¿½   (SQL Server)ï¿½        ï¿½  (Third-party)ï¿½
           +---------------+        +---------------+
 ```
 
@@ -726,7 +726,7 @@ public class GetApiDataQueryHandler : IRequestHandler<GetApiDataQuery, Result<Li
 
 ---
 
-## ? Infrastructure Layer Checklist
+## ğŸ”§ Infrastructure Layer Checklist
 
 - [x] Implements all Application layer interfaces
 - [x] EF Core configured with migrations
@@ -743,7 +743,7 @@ public class GetApiDataQueryHandler : IRequestHandler<GetApiDataQuery, Result<Li
 
 ---
 
-## ?? Best Practices
+## âœ… Best Practices
 
 ### ? DO
 - Use IHttpClientFactory for HttpClient management
@@ -770,7 +770,7 @@ public class GetApiDataQueryHandler : IRequestHandler<GetApiDataQuery, Result<Li
 
 ---
 
-## ?? Summary
+## ğŸ“ Summary
 
 The Infrastructure Layer:
 - **Implements** Application abstractions with EF Core and repositories
@@ -783,11 +783,11 @@ The Infrastructure Layer:
 This layer contains all the **"dirty details"** that can be swapped without affecting business logic.
 
 **Reference Files:**
-- ?? `Infrastructure/Data/ApplicationDbContext.cs` - DbContext implementation
-- ?? `Infrastructure/Data/Configurations/ApiDataItemConfiguration.cs` - Entity configuration
-- ?? `Infrastructure/Repositories/ApiDataItemRepository.cs` - Repository implementation
-- ?? `Infrastructure/Data/DatabaseSettings.cs` - Configuration class
-- ?? `Presentation/Extensions/DependencyInjection/InfrastructureServiceExtensions.cs` - DI setup
+- ğŸ“– `Infrastructure/Data/ApplicationDbContext.cs` - DbContext implementation
+- ğŸ“– `Infrastructure/Data/Configurations/ApiDataItemConfiguration.cs` - Entity configuration
+- ğŸ“– `Infrastructure/Repositories/ApiDataItemRepository.cs` - Repository implementation
+- ğŸ“– `Infrastructure/Data/DatabaseSettings.cs` - Configuration class
+- ğŸ“– `Presentation/Extensions/DependencyInjection/InfrastructureServiceExtensions.cs` - DI setup
 
 ---
 

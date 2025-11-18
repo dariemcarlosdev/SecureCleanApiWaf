@@ -1,21 +1,21 @@
 # SecureCleanApiWaf.Web Project (Presentation Layer)
 
 > *"The user interface is the part of the system that the user sees and interacts with. Make it clean, make it intuitive, make it delightful."*  
-> — **Martin Fowler**, Software Architecture and Design
+> ï¿½ **Martin Fowler**, Software Architecture and Design
 
 ---
 
-**?? New to Clean Architecture or DDD?**  
+**ğŸ“š New to Clean Architecture or DDD?**  
 Read **[Architecture Patterns Explained](../ARCHITECTURE_PATTERNS_EXPLAINED.md)** first to understand how Clean Architecture and Domain-Driven Design work together in this project.
 
 ---
 
-## ?? Overview
+## ğŸ“– Overview
 The **Presentation Layer** (Web project) is the entry point for users and external systems. This layer contains Blazor Server components, API controllers, middleware, and all UI/API concerns. It orchestrates the Application layer to fulfill user requests.
 
 ---
 
-## ?? Purpose
+## ğŸ¯ Purpose
 - Serve Blazor Server UI for interactive web applications
 - Expose REST API endpoints for external consumption
 - Handle HTTP requests and responses
@@ -27,62 +27,62 @@ The **Presentation Layer** (Web project) is the entry point for users and extern
 
 ---
 
-## ?? Project Structure
+## ğŸ“ Project Structure
 
 ```
 SecureCleanApiWaf.Web/
 +-- Components/                       # Blazor components
-¦   +-- Layout/
-¦   ¦   +-- MainLayout.razor         # Main application layout
-¦   ¦   +-- NavMenu.razor            # Navigation menu
-¦   ¦   +-- MainLayout.razor.css     # Layout styles
-¦   ¦
-¦   +-- Pages/                        # Routable page components
-¦   ¦   +-- Home.razor               # Home page
-¦   ¦   +-- SampleData.razor         # Data display page
-¦   ¦   +-- Error.razor              # Error page
-¦   ¦   +-- _Imports.razor           # Component imports
-¦   ¦
-¦   +-- Shared/                       # Reusable components
-¦   ¦   +-- LoadingSpinner.razor
-¦   ¦   +-- ErrorMessage.razor
-¦   ¦   +-- DataTable.razor
-¦   ¦
-¦   +-- App.razor                     # Root component
-¦   +-- Routes.razor                  # Routing configuration
-¦
+ï¿½   +-- Layout/
+ï¿½   ï¿½   +-- MainLayout.razor         # Main application layout
+ï¿½   ï¿½   +-- NavMenu.razor            # Navigation menu
+ï¿½   ï¿½   +-- MainLayout.razor.css     # Layout styles
+ï¿½   ï¿½
+ï¿½   +-- Pages/                        # Routable page components
+ï¿½   ï¿½   +-- Home.razor               # Home page
+ï¿½   ï¿½   +-- SampleData.razor         # Data display page
+ï¿½   ï¿½   +-- Error.razor              # Error page
+ï¿½   ï¿½   +-- _Imports.razor           # Component imports
+ï¿½   ï¿½
+ï¿½   +-- Shared/                       # Reusable components
+ï¿½   ï¿½   +-- LoadingSpinner.razor
+ï¿½   ï¿½   +-- ErrorMessage.razor
+ï¿½   ï¿½   +-- DataTable.razor
+ï¿½   ï¿½
+ï¿½   +-- App.razor                     # Root component
+ï¿½   +-- Routes.razor                  # Routing configuration
+ï¿½
 +-- Controllers/                      # REST API controllers
-¦   +-- v1/
-¦   ¦   +-- SampleDataController.cs  # Sample data endpoints
-¦   ¦   +-- HealthController.cs      # Health check endpoints
-¦   +-- v2/
-¦       +-- SampleDataController.cs  # v2 endpoints (breaking changes)
-¦
+ï¿½   +-- v1/
+ï¿½   ï¿½   +-- SampleDataController.cs  # Sample data endpoints
+ï¿½   ï¿½   +-- HealthController.cs      # Health check endpoints
+ï¿½   +-- v2/
+ï¿½       +-- SampleDataController.cs  # v2 endpoints (breaking changes)
+ï¿½
 +-- Extensions/                       # Startup configuration extensions
-¦   +-- WebApplicationExtensions.cs  # HTTP pipeline configuration
-¦   +-- ServiceCollectionExtensions.cs # DI registration
-¦
+ï¿½   +-- WebApplicationExtensions.cs  # HTTP pipeline configuration
+ï¿½   +-- ServiceCollectionExtensions.cs # DI registration
+ï¿½
 +-- Middleware/                       # Custom middleware
-¦   +-- ExceptionHandlingMiddleware.cs
-¦   +-- RequestLoggingMiddleware.cs
-¦   +-- ApiKeyAuthenticationMiddleware.cs
-¦
+ï¿½   +-- ExceptionHandlingMiddleware.cs
+ï¿½   +-- RequestLoggingMiddleware.cs
+ï¿½   +-- ApiKeyAuthenticationMiddleware.cs
+ï¿½
 +-- Models/                           # Request/Response models (API contracts)
-¦   +-- Requests/
-¦   ¦   +-- CreateSampleRequest.cs
-¦   ¦   +-- UpdateSampleRequest.cs
-¦   +-- Responses/
-¦       +-- SampleDataResponse.cs
-¦       +-- ErrorResponse.cs
-¦
+ï¿½   +-- Requests/
+ï¿½   ï¿½   +-- CreateSampleRequest.cs
+ï¿½   ï¿½   +-- UpdateSampleRequest.cs
+ï¿½   +-- Responses/
+ï¿½       +-- SampleDataResponse.cs
+ï¿½       +-- ErrorResponse.cs
+ï¿½
 +-- wwwroot/                          # Static files
-¦   +-- css/
-¦   ¦   +-- app.css                  # Global styles
-¦   ¦   +-- bootstrap/               # Bootstrap files
-¦   +-- js/
-¦   ¦   +-- site.js                  # JavaScript files
-¦   +-- favicon.ico
-¦
+ï¿½   +-- css/
+ï¿½   ï¿½   +-- app.css                  # Global styles
+ï¿½   ï¿½   +-- bootstrap/               # Bootstrap files
+ï¿½   +-- js/
+ï¿½   ï¿½   +-- site.js                  # JavaScript files
+ï¿½   +-- favicon.ico
+ï¿½
 +-- appsettings.json                  # Configuration (non-sensitive)
 +-- appsettings.Development.json      # Development configuration
 +-- appsettings.Production.json       # Production configuration
@@ -93,7 +93,7 @@ SecureCleanApiWaf.Web/
 
 ---
 
-## ?? Key Components
+## ğŸ“– Key Components
 
 ### 1. **Program.cs (Application Entry Point)**
 
@@ -568,7 +568,7 @@ public class ErrorResponse
 
 ---
 
-## ?? Dependencies
+## ğŸ“¦ Dependencies
 
 ### **NuGet Packages**
 ```xml
@@ -603,7 +603,7 @@ public class ErrorResponse
 
 ---
 
-## ?? Configuration Files
+## âš™ï¸ Configuration Files
 
 ### **appsettings.json**
 ```json
@@ -647,7 +647,7 @@ public class ErrorResponse
 
 ---
 
-## ?? Testing Strategy
+## ğŸ§ª Testing Strategy
 
 ### **Functional Tests**
 ```csharp
@@ -693,7 +693,7 @@ public class SampleDataControllerFunctionalTests : IClassFixture<WebApplicationF
 
 ---
 
-## ? Presentation Layer Checklist
+## âœ… Presentation Layer Checklist
 
 - [ ] Blazor Server configured for interactive components
 - [ ] API controllers with versioning
@@ -708,7 +708,7 @@ public class SampleDataControllerFunctionalTests : IClassFixture<WebApplicationF
 
 ---
 
-## ?? Best Practices
+## âœ… Best Practices
 
 ### ? DO
 - Use MediatR to decouple controllers from handlers
@@ -732,10 +732,10 @@ public class SampleDataControllerFunctionalTests : IClassFixture<WebApplicationF
 
 ---
 
-## ?? Migration from Current Structure
+## ğŸ“– Migration from Current Structure
 
 ```
-Current Structure ? Clean Architecture Web Layer
+Current Structure ğŸ›ï¸ Clean Architecture Web Layer
 
 Components/                    ? Web/Components/
 Controllers/SampleController.cs ? Web/Controllers/v1/SampleDataController.cs
@@ -746,7 +746,7 @@ Models/SampleModel.cs          ? Web/Models/Responses/SampleDataResponse.cs
 
 ---
 
-## ?? Summary
+## ğŸ“ Summary
 
 The Presentation Layer:
 - **Entry point** for HTTP requests

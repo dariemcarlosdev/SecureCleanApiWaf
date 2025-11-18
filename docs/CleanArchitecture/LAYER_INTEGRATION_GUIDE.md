@@ -6,7 +6,7 @@
 
 ---
 
-## ?? Table of Contents
+## üìë Table of Contents
 
 1. [Overview](#-overview)
 2. [Integration Architecture](#-integration-architecture)
@@ -24,7 +24,7 @@
 
 ---
 
-## ?? Overview
+## üìñ Overview
 
 SecureCleanApiWaf implements **Clean Architecture with Domain-Driven Design (DDD)** in a single-project structure. This guide explains:
 
@@ -36,8 +36,8 @@ SecureCleanApiWaf implements **Clean Architecture with Domain-Driven Design (DDD
 
 ? **Dependencies flow inward** - Outer layers depend on inner layers, never the reverse  
 ? **Abstractions over implementations** - Layers communicate through interfaces  
-? **Dependency Injection** - Runtime wiring of concrete implementations  
-? **Single Responsibility** - Each integration point has one clear purpose  
+‚úÖ **Dependency Injection** - Runtime wiring of concrete implementations  
+‚úÖ **Single Responsibility** - Each integration point has one clear purpose  
 
 ---
 
@@ -47,66 +47,66 @@ SecureCleanApiWaf implements **Clean Architecture with Domain-Driven Design (DDD
 
 ```
 +------------------------------------------------------------+
-¶                    PRESENTATION LAYER                      ¶
-¶  ï API Controllers (AuthController, SampleController)      ¶
-¶  ï Blazor Components (Home.razor, Layout)                  ¶
-¶  ï Middleware (JwtBlacklistValidationMiddleware)           ¶
-¶  ï DI Configuration (Program.cs, Extensions)               ¶
-¶                                                            ¶
-¶  Integration: Sends Commands/Queries ? MediatR            ¶
-¶               Registers Services ? DI Container            ¶
+ÔøΩ                    PRESENTATION LAYER                      ÔøΩ
+ÔøΩ  ÔøΩ API Controllers (AuthController, SampleController)      ÔøΩ
+ÔøΩ  ÔøΩ Blazor Components (Home.razor, Layout)                  ÔøΩ
+ÔøΩ  ÔøΩ Middleware (JwtBlacklistValidationMiddleware)           ÔøΩ
+ÔøΩ  ÔøΩ DI Configuration (Program.cs, Extensions)               ÔøΩ
+ÔøΩ                                                            ÔøΩ
+ÔøΩ  Integration: Sends Commands/Queries ? MediatR            ÔøΩ
+ÔøΩ               Registers Services ? DI Container            ÔøΩ
 +------------------------------------------------------------+
-                        ¶
-                        ¶ ? Dependency Injection
-                        ¶ ? MediatR Request Dispatch
-                        ¶ ? Service Resolution
+                        ÔøΩ
+                        ÔøΩ ? Dependency Injection
+                        ÔøΩ ? MediatR Request Dispatch
+                        ÔøΩ ? Service Resolution
                         ?
 +------------------------------------------------------------+
-¶      INFRASTRUCTURE LAYER         ¶  INFRASTRUCTURE.AZURE  ¶
-¶  ï ApiIntegrationService          ¶  ï KeyVaultService     ¶
-¶  ï TokenBlacklistService          ¶  ï BlobStorageService  ¶
-¶  ï CacheService                   ¶  ï ServiceBusService   ¶
-¶  ï JwtTokenGenerator              ¶                        ¶
-¶                                   ¶                        ¶
-¶  Integration: Implements ? Application Interfaces         ¶
-¶               Uses ? Domain Entities/Value Objects        ¶
+ÔøΩ      INFRASTRUCTURE LAYER         ÔøΩ  INFRASTRUCTURE.AZURE  ÔøΩ
+ÔøΩ  ÔøΩ ApiIntegrationService          ÔøΩ  ÔøΩ KeyVaultService     ÔøΩ
+ÔøΩ  ÔøΩ TokenBlacklistService          ÔøΩ  ÔøΩ BlobStorageService  ÔøΩ
+ÔøΩ  ÔøΩ CacheService                   ÔøΩ  ÔøΩ ServiceBusService   ÔøΩ
+ÔøΩ  ÔøΩ JwtTokenGenerator              ÔøΩ                        ÔøΩ
+ÔøΩ                                   ÔøΩ                        ÔøΩ
+ÔøΩ  Integration: Implements ? Application Interfaces         ÔøΩ
+ÔøΩ               Uses ? Domain Entities/Value Objects        ÔøΩ
 +------------------------------------------------------------+
-                        ¶
-                        ¶ ? Interface Implementation
-                        ¶ ? Domain Entity Usage
-                        ¶ ? External Service Calls
+                        ÔøΩ
+                        ÔøΩ ? Interface Implementation
+                        ÔøΩ ? Domain Entity Usage
+                        ÔøΩ ? External Service Calls
                         ?
 +------------------------------------------------------------+
-¶                   APPLICATION LAYER                        ¶
-¶  ï CQRS Commands (LoginUserCommand, BlacklistTokenCommand)¶
-¶  ï CQRS Queries (IsTokenBlacklistedQuery, GetApiDataQuery)¶
-¶  ï Handlers (LoginUserCommandHandler, etc.)                ¶
-¶  ï Pipeline Behaviors (Caching, Logging, Validation)      ¶
-¶  ï Interface Definitions (IApiIntegrationService, etc.)    ¶
-¶                                                            ¶
-¶  Integration: Orchestrates ? Domain Logic                 ¶
-¶               Defines ? Infrastructure Contracts          ¶
-¶               Uses ? MediatR Pipeline                     ¶
+ÔøΩ                   APPLICATION LAYER                        ÔøΩ
+ÔøΩ  ÔøΩ CQRS Commands (LoginUserCommand, BlacklistTokenCommand)ÔøΩ
+ÔøΩ  ÔøΩ CQRS Queries (IsTokenBlacklistedQuery, GetApiDataQuery)ÔøΩ
+ÔøΩ  ÔøΩ Handlers (LoginUserCommandHandler, etc.)                ÔøΩ
+ÔøΩ  ÔøΩ Pipeline Behaviors (Caching, Logging, Validation)      ÔøΩ
+ÔøΩ  ÔøΩ Interface Definitions (IApiIntegrationService, etc.)    ÔøΩ
+ÔøΩ                                                            ÔøΩ
+ÔøΩ  Integration: Orchestrates ? Domain Logic                 ÔøΩ
+ÔøΩ               Defines ? Infrastructure Contracts          ÔøΩ
+ÔøΩ               Uses ? MediatR Pipeline                     ÔøΩ
 +------------------------------------------------------------+
-                        ¶
-                        ¶ ? Entity Creation/Manipulation
-                        ¶ ? Value Object Validation
-                        ¶ ? Business Rule Enforcement
+                        ÔøΩ
+                        ÔøΩ ? Entity Creation/Manipulation
+                        ÔøΩ ? Value Object Validation
+                        ÔøΩ ? Business Rule Enforcement
                         ?
 +------------------------------------------------------------+
-¶                     DOMAIN LAYER                           ¶
-¶  ï Entities (User, Token, ApiDataItem)                     ¶
-¶  ï Value Objects (Email, Role)                             ¶
-¶  ï Enums (UserStatus, TokenStatus, TokenType, DataStatus)  ¶
-¶  ï Domain Exceptions (DomainException)                     ¶
-¶                                                            ¶
-¶  Integration: NONE - Pure business logic, no dependencies ¶
+ÔøΩ                     DOMAIN LAYER                           ÔøΩ
+ÔøΩ  ÔøΩ Entities (User, Token, ApiDataItem)                     ÔøΩ
+ÔøΩ  ÔøΩ Value Objects (Email, Role)                             ÔøΩ
+ÔøΩ  ÔøΩ Enums (UserStatus, TokenStatus, TokenType, DataStatus)  ÔøΩ
+ÔøΩ  ÔøΩ Domain Exceptions (DomainException)                     ÔøΩ
+ÔøΩ                                                            ÔøΩ
+ÔøΩ  Integration: NONE - Pure business logic, no dependencies ÔøΩ
 +------------------------------------------------------------+
 ```
 
 ---
 
-## ?? Layer Integration Points
+## üîó Layer Integration Points
 
 ### **1. Domain ? Application**
 
@@ -251,8 +251,8 @@ public static IServiceCollection AddInfrastructure(this IServiceCollection servi
 #### **Why This Pattern**
 
 - ? **Dependency Inversion** - Application doesn't depend on Infrastructure code
-- ? **Testability** - Easy to mock interfaces in unit tests
-- ? **Flexibility** - Swap implementations without changing handlers
+- ‚úÖ **Testability** - Easy to mock interfaces in unit tests
+- ‚úÖ **Flexibility** - Swap implementations without changing handlers
 - ? **Clean Architecture Compliance** - Proper dependency flow
 
 #### **Key Interfaces**
@@ -344,9 +344,9 @@ public class AuthController : ControllerBase
 #### **Why This Pattern**
 
 - ? **Thin Controllers** - Controllers only handle HTTP concerns
-- ? **Business Logic Isolation** - All logic in handlers
+- ? **Business logic Isolation** - All logic in handlers
 - ? **Automatic Behaviors** - Logging, caching, validation via pipeline
-- ? **Testability** - Test handlers independently of HTTP
+- ‚úÖ **Testability** - Test handlers independently of HTTP
 
 #### **MediatR Pipeline Flow**
 
@@ -460,7 +460,7 @@ app.ConfigureMiddleware(); // ? Applies middleware
 
 ---
 
-## ?? Cross-Layer Integration Patterns
+## ü§ù Cross-Layer Integration Patterns
 
 ### **Pattern 1: CQRS Authentication Flow**
 
@@ -468,43 +468,43 @@ app.ConfigureMiddleware(); // ? Applies middleware
 
 ```
 +-------------------------------------------------------------+
-¶ 1. PRESENTATION - API Request                               ¶
-¶    POST /api/v1/auth/login                                  ¶
-¶    Body: { username, password, role }                       ¶
+ÔøΩ 1. PRESENTATION - API Request                               ÔøΩ
+ÔøΩ    POST /api/v1/auth/login                                  ÔøΩ
+ÔøΩ    Body: { username, password, role }                       ÔøΩ
 +-------------------------------------------------------------+
-             ¶
-             ¶ AuthController dispatches command
+             ÔøΩ
+             ÔøΩ AuthController dispatches command
              ?
 +-------------------------------------------------------------+
-¶ 2. APPLICATION - MediatR Command                            ¶
-¶    LoginUserCommand ? LoginUserCommandHandler               ¶
-¶    ï Validates credentials                                  ¶
-¶    ï Creates User entity (Domain)                           ¶
-¶    ï Generates Token entity (Domain)                        ¶
+ÔøΩ 2. APPLICATION - MediatR Command                            ÔøΩ
+ÔøΩ    LoginUserCommand ? LoginUserCommandHandler               ÔøΩ
+ÔøΩ    ÔøΩ Validates credentials                                  ÔøΩ
+ÔøΩ    ÔøΩ Creates User entity (Domain)                           ÔøΩ
+ÔøΩ    ÔøΩ Generates Token entity (Domain)                        ÔøΩ
 +-------------------------------------------------------------+
-             ¶
-             ¶ Handler calls Infrastructure service
+             ÔøΩ
+             ÔøΩ Handler calls Infrastructure service
              ?
 +-------------------------------------------------------------+
-¶ 3. INFRASTRUCTURE - Token Generation                        ¶
-¶    IJwtTokenGenerator.GenerateToken()                       ¶
-¶    ï Creates JWT with user claims                           ¶
-¶    ï Signs with secret key                                  ¶
-¶    ï Returns token string                                   ¶
+ÔøΩ 3. INFRASTRUCTURE - Token Generation                        ÔøΩ
+ÔøΩ    IJwtTokenGenerator.GenerateToken()                       ÔøΩ
+ÔøΩ    ÔøΩ Creates JWT with user claims                           ÔøΩ
+ÔøΩ    ÔøΩ Signs with secret key                                  ÔøΩ
+ÔøΩ    ÔøΩ Returns token string                                   ÔøΩ
 +-------------------------------------------------------------+
-             ¶
-             ¶ Response flows back
+             ÔøΩ
+             ÔøΩ Response flows back
              ?
 +-------------------------------------------------------------+
-¶ 4. APPLICATION - Handler returns Result<LoginResponse>      ¶
-¶    { token, expiresAt, username, role }                     ¶
+ÔøΩ 4. APPLICATION - Handler returns Result<LoginResponse>      ÔøΩ
+ÔøΩ    { token, expiresAt, username, role }                     ÔøΩ
 +-------------------------------------------------------------+
-             ¶
-             ¶ Controller transforms to HTTP response
+             ÔøΩ
+             ÔøΩ Controller transforms to HTTP response
              ?
 +-------------------------------------------------------------+
-¶ 5. PRESENTATION - HTTP 200 OK                               ¶
-¶    Response: { token: "eyJ...", expiresAt: "2025-..." }    ¶
+ÔøΩ 5. PRESENTATION - HTTP 200 OK                               ÔøΩ
+ÔøΩ    Response: { token: "eyJ...", expiresAt: "2025-..." }    ÔøΩ
 +-------------------------------------------------------------+
 ```
 
@@ -526,40 +526,40 @@ app.ConfigureMiddleware(); // ? Applies middleware
 
 ```
 +-------------------------------------------------------------+
-¶ 1. PRESENTATION - Logout Request                            ¶
-¶    POST /api/v1/auth/logout                                 ¶
-¶    Headers: Authorization: Bearer <token>                   ¶
+ÔøΩ 1. PRESENTATION - Logout Request                            ÔøΩ
+ÔøΩ    POST /api/v1/auth/logout                                 ÔøΩ
+ÔøΩ    Headers: Authorization: Bearer <token>                   ÔøΩ
 +-------------------------------------------------------------+
-             ¶
-             ¶ Controller dispatches command
+             ÔøΩ
+             ÔøΩ Controller dispatches command
              ?
 +-------------------------------------------------------------+
-¶ 2. APPLICATION - MediatR Command                            ¶
-¶    BlacklistTokenCommand ? BlacklistTokenCommandHandler     ¶
-¶    ï Validates token format                                 ¶
-¶    ï Creates Token entity                                   ¶
-¶    ï Marks as revoked                                       ¶
+ÔøΩ 2. APPLICATION - MediatR Command                            ÔøΩ
+ÔøΩ    BlacklistTokenCommand ? BlacklistTokenCommandHandler     ÔøΩ
+ÔøΩ    ÔøΩ Validates token format                                 ÔøΩ
+ÔøΩ    ÔøΩ Creates Token entity                                   ÔøΩ
+ÔøΩ    ÔøΩ Marks as revoked                                       ÔøΩ
 +-------------------------------------------------------------+
-             ¶
-             ¶ Handler calls Infrastructure service
+             ÔøΩ
+             ÔøΩ Handler calls Infrastructure service
              ?
 +-------------------------------------------------------------+
-¶ 3. INFRASTRUCTURE - Dual-Cache Storage                      ¶
-¶    ITokenBlacklistService.BlacklistTokenAsync()             ¶
-¶    ï Stores in Memory Cache (fast)                          ¶
-¶    ï Stores in Distributed Cache (persistent)               ¶
-¶    ï Sets expiration = token lifetime                       ¶
+ÔøΩ 3. INFRASTRUCTURE - Dual-Cache Storage                      ÔøΩ
+ÔøΩ    ITokenBlacklistService.BlacklistTokenAsync()             ÔøΩ
+ÔøΩ    ÔøΩ Stores in Memory Cache (fast)                          ÔøΩ
+ÔøΩ    ÔøΩ Stores in Distributed Cache (persistent)               ÔøΩ
+ÔøΩ    ÔøΩ Sets expiration = token lifetime                       ÔøΩ
 +-------------------------------------------------------------+
-             ¶
-             ¶ Every subsequent request with that token
+             ÔøΩ
+             ÔøΩ Every subsequent request with that token
              ?
 +-------------------------------------------------------------+
-¶ 4. INFRASTRUCTURE - Middleware Validation                   ¶
-¶    JwtBlacklistValidationMiddleware                         ¶
-¶    ï Extracts token from header                             ¶
-¶    ï Queries: IsTokenBlacklistedQuery (MediatR)             ¶
-¶    ï Checks dual cache (Memory ? Distributed)               ¶
-¶    ï Returns 401 if blacklisted                             ¶
+ÔøΩ 4. INFRASTRUCTURE - Middleware Validation                   ÔøΩ
+ÔøΩ    JwtBlacklistValidationMiddleware                         ÔøΩ
+ÔøΩ    ÔøΩ Extracts token from header                             ÔøΩ
+ÔøΩ    ÔøΩ Queries: IsTokenBlacklistedQuery (MediatR)             ÔøΩ
+ÔøΩ    ÔøΩ Checks dual cache (Memory ? Distributed)               ÔøΩ
+ÔøΩ    ÔøΩ Returns 401 if blacklisted                             ÔøΩ
 +-------------------------------------------------------------+
 ```
 
@@ -581,47 +581,47 @@ app.ConfigureMiddleware(); // ? Applies middleware
 
 ```
 +-------------------------------------------------------------+
-¶ 1. PRESENTATION - API Request                               ¶
-¶    GET /api/v1/sample/data                                  ¶
+ÔøΩ 1. PRESENTATION - API Request                               ÔøΩ
+ÔøΩ    GET /api/v1/sample/data                                  ÔøΩ
 +-------------------------------------------------------------+
-             ¶
-             ¶ Controller dispatches query
+             ÔøΩ
+             ÔøΩ Controller dispatches query
              ?
 +-------------------------------------------------------------+
-¶ 2. APPLICATION - MediatR Pipeline                           ¶
-¶    GetApiDataQuery (implements ICacheable)                  ¶
-¶      ?                                                       ¶
-¶    CachingBehavior checks cache                             ¶
-¶      ?                                                       ¶
-¶    Cache MISS ? Handler executes                            ¶
-¶      ?                                                       ¶
-¶    GetApiDataQueryHandler                                   ¶
+ÔøΩ 2. APPLICATION - MediatR Pipeline                           ÔøΩ
+ÔøΩ    GetApiDataQuery (implements ICacheable)                  ÔøΩ
+ÔøΩ      ?                                                       ÔøΩ
+ÔøΩ    CachingBehavior checks cache                             ÔøΩ
+ÔøΩ      ?                                                       ÔøΩ
+ÔøΩ    Cache MISS ? Handler executes                            ÔøΩ
+ÔøΩ      ?                                                       ÔøΩ
+ÔøΩ    GetApiDataQueryHandler                                   ÔøΩ
 +-------------------------------------------------------------+
-             ¶
-             ¶ Handler calls Infrastructure service
+             ÔøΩ
+             ÔøΩ Handler calls Infrastructure service
              ?
 +-------------------------------------------------------------+
-¶ 3. INFRASTRUCTURE - API Integration                         ¶
-¶    IApiIntegrationService.GetAllDataAsync()                 ¶
-¶    ï HttpClientFactory creates client                       ¶
-¶    ï ApiKeyHandler adds API key                             ¶
-¶    ï Polly retries on failure                               ¶
-¶    ï Returns Result<List<SampleDataDto>>                    ¶
+ÔøΩ 3. INFRASTRUCTURE - API Integration                         ÔøΩ
+ÔøΩ    IApiIntegrationService.GetAllDataAsync()                 ÔøΩ
+ÔøΩ    ÔøΩ HttpClientFactory creates client                       ÔøΩ
+ÔøΩ    ÔøΩ ApiKeyHandler adds API key                             ÔøΩ
+ÔøΩ    ÔøΩ Polly retries on failure                               ÔøΩ
+ÔøΩ    ÔøΩ Returns Result<List<SampleDataDto>>                    ÔøΩ
 +-------------------------------------------------------------+
-             ¶
-             ¶ Response flows back
+             ÔøΩ
+             ÔøΩ Response flows back
              ?
 +-------------------------------------------------------------+
-¶ 4. APPLICATION - CachingBehavior stores result              ¶
-¶    ï Caches response for 5 minutes                          ¶
-¶    ï Next request = Cache HIT (no API call)                 ¶
+ÔøΩ 4. APPLICATION - CachingBehavior stores result              ÔøΩ
+ÔøΩ    ÔøΩ Caches response for 5 minutes                          ÔøΩ
+ÔøΩ    ÔøΩ Next request = Cache HIT (no API call)                 ÔøΩ
 +-------------------------------------------------------------+
-             ¶
-             ¶ Controller returns HTTP response
+             ÔøΩ
+             ÔøΩ Controller returns HTTP response
              ?
 +-------------------------------------------------------------+
-¶ 5. PRESENTATION - HTTP 200 OK                               ¶
-¶    Response: [{ id, name, description }]                    ¶
+ÔøΩ 5. PRESENTATION - HTTP 200 OK                               ÔøΩ
+ÔøΩ    Response: [{ id, name, description }]                    ÔøΩ
 +-------------------------------------------------------------+
 ```
 
@@ -638,7 +638,7 @@ app.ConfigureMiddleware(); // ? Applies middleware
 
 ---
 
-## ?? Dependency Injection Flow
+## üîÑ Dependency Injection Flow
 
 **Registration happens in Presentation, resolution happens at runtime:**
 
@@ -730,7 +730,7 @@ HttpClient with configured policies
 
 ---
 
-## ?? Request Flow Examples
+## üîÑ Request Flow Examples
 
 ### **Example 1: Protected API Endpoint**
 
@@ -739,38 +739,38 @@ HttpClient with configured policies
    Headers: Authorization: Bearer eyJ...
    
 2. JwtBlacklistValidationMiddleware
-   ï Extracts token
-   ï Sends IsTokenBlacklistedQuery via MediatR
-   ï CachingBehavior checks cache (fast lookup)
-   ï Validates token not blacklisted
+   ÔøΩ Extracts token
+   ÔøΩ Sends IsTokenBlacklistedQuery via MediatR
+   ÔøΩ CachingBehavior checks cache (fast lookup)
+   ÔøΩ Validates token not blacklisted
    
 3. UseAuthentication() middleware
-   ï Validates JWT signature
-   ï Populates ClaimsPrincipal
+   ÔøΩ Validates JWT signature
+   ÔøΩ Populates ClaimsPrincipal
    
 4. UseAuthorization() middleware
-   ï Checks [Authorize(Roles = "User,Admin")]
-   ï Allows request to proceed
+   ÔøΩ Checks [Authorize(Roles = "User,Admin")]
+   ÔøΩ Allows request to proceed
    
 5. Controller receives request
-   ï SampleController.GetAllData()
-   ï Dispatches GetApiDataQuery via MediatR
+   ÔøΩ SampleController.GetAllData()
+   ÔøΩ Dispatches GetApiDataQuery via MediatR
    
 6. MediatR Pipeline
-   ï LoggingBehavior logs request
-   ï CachingBehavior checks cache
-   ï Cache MISS ? Handler executes
+   ÔøΩ LoggingBehavior logs request
+   ÔøΩ CachingBehavior checks cache
+   ÔøΩ Cache MISS ? Handler executes
    
 7. GetApiDataQueryHandler
-   ï Calls IApiIntegrationService
-   ï Service uses HttpClientFactory
-   ï ApiKeyHandler adds API key
-   ï Polly retries on failure
+   ÔøΩ Calls IApiIntegrationService
+   ÔøΩ Service uses HttpClientFactory
+   ÔøΩ ApiKeyHandler adds API key
+   ÔøΩ Polly retries on failure
    
 8. Response flows back
-   ï Handler returns Result<List<SampleDataDto>>
-   ï CachingBehavior caches response
-   ï Controller returns HTTP 200 OK
+   ÔøΩ Handler returns Result<List<SampleDataDto>>
+   ÔøΩ CachingBehavior caches response
+   ÔøΩ Controller returns HTTP 200 OK
 ```
 
 ### **Example 2: User Logout**
@@ -782,33 +782,33 @@ HttpClient with configured policies
 2. Middleware validates token (not yet blacklisted)
    
 3. AuthController.Logout()
-   ï Extracts token from header
-   ï Creates BlacklistTokenCommand
-   ï Dispatches via MediatR
+   ÔøΩ Extracts token from header
+   ÔøΩ Creates BlacklistTokenCommand
+   ÔøΩ Dispatches via MediatR
    
 4. BlacklistTokenCommandHandler
-   ï Validates token format
-   ï Creates Token entity (Domain)
-   ï Marks Status = Revoked
-   ï Calls ITokenBlacklistService
+   ÔøΩ Validates token format
+   ÔøΩ Creates Token entity (Domain)
+   ÔøΩ Marks Status = Revoked
+   ÔøΩ Calls ITokenBlacklistService
    
 5. TokenBlacklistService
-   ï Stores in Memory Cache (fast)
-   ï Stores in Distributed Cache (persistent)
-   ï Sets expiration = token lifetime
+   ÔøΩ Stores in Memory Cache (fast)
+   ÔøΩ Stores in Distributed Cache (persistent)
+   ÔøΩ Sets expiration = token lifetime
    
 6. Response: HTTP 200 OK
    { message: "Logout successful" }
    
 7. Subsequent requests with that token
-   ï JwtBlacklistValidationMiddleware intercepts
-   ï IsTokenBlacklistedQuery returns true
-   ï HTTP 401 Unauthorized (token revoked)
+   ÔøΩ JwtBlacklistValidationMiddleware intercepts
+   ÔøΩ IsTokenBlacklistedQuery returns true
+   ÔøΩ HTTP 401 Unauthorized (token revoked)
 ```
 
 ---
 
-## ?? Key Integration Files
+## üìÅ Key Integration Files
 
 ### **Dependency Injection Configuration**
 
@@ -836,7 +836,7 @@ HttpClient with configured policies
 
 ---
 
-## ?? Anti-Patterns to Avoid
+## ‚ùå Anti-Patterns to Avoid
 
 ### **? Domain Referencing Outer Layers**
 
@@ -852,7 +852,7 @@ public class User : BaseEntity
 }
 ```
 
-**? CORRECT:**
+**‚úÖ CORRECT:**
 Domain entities should have zero dependencies. All external calls go through Application handlers.
 
 ---
@@ -871,7 +871,7 @@ public class GetApiDataQueryHandler
 }
 ```
 
-**? CORRECT:**
+**‚úÖ CORRECT:**
 Always depend on interfaces defined in Application layer.
 
 ---
@@ -894,7 +894,7 @@ public class SampleController : ControllerBase
 }
 ```
 
-**? CORRECT:**
+**‚úÖ CORRECT:**
 Controllers should only send MediatR commands/queries.
 
 ---
@@ -914,7 +914,7 @@ public class JwtBlacklistValidationMiddleware
 }
 ```
 
-**? CORRECT:**
+**‚úÖ CORRECT:**
 Use MediatR to maintain consistent flow through Application layer.
 
 ```csharp
@@ -930,7 +930,7 @@ public async Task InvokeAsync(
 
 ---
 
-## ?? Reference Documentation
+## üìö Reference Documentation
 
 ### **Layer-Specific Guides**
 
@@ -955,7 +955,7 @@ public async Task InvokeAsync(
 
 ---
 
-## ?? Summary
+## üìù Summary
 
 ### **Integration Principles**
 
@@ -974,22 +974,22 @@ public async Task InvokeAsync(
 
 ### **Benefits of This Approach**
 
-? **Testability** - Each layer testable in isolation  
-? **Flexibility** - Swap implementations without code changes  
-? **Maintainability** - Clear boundaries and responsibilities  
-? **Scalability** - Easy to add features following patterns  
+‚úÖ **Testability** - Each layer testable in isolation  
+‚úÖ **Flexibility** - Swap implementations without code changes  
+‚úÖ **Maintainability** - Clear boundaries and responsibilities  
+‚úÖ **Scalability** - Easy to add features following patterns  
 ? **Team Collaboration** - Multiple developers work on different layers  
 
 ---
 
-## ?? Support
+## üÜò Support
 
 **Questions about layer integration?**
 
-- ?? **Documentation:** See layer-specific guides linked above
-- ?? **Issues:** [GitHub Issues](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues)
-- ?? **Email:** softevolutionsl@gmail.com
-- ?? **GitHub:** [@dariemcarlosdev](https://github.com/dariemcarlosdev)
+- üìñ **Documentation:** See layer-specific guides linked above
+- üêõ **Issues:** [GitHub Issues](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues)
+- üìß **Email:** softevolutionsl@gmail.com
+- üêô **GitHub:** [@dariemcarlosdev](https://github.com/dariemcarlosdev)
 
 ---
 

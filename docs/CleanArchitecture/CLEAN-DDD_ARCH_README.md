@@ -1,12 +1,12 @@
 # Clean Architecture & DDD Documentation - SecureCleanApiWaf
 
-> **"Clean Architecture is not about perfectionóit's about making code that's easy to change, test, and understand."**
+> **"Clean Architecture is not about perfectionÔøΩit's about making code that's easy to change, test, and understand."**
 
-## ?? Overview
+## üìñ Overview
 
 Welcome to the **Clean Architecture & Domain-Driven Design (DDD)** documentation hub for SecureCleanApiWaf. This guide serves as your starting point to understand how this project implements industry-standard architectural patterns with a pragmatic, single-project approach.
 
-**?? What You'll Find Here:**
+**üìö What You'll Find Here:**
 - Complete Clean Architecture implementation guide
 - Domain-Driven Design (DDD) patterns and practices
 - Single-project vs. multi-project approach comparison
@@ -16,7 +16,7 @@ Welcome to the **Clean Architecture & Domain-Driven Design (DDD)** documentation
 
 ---
 
-## ?? Table of Contents
+## üìë Table of Contents
 
 ### **Quick Navigation**
 1. [What is Clean Architecture & DDD?](#-what-is-clean-architecture--ddd)
@@ -44,7 +44,7 @@ Welcome to the **Clean Architecture & Domain-Driven Design (DDD)** documentation
 
 **Clean Architecture** is a software design philosophy that creates systems with:
 - ? **Independence** from frameworks, UI, databases, and external services
-- ? **Testability** at every layer without external dependencies
+- ‚úÖ **Testability** at every layer without external dependencies
 - ? **Maintainability** through clear separation of concerns
 - ? **Flexibility** to swap implementations without rewriting business logic
 
@@ -58,7 +58,7 @@ Welcome to the **Clean Architecture & Domain-Driven Design (DDD)** documentation
 
 ---
 
-## ?? Why This Matters
+## üí° Why This Matters
 
 ### **For SecureClean Developers**
 
@@ -82,7 +82,7 @@ This architecture demonstrates:
 
 ---
 
-## ?? Project Status
+## ‚úÖ Project Status
 
 ### **Current Implementation: Single-Project Clean Architecture**
 
@@ -107,39 +107,39 @@ SecureCleanApiWaf.csproj (Single Project)
 
 ---
 
-## ?? Architecture Overview
+## üèóÔ∏è Architecture Overview
 
 ### **Dependency Flow**
 
 ```
 ???????????????????????????????????????????????????????????
 ?  Presentation Layer (API Controllers, Blazor Pages)     ?
-?  ï HTTP Concerns                                        ?
-?  ï Routing & Model Binding                             ?
-?  ï Depends on: Application                             ?
+?  ÔøΩ HTTP Concerns                                        ?
+?  ÔøΩ Routing & Model Binding                             ?
+?  ÔøΩ Depends on: Application                             ?
 ???????????????????????????????????????????????????????????
                      ?
                      ?
 ???????????????????????????????????????????????????????????
 ?  Application Layer (CQRS Handlers, Pipeline Behaviors) ?
-?  ï Use Cases & Business Workflows                      ?
-?  ï MediatR Integration                                 ?
-?  ï Depends on: Domain                                  ?
+?  ÔøΩ Use Cases & Business Workflows                      ?
+?  ÔøΩ MediatR Integration                                 ?
+?  ÔøΩ Depends on: Domain                                  ?
 ???????????????????????????????????????????????????????????
                      ?
                      ?
 ???????????????????????????????????????????????????????????
 ?  Domain Layer (Entities, Value Objects, Business Rules)?
-?  ï Pure Business Logic                                 ?
-?  ï NO DEPENDENCIES                                     ?
+?  ÔøΩ Pure Business Logic                                 ?
+?  ÔøΩ NO DEPENDENCIES                                     ?
 ???????????????????????????????????????????????????????????
                      ?
                      ?
 ???????????????????????????????????????????????????????????
 ?  Infrastructure Layer (Services, APIs, Data Access)     ?
-?  ï External Integrations                               ?
-?  ï Third-Party APIs                                    ?
-?  ï Depends on: Application Interfaces                 ?
+?  ÔøΩ External Integrations                               ?
+?  ÔøΩ Third-Party APIs                                    ?
+?  ÔøΩ Depends on: Application Interfaces                 ?
 ???????????????????????????????????????????????????????????
 ```
 
@@ -147,7 +147,7 @@ SecureCleanApiWaf.csproj (Single Project)
 
 ---
 
-## ?? Documentation Structure
+## üìö Documentation Structure
 
 ### **?? Core Documentation**
 
@@ -206,7 +206,7 @@ SecureCleanApiWaf.csproj (Single Project)
 **Learn the patterns and principles used throughout the project.**
 
 **What's Inside:**
-- ? Clean Architecture principles explained
+- üèõÔ∏è Clean Architecture principles explained
 - ? Domain-Driven Design (DDD) concepts
 - ? CQRS pattern with MediatR
 - ? Result pattern for error handling
@@ -388,7 +388,7 @@ Located in **[Projects/](Projects/)** folder - Detailed implementation guides fo
 
 ---
 
-## ?? Getting Started
+## üöÄ Getting Started
 
 ### **For New Developers (Start Here!)**
 
@@ -445,7 +445,7 @@ Located in **[Projects/](Projects/)** folder - Detailed implementation guides fo
 
 ---
 
-## ? Quick Reference
+## üìã Quick Reference
 
 ### **Core Architectural Principles**
 
@@ -513,7 +513,7 @@ HTTP Response (200 OK with JWT token)
 
 ---
 
-## ?? Key Architectural Decisions
+## üéØ Key Architectural Decisions
 
 ### **1. Single-Project Structure**
 **Decision:** Keep all layers in one project initially.
@@ -588,7 +588,7 @@ return Result<List<SampleDataDto>>.Ok(result.Data);
 **Decision:** Use DDD patterns for domain modeling (85% complete).
 
 **Rationale:**
-- ? Business logic stays in domain entities
+- ‚ùå Business logic stays in domain entities
 - ? Value objects enforce validation (Email, Role)
 - ? Enums prevent invalid states (UserStatus, TokenStatus)
 - ? Aggregate roots enforce invariants
@@ -601,7 +601,7 @@ return Result<List<SampleDataDto>>.Ok(result.Data);
 
 ---
 
-## ? Benefits Demonstrated
+## ‚úÖ Benefits Demonstrated
 
 ### **For Development**
 | Benefit | Evidence |
@@ -629,7 +629,7 @@ return Result<List<SampleDataDto>>.Ok(result.Data);
 
 ---
 
-## ? When to Evolve
+## üìà When to Evolve
 
 ### **Stay Single-Project If:**
 - ? Team size: 1-3 developers
@@ -657,7 +657,7 @@ See [MIGRATION_GUIDE.md](MIGRATION_GUIDE.md) for detailed steps.
 
 ---
 
-## ?? Related Documentation
+## üìö Related Documentation
 
 ### **Architecture & Patterns**
 - ?? [Clean Architecture Index](CLEAN_ARCHITECTURE_INDEX.md) - Complete documentation catalog
@@ -687,7 +687,7 @@ See [MIGRATION_GUIDE.md](MIGRATION_GUIDE.md) for detailed steps.
 
 ---
 
-## ?? Contact & Support
+## üÜò Contact & Support
 
 ### **Documentation Issues**
 - ?? **GitHub Issues:** [SecureCleanApiWaf Issues](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues)
@@ -710,7 +710,7 @@ See [MIGRATION_GUIDE.md](MIGRATION_GUIDE.md) for detailed steps.
 
 ---
 
-## ?? Learning Resources
+## üìö Learning Resources
 
 ### **Recommended Reading Order**
 
@@ -736,7 +736,7 @@ See [MIGRATION_GUIDE.md](MIGRATION_GUIDE.md) for detailed steps.
 
 ---
 
-## ?? Summary
+## üìù Summary
 
 **SecureCleanApiWaf demonstrates production-ready Clean Architecture with:**
 
@@ -748,7 +748,7 @@ See [MIGRATION_GUIDE.md](MIGRATION_GUIDE.md) for detailed steps.
 ? **Azure-ready** with Key Vault, App Service, CI/CD  
 ? **Production security** with JWT + token blacklisting  
 
-**This is not a tutorial projectóit's a production implementation showcasing enterprise architecture patterns in action.**
+**This is not a tutorial projectÔøΩit's a production implementation showcasing enterprise architecture patterns in action.**
 
 ---
 

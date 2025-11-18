@@ -1,10 +1,13 @@
-# Docker Troubleshooting Guide - SecureCleanApiWaf
+# 🔧 Docker Troubleshooting Guide - SecureCleanApiWaf
+
+> *"Every error is a lesson in disguise; troubleshooting is the path to mastery."*  
+> — Engineering Wisdom
 
 This guide helps you build and run the SecureCleanApiWaf Blazor application in Docker.
 
 ---
 
-## ? **Setup Instructions (Step-by-Step)**
+## ✅ **Setup Instructions (Step-by-Step)**
 
 ### **Step 1: Build and Publish Locally (REQUIRED FIRST)**
 
@@ -122,7 +125,7 @@ The `.dockerignore` file was excluding the `publish` folder with the line:
 
 This prevented Docker from including the `publish` folder in the build context, even though the files physically existed on disk.
 
-### **? Final Solution**
+### **✅ Final Solution**
 
 **Edit `.dockerignore` and remove or comment out the `**/publish/` line:**
 
@@ -131,7 +134,7 @@ This prevented Docker from including the `publish` folder in the build context, 
 **/bin/
 **/obj/
 **/out/
-**/publish/    # ? This was blocking the build!
+**/publish/    # ⚠️ This was blocking the build!
 **/build/
 
 # After (CORRECT):
@@ -155,7 +158,7 @@ docker-compose up -d
 docker ps
 ```
 
-The container should now build and run successfully! ?
+The container should now build and run successfully! ✅
 
 ---
 
@@ -204,11 +207,11 @@ This Dockerfile uses a **runtime-only** image that expects pre-published applica
 
 | Benefit | Why |
 |---------|-----|
-| ? No network issues during build | NuGet restore happens locally, not in Docker |
-| ? No certificate/proxy problems | Local build uses your system's network settings |
-| ? Smaller, faster container images | Only runtime files, no SDK or build tools |
-| ? Works in corporate networks | Avoids Docker's SSL inspection issues |
-| ? Industry standard practice | How enterprises handle Docker in restricted networks |
+| ✅ No network issues during build | NuGet restore happens locally, not in Docker |
+| ✅ No certificate/proxy problems | Local build uses your system's network settings |
+| ✅ Smaller, faster container images | Only runtime files, no SDK or build tools |
+| ✅ Works in corporate networks | Avoids Docker's SSL inspection issues |
+| ✅ Industry standard practice | How enterprises handle Docker in restricted networks |
 
 ---
 
@@ -223,16 +226,16 @@ This Dockerfile uses a **runtime-only** image that expects pre-published applica
 **Last Updated:** 2025-01-14
 **For:** SecureCleanApiWaf (Blazor .NET 8)
 **Approach:** Local build + Docker containerization
-**Status:** ? Fully Working and Tested
+**Status:** ✅ Fully Working and Tested
 
 ## ?? Support
 
 **Need Help?**
 
-- ?? **Documentation:** Start with the deployment guides above
-- ?? **Issues:** [GitHub Issues](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues)
-- ?? **Email:** softevolutionsl@gmail.com
-- ?? **GitHub:** [@dariemcarlosdev](https://github.com/dariemcarlosdev)
+- 📖 **Documentation:** Start with the deployment guides above
+- 🐛 **Issues:** [GitHub Issues](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues)
+- 📧 **Email:** softevolutionsl@gmail.com
+- 🐙 **GitHub:** [@dariemcarlosdev](https://github.com/dariemcarlosdev)
 
 **Before asking for help:**
 1. Check the troubleshooting sections REF: above

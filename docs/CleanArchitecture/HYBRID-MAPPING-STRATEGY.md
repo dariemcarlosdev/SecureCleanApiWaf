@@ -1,6 +1,6 @@
 # HYBRID MAPPING STRATEGY: AutoMapper + Custom Mapper
 
-> *"The art of wisdom is knowing what to overlook."* — William James  
+> *"The art of wisdom is knowing what to overlook."* ï¿½ William James  
 > *In software architecture, true wisdom lies in knowing when to embrace convention and when to craft custom solutions.*
 
 ---
@@ -688,15 +688,15 @@ public class CustomMapperTests
 | **Flexibility** | ?? Requires DTOs | ? Handles anything |
 | **Code Maintenance** | ? Convention-based | ?? Manual logic |
 | **Memory Usage** | ? Efficient | ?? Dynamic allocation |
-| **Execution Speed** | ? ~100-200 µs | ?? ~300-500 µs |
+| **Execution Speed** | ? ~100-200 ï¿½s | ?? ~300-500 ï¿½s |
 | **Learning Curve** | ?? Moderate | ? Easy |
 | **Community Support** | ? Extensive | ? Internal only |
 
 **Benchmark Results** (approximate, varies by scenario):
 ```
-AutoMapper:     ~150 µs per mapping
-Custom Mapper:  ~400 µs per mapping
-Native Mapping: ~50 µs per mapping
+AutoMapper:     ~150 ï¿½s per mapping
+Custom Mapper:  ~400 ï¿½s per mapping
+Native Mapping: ~50 ï¿½s per mapping
 
 Note: Numbers are averages. AutoMapper approaches native 
 performance for simple mappings, while custom mapper excels 
@@ -794,7 +794,7 @@ var entities = _autoMapper.Map<List<ApiDataItem>>(response);
 ? **Production-ready** with both type safety and flexibility  
 ? **Insurance policy** against API changes and unexpected scenarios  
 
-This architecture allows your team to leverage AutoMapper's power while maintaining flexibility for unpredictable external APIs. It's not about choosing one over the other—it's about having the right tool for each job.
+This architecture allows your team to leverage AutoMapper's power while maintaining flexibility for unpredictable external APIs. It's not about choosing one over the otherï¿½it's about having the right tool for each job.
 
 **Remember:** The best architecture is one that adapts to your needs, not one that forces you to adapt to its limitations. The hybrid mapping strategy embodies this principle.
 

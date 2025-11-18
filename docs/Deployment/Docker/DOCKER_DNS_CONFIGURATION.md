@@ -1,10 +1,13 @@
-# Docker Desktop DNS Configuration - Visual Guide
+# ğŸŒ Docker Desktop DNS Configuration - Visual Guide
+
+> *"In the world of containers, DNS is the compass that guides your packets home."*  
+> â€” DevOps Wisdom
 
 This document provides step-by-step visual instructions for configuring DNS in Docker Desktop to fix NuGet connectivity issues.
 
 ---
 
-## Problem You're Experiencing
+## ğŸ” Problem You're Experiencing
 
 ```
 error NU1301: Unable to load the service index for source https://api.nuget.org/v3/index.json
@@ -18,8 +21,8 @@ failed to solve: process "/bin/sh -c dotnet restore..." did not complete success
 ### Step 1: Open Docker Desktop
 
 1. Look for the **Docker icon** in your system tray (bottom-right of Windows taskbar)
-   - Should be a **whale icon** ??
-   - Icon should be **GREEN** (if gray or orange, Docker is not fully running)
+   - Should be a **whale icon** ğŸ³
+   - Icon should be **GREEN** âœ… (if gray or orange, Docker is not fully running)
 
 2. **Right-click** the Docker icon
 3. Select **"Dashboard"** or **"Settings"**
@@ -31,20 +34,20 @@ failed to solve: process "/bin/sh -c dotnet restore..." did not complete success
 ```
 Docker Desktop Window Layout:
 +-------------------------------------------------+
-¦  Docker Desktop                              ?? ¦
-¦                                                 ¦
-¦  +--------------+  +-------------------------+  ¦
-¦  ¦ General      ¦  ¦                         ¦  ¦
-¦  ¦ Resources    ¦  ¦   Settings Content      ¦  ¦
-¦  ¦ Docker Engine¦?-¦   (JSON Configuration)  ¦  ¦
-¦  ¦ Kubernetes   ¦  ¦                         ¦  ¦
-¦  ¦ Software     ¦  ¦                         ¦  ¦
-¦  ¦ Updates      ¦  ¦                         ¦  ¦
-¦  +--------------+  +-------------------------+  ¦
+ï¿½  Docker Desktop                              ?? ï¿½
+ï¿½                                                 ï¿½
+ï¿½  +--------------+  +-------------------------+  ï¿½
+ï¿½  ï¿½ General      ï¿½  ï¿½                         ï¿½  ï¿½
+ï¿½  ï¿½ Resources    ï¿½  ï¿½   Settings Content      ï¿½  ï¿½
+ï¿½  ï¿½ Docker Engineï¿½?-ï¿½   (JSON Configuration)  ï¿½  ï¿½
+ï¿½  ï¿½ Kubernetes   ï¿½  ï¿½                         ï¿½  ï¿½
+ï¿½  ï¿½ Software     ï¿½  ï¿½                         ï¿½  ï¿½
+ï¿½  ï¿½ Updates      ï¿½  ï¿½                         ï¿½  ï¿½
+ï¿½  +--------------+  +-------------------------+  ï¿½
 +-------------------------------------------------+
 ```
 
-1. Click **Settings** (gear icon ??) in top-right corner
+1. Click **Settings** (gear icon âš™ï¸) in top-right corner
 2. In the left sidebar, click **"Docker Engine"**
 
 ---
@@ -86,7 +89,7 @@ You'll see a **JSON editor** with configuration like this:
 }
 ```
 
-**?? IMPORTANT:**
+**âš ï¸ IMPORTANT:**
 - Add the line: `"dns": ["8.8.8.8", "8.8.4.4"],` 
 - Make sure to add a **comma** after the previous line (see the comma after `}` in "builder" section)
 - JSON syntax matters - one missing comma or bracket will cause errors
@@ -98,8 +101,8 @@ You'll see a **JSON editor** with configuration like this:
 ```
 Bottom of Settings Window:
 +------------------------------------------+
-¦                                          ¦
-¦   [Cancel]  [Apply & Restart]            ¦
+ï¿½                                          ï¿½
+ï¿½   [Cancel]  [Apply & Restart]            ï¿½
 +------------------------------------------+
 ```
 
@@ -126,7 +129,7 @@ docker run --rm alpine nslookup api.nuget.org
 # Address:   <some IP address>
 ```
 
-If you see the output above, DNS is configured correctly! ?
+If you see the output above, DNS is configured correctly! âœ…
 
 ---
 
@@ -161,11 +164,11 @@ cd "C:\DATA\MYSTUFFS\PROFESSIONAL STUFF\TECH CHALLENGE\SecureCleanApiWaf"
 ```
 
 The script will:
-1. ? Check if Docker is running
-2. ? Test network connectivity
-3. ? Guide you through DNS configuration
-4. ? Clear build cache
-5. ? Rebuild the application
+1. âœ… Check if Docker is running
+2. âœ… Test network connectivity
+3. âœ… Guide you through DNS configuration
+4. âœ… Clear build cache
+5. âœ… Rebuild the application
 
 ---
 
@@ -186,21 +189,21 @@ The script will:
 
 ## Troubleshooting
 
-### ? "Apply & Restart" button is grayed out
+### âŒ "Apply & Restart" button is grayed out
 **Cause:** JSON syntax error
 **Solution:** 
 - Check for missing commas
 - Check for matching brackets `{}`
 - Copy the example JSON exactly as shown above
 
-### ? Docker won't restart after applying
+### âŒ Docker won't restart after applying
 **Cause:** Invalid configuration
 **Solution:**
 1. Re-open Docker Desktop settings
 2. Revert to previous configuration
 3. Try again with correct JSON syntax
 
-### ? Still getting NuGet errors after DNS configuration
+### âŒ Still getting NuGet errors after DNS configuration
 **Solutions:**
 1. Verify Docker fully restarted (green icon)
 2. Run `docker info` and check DNS section
@@ -208,7 +211,7 @@ The script will:
 4. Check Windows Firewall settings
 5. Restart your computer
 
-### ? Cannot find "Docker Engine" in settings
+### âŒ Cannot find "Docker Engine" in settings
 **Cause:** Using old version of Docker Desktop
 **Solution:**
 - Update Docker Desktop to latest version
@@ -241,7 +244,7 @@ If Google DNS (8.8.8.8) doesn't work, try these alternatives:
 
 ### Where to Configure DNS:
 ```
-Docker Desktop ? Settings ? Docker Engine ? JSON Editor
+Docker Desktop â†’ Settings â†’ Docker Engine â†’ JSON Editor
 ```
 
 ### What to Add:
@@ -270,11 +273,11 @@ docker-compose up -d
 
 ## Success Indicators
 
-? Docker icon in system tray is **GREEN**
-? Command `docker version` shows both Client and Server
-? Command `docker run --rm alpine nslookup api.nuget.org` succeeds
-? Build completes without NuGet errors
-? Application starts at http://localhost:8080
+âœ… Docker icon in system tray is **GREEN**
+âœ… Command `docker version` shows both Client and Server
+âœ… Command `docker run --rm alpine nslookup api.nuget.org` succeeds
+âœ… Build completes without NuGet errors
+âœ… Application starts at http://localhost:8080
 
 ---
 
@@ -294,14 +297,14 @@ docker-compose up -d
 
 ---
 
-## ?? Support
+## ğŸ†˜ Support & Contact
 
 **Need Help?**
 
-- ?? **Documentation:** Start with the deployment guides above
-- ?? **Issues:** [GitHub Issues](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues)
-- ?? **Email:** softevolutionsl@gmail.com
-- ?? **GitHub:** [@dariemcarlosdev](https://github.com/dariemcarlosdev)
+- ğŸ“– **Documentation:** Start with the deployment guides above
+- ğŸ› **Issues:** [GitHub Issues](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues)
+- ğŸ“§ **Email:** softevolutionsl@gmail.com
+- ğŸ™ **GitHub:** [@dariemcarlosdev](https://github.com/dariemcarlosdev)
 
 **Before asking for help:**
 1. Check the troubleshooting sections REF: above
@@ -311,7 +314,7 @@ docker-compose up -d
 
 ---
 
-**Remember**: 90% of Docker NuGet issues are resolved by configuring DNS! ??
+**Remember**: 90% of Docker NuGet issues are resolved by configuring DNS! ğŸ‰
 
 ---
 

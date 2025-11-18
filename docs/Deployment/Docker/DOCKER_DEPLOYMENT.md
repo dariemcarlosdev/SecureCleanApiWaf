@@ -1,15 +1,16 @@
-# ?? SecureCleanApiWaf - Docker Deployment Guide
+﻿# 🚀 SecureCleanApiWaf - Docker Deployment Guide
 
-**Status:** ? Current & Maintained  
+**Status:** ✅ Current & Maintained  
 **Repository:** https://github.com/dariemcarlosdev/SecureCleanApiWaf (Branch: Dev)  
 **Application:** Blazor Web Application (.NET 8)  
-**Last Updated:** November 2025  
+**Last Updated:** November 2025
+**Author:** Dariemcarlos
 
 This comprehensive guide provides step-by-step instructions for building, running, and publishing the SecureCleanApiWaf Blazor application using Docker.
 
 ---
 
-## ?? Table of Contents
+## 📑 Table of Contents
 
 1. [Overview](#-overview)
 2. [Prerequisites](#-prerequisites)
@@ -23,26 +24,26 @@ This comprehensive guide provides step-by-step instructions for building, runnin
 10. [Security Best Practices](#-security-best-practices)
 11. [Docker Commands Cheat Sheet](#-docker-commands-cheat-sheet)
 12. [Troubleshooting](#-troubleshooting)
-13. [Support](#-support)
+13. [Support & Contact](#-support--contact)
 
 ---
 
-## ?? Overview
+## 📖 Overview
 
 SecureCleanApiWaf is a **Blazor Web Application** built with **.NET 8** that has been fully containerized with production-ready Docker configuration.
 
 **Key Features:**
-- ? Multi-stage optimized Dockerfile
-- ? .NET 8 ASP.NET Core runtime (~215 MB)
-- ? Non-root user security (appuser, UID 1000)
-- ? Docker Compose for local development
-- ? Environment variable configuration
-- ? Pre-build approach (optimized for corporate environments)
-- ? Ready for Azure, AWS, GCP, Kubernetes deployment
+- ⚡ Multi-stage optimized Dockerfile
+- 📦 .NET 8 ASP.NET Core runtime (~215 MB)
+- 🔒 Non-root user security (appuser, UID 1000)
+- 🐳 Docker Compose for local development
+- ⚙️ Environment variable configuration
+- 🏗️ Pre-build approach (optimized for corporate environments)
+- ☁️ Ready for Azure, AWS, GCP, Kubernetes deployment
 
 ---
 
-## ?? Prerequisites
+## ✅ Prerequisites
 
 ### Required Software
 
@@ -87,7 +88,7 @@ dotnet --version
 
 ---
 
-## ?? Quick Start (5 Minutes)
+## 🚀 Quick Start (5 Minutes)
 
 ### Step 1: Prepare the Application
 
@@ -160,11 +161,11 @@ docker-compose down
 docker rmi SecureCleanApiWaf:latest
 ```
 
-**?? Total Time: 5-10 minutes (first time may take longer)**
+**⏱️ Total Time: 5-10 minutes (first time may take longer)**
 
 ---
 
-## ??? Building the Docker Image
+## 🏗️ Building the Docker Image
 
 ### Understand the Build Process
 
@@ -238,7 +239,7 @@ docker build -t SecureCleanApiWaf:latest . --progress=plain
 
 ---
 
-## ?? Running the Container
+## 🏃 Running the Container
 
 ### Basic Run
 
@@ -314,15 +315,15 @@ docker run -it \
 
 ---
 
-## ?? Docker Compose
+## 🐳 Docker Compose
 
 ### Why Use Docker Compose?
 
 Docker Compose simplifies running multi-container applications:
-- ? One command to start everything
-- ? Easy environment configuration
-- ? Service networking built-in
-- ? Perfect for local development
+- ✅ One command to start everything
+- ⚙️ Easy environment configuration
+- 🌐 Service networking built-in
+- 🔧 Perfect for local development
 
 ### Current docker-compose.yml Configuration
 
@@ -427,7 +428,7 @@ environment:
 
 ---
 
-## ?? Publishing to Docker Hub
+## 📤 Publishing to Docker Hub
 
 ### Step 1: Create Docker Hub Repository
 
@@ -482,10 +483,10 @@ docker push yourdockerhubusername/SecureCleanApiWaf --all-tags
 Visit: `https://hub.docker.com/r/yourdockerhubusername/SecureCleanApiWaf`
 
 You should see:
-- ? Latest tag available
-- ? Version tags listed
-- ? Image size shown
-- ? Pull instructions displayed
+- ✅ Latest tag available
+- 📋 Version tags listed
+- 📊 Image size shown
+- 📝 Pull instructions displayed
 
 ### Step 6: Pull and Run from Docker Hub
 
@@ -525,7 +526,7 @@ chmod +x docker-build-push.sh
 
 ---
 
-## ?? Environment Variables
+## ⚙️ Environment Variables
 
 ### Required Variables
 
@@ -591,7 +592,7 @@ Variables are loaded in this order (later overrides earlier):
 
 ---
 
-## ?? Production Deployment
+## ☁️ Production Deployment
 
 ### Azure Container Instances (ACI)
 
@@ -735,16 +736,16 @@ gcloud run deploy SecureCleanApiWaf \
 
 ---
 
-## ?? Security Best Practices
+## 🔒 Security Best Practices
 
 ### 1. Never Hardcode Secrets
 
-? **Bad:**
+❌ **Bad:**
 ```dockerfile
 ENV JWT_SECRET=mysecretkey123
 ```
 
-? **Good:**
+✅ **Good:**
 ```dockerfile
 # Use environment variables at runtime
 # Don't embed in image
@@ -763,19 +764,19 @@ docker run -d \
 
 ### 3. Use Specific Image Tags
 
-? **Bad:**
+❌ **Bad:**
 ```bash
 docker run SecureCleanApiWaf:latest  # Latest can change unexpectedly
 ```
 
-? **Good:**
+✅ **Good:**
 ```bash
 docker run SecureCleanApiWaf:v1.0.0  # Specific version
 ```
 
 ### 4. Run as Non-Root User
 
-? **Already configured in Dockerfile:**
+✅ **Already configured in Dockerfile:**
 ```dockerfile
 RUN adduser -u 1000 --disabled-password --gecos "" appuser
 USER appuser
@@ -830,7 +831,7 @@ docker run -d \
 
 ---
 
-## ?? Docker Commands Cheat Sheet
+## 📋 Docker Commands Cheat Sheet
 
 ### Container Management
 
@@ -951,7 +952,7 @@ docker inspect SecureCleanApiWaf | grep -A 5 '"HostConfig"'
 
 ---
 
-## ?? Troubleshooting
+## 🔧 Troubleshooting
 
 ### Issue: Container Won't Start
 
@@ -1138,7 +1139,7 @@ docker push yourusername/SecureCleanApiWaf:latest
 **Solutions:**
 ```bash
 # Increase Docker memory allocation
-# Windows/Mac: Docker Desktop ? Settings ? Resources
+# Windows/Mac: Docker Desktop -> Settings -> Resources
 # Linux: Configure in docker daemon config
 
 # Or limit memory for specific container
@@ -1150,7 +1151,7 @@ docker stats SecureCleanApiWaf
 
 ---
 
-## ?? Additional Resources
+## 📚 Additional Resources
 
 **Official Documentation:**
 - [Docker Documentation](https://docs.docker.com/) - Complete Docker reference
@@ -1171,36 +1172,36 @@ docker stats SecureCleanApiWaf
 
 ---
 
-## ?? Support
+## 🆘 Support & Contact
 
 **Need Help?**
 
-- ?? **Documentation:** Start with the deployment guides in this directory
-- ?? **Quick Ref:** Use [DOCKER_QUICK_REFERENCE.md](./DOCKER_QUICK_REFERENCE.md) for commands
-- ?? **Troubleshoot:** Check the [Troubleshooting](#-troubleshooting) section above
-- ?? **Issues:** [GitHub Issues](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues)
-- ?? **Email:** softevolutionsl@gmail.com
-- ?? **GitHub:** [@dariemcarlosdev](https://github.com/dariemcarlosdev)
+- 📖 **Documentation:** Start with the deployment guides in this directory
+- ⚡ **Quick Ref:** Use [DOCKER_QUICK_REFERENCE.md](./DOCKER_QUICK_REFERENCE.md) for commands
+- 🔍 **Troubleshoot:** Check the [Troubleshooting](#-troubleshooting) section above
+- 🐛 **Issues:** [GitHub Issues](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues)
+- 📧 **Email:** softevolutionsl@gmail.com
+- 🐙 **GitHub:** [@dariemcarlosdev](https://github.com/dariemcarlosdev)
 
 **Before asking for help:**
-1. ? Check the [Troubleshooting](#-troubleshooting) section above
-2. ? Review the [Quick Start](#-quick-start-5-minutes) for common issues
-3. ? Search [existing GitHub issues](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues)
-4. ? Include error messages and logs in your issue
+1. 🚀 Check the [Troubleshooting](#-troubleshooting) section above
+2. ⚙️ Review the [Quick Start](#-quick-start-5-minutes) for common issues
+3. 🔍 Search [existing GitHub issues](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues)
+4. 📜 Include error messages and logs in your issue
 
 **Getting Help:**
-- ?? **First time with Docker?** ? Start with [Quick Start](#-quick-start-5-minutes)
-- ? **Need quick commands?** ? Check [Docker Commands Cheat Sheet](#-docker-commands-cheat-sheet)
-- ??? **Building for production?** ? See [Production Deployment](#-production-deployment)
-- ?? **Something's broken?** ? Go to [Troubleshooting](#-troubleshooting)
+- 🚀 **First time with Docker?** 🌟 Start with [Quick Start](#-quick-start-5-minutes)
+- ⚡ **Need quick commands?** 📋 Check [Docker Commands Cheat Sheet](#-docker-commands-cheat-sheet)
+- 🏗️ **Building for production?** 📦 See [Production Deployment](#-production-deployment)
+- 🐛 **Something's broken?** 😢 Go to [Troubleshooting](#-troubleshooting)
 
 ---
 
-**Ready to deploy? Follow the Quick Start above and get containerizing! Happy deploying SecureCleanApiWaf Team! ??**
+**Ready to deploy? Follow the Quick Start above and get containerizing! Happy deploying SecureCleanApiWaf Team! 🚀**
 
 ---
 
 **Last Updated:** November 2025  
 **Maintainer:** Dariemcarlos  
 **GitHub:** [SecureCleanApiWaf](https://github.com/dariemcarlosdev/SecureCleanApiWaf)  
-**Status:** ? Current & Maintained
+**Status:** ✅ Current & Maintained

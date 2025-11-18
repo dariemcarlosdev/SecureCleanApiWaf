@@ -1,12 +1,12 @@
 # Authentication & Authorization Documentation - SecureCleanApiWaf
 
-> **"Security is not a featureóit's the foundation of trust in every API call."**
+> **"Security is not a featureÔøΩit's the foundation of trust in every API call."**
 
-## ?? Overview
+## üìñ Overview
 
 Welcome to the **Authentication & Authorization** documentation hub for SecureCleanApiWaf. This guide serves as your starting point to understand how this project implements industry-standard security patterns with JWT authentication, CQRS integration, and token blacklisting.
 
-**?? What You'll Find Here:**
+**üìö What You'll Find Here:**
 - Complete CQRS-based JWT authentication implementation
 - Token blacklisting with dual-cache strategy
 - Step-by-step testing guides
@@ -15,7 +15,7 @@ Welcome to the **Authentication & Authorization** documentation hub for SecureCl
 
 ---
 
-## ?? Table of Contents
+## üìë Table of Contents
 
 ### **Quick Navigation**
 1. [What is JWT Authentication with CQRS?](#-what-is-jwt-authentication-with-cqrs)
@@ -33,30 +33,30 @@ Welcome to the **Authentication & Authorization** documentation hub for SecureCl
 
 ---
 
-## ?? What is JWT Authentication with CQRS?
+## üìñ What is JWT Authentication with CQRS?
 
 **JWT (JSON Web Token) Authentication** provides:
-- ? **Stateless authentication** - No server-side session storage
-- ? **Token-based security** - Cryptographically signed tokens
-- ? **Role-based access control** - User and Admin roles
-- ? **Self-contained claims** - User identity and permissions in token
+- ‚úÖ **Stateless authentication** - No server-side session storage
+- ‚úÖ **Token-based security** - Cryptographically signed tokens
+- ‚úÖ **Role-based access control** - User and Admin roles
+- ‚úÖ **Self-contained claims** - User identity and permissions in token
 
 **CQRS (Command Query Responsibility Segregation)** integration provides:
-- ? **Clean separation** - Commands (login/logout) vs Queries (validation)
-- ? **Testable handlers** - Unit test each command/query independently
-- ? **Automatic caching** - Query results cached via MediatR pipeline
-- ? **Consistent patterns** - Result<T> for all operations
+- ‚úÖ **Clean separation** - Commands (login/logout) vs Queries (validation)
+- ‚úÖ **Testable handlers** - Unit test each command/query independently
+- ‚úÖ **Automatic caching** - Query results cached via MediatR pipeline
+- ‚úÖ **Consistent patterns** - Result<T> for all operations
 
 **Token Blacklisting** adds:
-- ? **Secure logout** - Invalidate tokens before natural expiration
-- ? **Dual-cache strategy** - Memory + Distributed cache for performance
-- ? **Admin monitoring** - Statistics and health check endpoints
+- ‚úÖ **Secure logout** - Invalidate tokens before natural expiration
+- ‚úÖ **Dual-cache strategy** - Memory + Distributed cache for performance
+- ‚úÖ **Admin monitoring** - Statistics and health check endpoints
 
 **This project demonstrates all three working together in production-ready architecture.**
 
 ---
 
-## ?? Why This Implementation Matters
+## üí° Why This Implementation Matters
 
 ### **For SecureClean Developers**
 
@@ -72,74 +72,74 @@ This implementation demonstrates:
 
 ### **Real-World Application**
 
-- ?? **Production-Ready** - JWT + blacklisting + CQRS integration
-- ??? **Clean Architecture** - Proper layer separation (Domain, Application, Infrastructure)
-- ?? **Testable** - Mock-friendly with MediatR and interface abstractions
-- ?? **Maintainable** - Clear patterns make onboarding fast
-- ?? **Extensible** - Easy to add OAuth, 2FA, or other auth providers
+- ‚úÖ **Production-Ready** - JWT + blacklisting + CQRS integration
+- üèóÔ∏è **Clean Architecture** - Proper layer separation (Domain, Application, Infrastructure)
+- ‚úÖ **Testable** - Mock-friendly with MediatR and interface abstractions
+- ‚úÖ **Maintainable** - Clear patterns make onboarding fast
+- ‚úÖ **Extensible** - Easy to add OAuth, 2FA, or other auth providers
 
 ---
 
-## ?? System Status
+## ‚úÖ System Status
 
 ### **Current Implementation: Complete CQRS Authentication**
 
 ```
 Authentication System (100% Complete)
-+-- Commands/                 [? Login, Logout]
-+-- Queries/                  [? Token validation, Statistics]
-+-- Handlers/                 [? 4 handlers with caching]
-+-- Services/                 [? JWT generation, Token blacklisting]
-+-- Middleware/               [? Custom validation pipeline]
-+-- Controllers/              [? Auth & Admin endpoints]
++-- Commands/                 [‚úÖ Login, Logout]
++-- Queries/                  [‚úÖ Token validation, Statistics]
++-- Handlers/                 [‚úÖ 4 handlers with caching]
++-- Services/                 [‚úÖ JWT generation, Token blacklisting]
++-- Middleware/               [‚úÖ Custom validation pipeline]
++-- Controllers/              [‚úÖ Auth & Admin endpoints]
 ```
 
-### **Implementation Maturity**
+### **üíª Implementation Maturity**
 
 | Component | Status | Key Features |
 |-----------|--------|--------------|
-| **JWT Generation** | ? 100% | HS256 signing, configurable expiration, role claims |
-| **CQRS Commands** | ? 100% | LoginUserCommand, BlacklistTokenCommand with handlers |
-| **CQRS Queries** | ? 100% | IsTokenBlacklistedQuery, GetTokenBlacklistStatsQuery |
-| **Token Blacklisting** | ? 100% | Dual-cache (Memory + Distributed), automatic expiration |
-| **Middleware** | ? 100% | JwtBlacklistValidationMiddleware in HTTP pipeline |
-| **Admin Endpoints** | ? 100% | Token status, statistics, health checks |
-| **Testing** | ? 100% | Complete guide with Swagger and cURL examples |
+| **JWT Generation** | ‚úÖ 100% | HS256 signing, configurable expiration, role claims |
+| **CQRS Commands** | ‚úÖ 100% | LoginUserCommand, BlacklistTokenCommand with handlers |
+| **CQRS Queries** | ‚úÖ 100% | IsTokenBlacklistedQuery, GetTokenBlacklistStatsQuery |
+| **Token Blacklisting** | ‚úÖ 100% | Dual-cache (Memory + Distributed), automatic expiration |
+| **Middleware** | ‚úÖ 100% | JwtBlacklistValidationMiddleware in HTTP pipeline |
+| **Admin Endpoints** | ‚úÖ 100% | Token status, statistics, health checks |
+| **Testing** | ‚úÖ 100% | Complete guide with Swagger and cURL examples |
 
 ---
 
-## ?? Architecture Overview
+## üèóÔ∏è Architecture Overview
 
 ### **Authentication Flow**
 
 ```
 +-----------------------------------------------------+
-¶  1. Client ? POST /api/v1/auth/login                ¶
-¶     Sends: { username, password, role }             ¶
+ÔøΩ  1. Client ? POST /api/v1/auth/login                ÔøΩ
+ÔøΩ     Sends: { username, password, role }             ÔøΩ
 +-----------------------------------------------------+
-                     ¶
+                     ÔøΩ
                      ?
 +-----------------------------------------------------+
-¶  2. AuthController ? LoginUserCommand                ¶
-¶     Creates CQRS command with credentials           ¶
+ÔøΩ  2. AuthController ? LoginUserCommand                ÔøΩ
+ÔøΩ     Creates CQRS command with credentials           ÔøΩ
 +-----------------------------------------------------+
-                     ¶
+                     ÔøΩ
                      ?
 +-----------------------------------------------------+
-¶  3. MediatR ? LoginUserCommandHandler                ¶
-¶     Validates credentials, generates JWT token       ¶
+ÔøΩ  3. MediatR ? LoginUserCommandHandler                ÔøΩ
+ÔøΩ     Validates credentials, generates JWT token       ÔøΩ
 +-----------------------------------------------------+
-                     ¶
+                     ÔøΩ
                      ?
 +-----------------------------------------------------+
-¶  4. JwtTokenGenerator ? Creates Token                ¶
-¶     Signs token with claims (sub, role, jti, exp)   ¶
+ÔøΩ  4. JwtTokenGenerator ? Creates Token                ÔøΩ
+ÔøΩ     Signs token with claims (sub, role, jti, exp)   ÔøΩ
 +-----------------------------------------------------+
-                     ¶
+                     ÔøΩ
                      ?
 +-----------------------------------------------------+
-¶  5. Returns JWT Token + Metadata                     ¶
-¶     { token, tokenType, expiresIn, roles, ... }     ¶
+ÔøΩ  5. Returns JWT Token + Metadata                     ÔøΩ
+ÔøΩ     { token, tokenType, expiresIn, roles, ... }     ÔøΩ
 +-----------------------------------------------------+
 ```
 
@@ -147,32 +147,32 @@ Authentication System (100% Complete)
 
 ```
 +-----------------------------------------------------+
-¶  1. Client ? POST /api/v1/auth/logout               ¶
-¶     Sends: Authorization: Bearer {token}            ¶
+ÔøΩ  1. Client ? POST /api/v1/auth/logout               ÔøΩ
+ÔøΩ     Sends: Authorization: Bearer {token}            ÔøΩ
 +-----------------------------------------------------+
-                     ¶
+                     ÔøΩ
                      ?
 +-----------------------------------------------------+
-¶  2. AuthController ? BlacklistTokenCommand           ¶
-¶     Extracts token, creates CQRS command            ¶
+ÔøΩ  2. AuthController ? BlacklistTokenCommand           ÔøΩ
+ÔøΩ     Extracts token, creates CQRS command            ÔøΩ
 +-----------------------------------------------------+
-                     ¶
+                     ÔøΩ
                      ?
 +-----------------------------------------------------+
-¶  3. MediatR ? BlacklistTokenCommandHandler           ¶
-¶     Validates token, extracts JTI and expiration    ¶
+ÔøΩ  3. MediatR ? BlacklistTokenCommandHandler           ÔøΩ
+ÔøΩ     Validates token, extracts JTI and expiration    ÔøΩ
 +-----------------------------------------------------+
-                     ¶
+                     ÔøΩ
                      ?
 +-----------------------------------------------------+
-¶  4. TokenBlacklistService ? Dual Cache               ¶
-¶     Stores in Memory Cache + Distributed Cache      ¶
+ÔøΩ  4. TokenBlacklistService ? Dual Cache               ÔøΩ
+ÔøΩ     Stores in Memory Cache + Distributed Cache      ÔøΩ
 +-----------------------------------------------------+
-                     ¶
+                     ÔøΩ
                      ?
 +-----------------------------------------------------+
-¶  5. Returns Success + Client Actions                 ¶
-¶     { status: "blacklisted", recommendations }      ¶
+ÔøΩ  5. Returns Success + Client Actions                 ÔøΩ
+ÔøΩ     { status: "blacklisted", recommendations }      ÔøΩ
 +-----------------------------------------------------+
 ```
 
@@ -180,57 +180,57 @@ Authentication System (100% Complete)
 
 ```
 +-----------------------------------------------------+
-¶  1. Client ? GET /api/v1/sample (Protected)         ¶
-¶     Sends: Authorization: Bearer {token}            ¶
+ÔøΩ  1. Client ? GET /api/v1/sample (Protected)         ÔøΩ
+ÔøΩ     Sends: Authorization: Bearer {token}            ÔøΩ
 +-----------------------------------------------------+
-                     ¶
+                     ÔøΩ
                      ?
 +-----------------------------------------------------+
-¶  2. JwtBlacklistValidationMiddleware                 ¶
-¶     Intercepts request before authorization          ¶
+ÔøΩ  2. JwtBlacklistValidationMiddleware                 ÔøΩ
+ÔøΩ     Intercepts request before authorization          ÔøΩ
 +-----------------------------------------------------+
-                     ¶
+                     ÔøΩ
                      ?
 +-----------------------------------------------------+
-¶  3. MediatR ? IsTokenBlacklistedQuery (Cached)       ¶
-¶     Checks cache first (1-2 min cache)              ¶
+ÔøΩ  3. MediatR ? IsTokenBlacklistedQuery (Cached)       ÔøΩ
+ÔøΩ     Checks cache first (1-2 min cache)              ÔøΩ
 +-----------------------------------------------------+
-                     ¶
+                     ÔøΩ
                      ?
 +-----------------------------------------------------+
-¶  4. IsTokenBlacklistedQueryHandler                   ¶
-¶     Queries TokenBlacklistService                   ¶
+ÔøΩ  4. IsTokenBlacklistedQueryHandler                   ÔøΩ
+ÔøΩ     Queries TokenBlacklistService                   ÔøΩ
 +-----------------------------------------------------+
-                     ¶
+                     ÔøΩ
         +-------------------------+
-        ¶                         ¶
+        ÔøΩ                         ÔøΩ
         ?                         ?
 +--------------+         +--------------+
-¶ If Blacklisted¶         ¶  If Valid    ¶
-¶ Return 401    ¶         ¶  Continue    ¶
+ÔøΩ If BlacklistedÔøΩ         ÔøΩ  If Valid    ÔøΩ
+ÔøΩ Return 401    ÔøΩ         ÔøΩ  Continue    ÔøΩ
 +--------------+         +--------------+
 ```
 
 ---
 
-## ?? Documentation Structure
+## üìö Documentation Structure
 
-### **?? Main Guides**
+### **üìö Main Guides**
 
-#### **1. [TEST_AUTHENTICATION_GUIDE.md](TEST_AUTHENTICATION_GUIDE.md)** - ?? START HERE for Testing
+#### **1. [TEST_AUTHENTICATION_GUIDE.md](TEST_AUTHENTICATION_GUIDE.md)** - üéØ START HERE for Testing
 **Your hands-on guide to testing all authentication features.**
 
 **What's Inside:**
-- ? Step-by-step testing workflow (8 steps)
-- ? JWT authentication testing procedures
-- ? Swagger UI testing with screenshots
-- ? cURL command examples for all endpoints
-- ? Login/logout testing workflows
-- ? Token blacklisting verification
-- ? Role-based access control testing
-- ? Rate limiting verification
-- ? Complete troubleshooting guide
-- ? Interview talking points
+- ‚úÖ Step-by-step testing workflow (8 steps)
+- ‚úÖ JWT authentication testing procedures
+- ‚úÖ Swagger UI testing with screenshots
+- ‚úÖ cURL command examples for all endpoints
+- ‚úÖ Login/logout testing workflows
+- ‚úÖ Token blacklisting verification
+- ‚úÖ Role-based access control testing
+- ‚úÖ Rate limiting verification
+- ‚úÖ Complete troubleshooting guide
+- ‚úÖ Interview talking points
 
 **When to Read:** Start here if you want to test the authentication system.
 
@@ -240,13 +240,13 @@ Authentication System (100% Complete)
 **Complete CQRS integration and architectural decisions.**
 
 **What's Inside:**
-- ? CQRS authentication architecture
-- ? Visual integration diagrams
-- ? Complete request/response flows
-- ? MediatR pipeline integration
-- ? Automatic caching with CachingBehavior
-- ? Performance optimization strategies
-- ? Why CQRS for authentication?
+- ‚úÖ CQRS authentication architecture
+- ‚úÖ Visual integration diagrams
+- ‚úÖ Complete request/response flows
+- ‚úÖ MediatR pipeline integration
+- ‚úÖ Automatic caching with CachingBehavior
+- ‚úÖ Performance optimization strategies
+- ‚úÖ Why CQRS for authentication?
 
 **When to Read:** After testing, read this to understand the architecture.
 
@@ -256,31 +256,31 @@ Authentication System (100% Complete)
 **Comprehensive security implementation details.**
 
 **What's Inside:**
-- ? JWT configuration and setup
-- ? Token blacklisting implementation
-- ? Custom middleware pipeline
-- ? Rate limiting configuration
-- ? CORS setup
-- ? Security headers
-- ? External API security (ApiKeyHandler)
-- ? Polly resilience patterns
-- ? Production deployment checklist
+- ‚úÖ JWT configuration and setup
+- ‚úÖ Token blacklisting implementation
+- ‚úÖ Custom middleware pipeline
+- ‚úÖ Rate limiting configuration
+- ‚úÖ CORS setup
+- ‚úÖ Security headers
+- ‚úÖ External API security (ApiKeyHandler)
+- ‚úÖ Polly resilience patterns
+- ‚úÖ Production deployment checklist
 
 **When to Read:** For complete security implementation details and production guidance.
 
 ---
 
-### **?? Implementation Guides**
+### **üíª Implementation Guides**
 
 #### **[CQRS_LOGIN_IMPLEMENTATION_SUMMARY.md](CQRS_LOGIN_IMPLEMENTATION_SUMMARY.md)** - Login Details
 **Detailed login CQRS implementation reference.**
 
 **What's Inside:**
-- ? LoginUserCommand structure
-- ? LoginUserCommandHandler implementation
-- ? JWT token generation process
-- ? Response metadata and audit logging
-- ? Testing examples
+- ‚úÖ LoginUserCommand structure
+- ‚úÖ LoginUserCommandHandler implementation
+- ‚úÖ JWT token generation process
+- ‚úÖ Response metadata and audit logging
+- ‚úÖ Testing examples
 
 **When to Use:** Reference for implementing similar CQRS commands.
 
@@ -290,47 +290,47 @@ Authentication System (100% Complete)
 **Detailed logout and blacklisting implementation reference.**
 
 **What's Inside:**
-- ? BlacklistTokenCommand structure
-- ? IsTokenBlacklistedQuery with caching
-- ? GetTokenBlacklistStatsQuery implementation
-- ? Dual-cache strategy details
-- ? Admin monitoring endpoints
-- ? Middleware integration
+- ‚úÖ BlacklistTokenCommand structure
+- ‚úÖ IsTokenBlacklistedQuery with caching
+- ‚úÖ GetTokenBlacklistStatsQuery implementation
+- ‚úÖ Dual-cache strategy details
+- ‚úÖ Admin monitoring endpoints
+- ‚úÖ Middleware integration
 
 **When to Use:** Reference for implementing token management features.
 
 ---
 
-## ?? Getting Started
+## üöÄ Getting Started
 
 ### **For New Developers (Start Here!)**
 
 **Day 1: Test the System**
-1. ?? Read [TEST_AUTHENTICATION_GUIDE.md](TEST_AUTHENTICATION_GUIDE.md)
-2. ?? Run the application: `dotnet run`
-3. ?? Open Swagger: `https://localhost:7178/swagger`
-4. ? Follow Steps 1-8 to test all authentication features
+1. üìñ Read [TEST_AUTHENTICATION_GUIDE.md](TEST_AUTHENTICATION_GUIDE.md)
+2. ‚ñ∂Ô∏è Run the application: `dotnet run`
+3. üåê Open Swagger: `https://localhost:7178/swagger`
+4. ‚úÖ Follow Steps 1-8 to test all authentication features
 
 **Day 2: Understand Architecture**
-1. ?? Read [JWT_AUTHENTICATION_CQRS_ARCHITECTURE.md](JWT_AUTHENTICATION_CQRS_ARCHITECTURE.md)
-2. ?? Review CQRS command and query patterns
-3. ?? Understand why CQRS for authentication
-4. ?? See how layers integrate
+1. üìñ Read [JWT_AUTHENTICATION_CQRS_ARCHITECTURE.md](JWT_AUTHENTICATION_CQRS_ARCHITECTURE.md)
+2. üß© Review CQRS command and query patterns
+3. üí° Understand why CQRS for authentication
+4. üîó See how layers integrate
 
 **Day 3: Security Deep Dive**
-1. ??? Read [API-SECURITY-IMPLEMENTATION-GUIDE.md](API-SECURITY-IMPLEMENTATION-GUIDE.md)
-2. ?? Review JWT configuration
-3. ?? Understand token blacklisting
-4. ?? Study security middleware pipeline
+1. üîí Read [API-SECURITY-IMPLEMENTATION-GUIDE.md](API-SECURITY-IMPLEMENTATION-GUIDE.md)
+2. ‚öôÔ∏è Review JWT configuration
+3. üõ°Ô∏è Understand token blacklisting
+4. üîê Study security middleware pipeline
 
 ---
 
 ### **For Security Engineers**
 
 **Quick Assessment Path:**
-1. ? [API-SECURITY-IMPLEMENTATION-GUIDE.md](API-SECURITY-IMPLEMENTATION-GUIDE.md) - Security overview
-2. ? [JWT_AUTHENTICATION_CQRS_ARCHITECTURE.md](JWT_AUTHENTICATION_CQRS_ARCHITECTURE.md) - Architecture review
-3. ? [TEST_AUTHENTICATION_GUIDE.md](TEST_AUTHENTICATION_GUIDE.md) - Verify implementation
+1. üîí [API-SECURITY-IMPLEMENTATION-GUIDE.md](API-SECURITY-IMPLEMENTATION-GUIDE.md) - Security overview
+2. üèóÔ∏è [JWT_AUTHENTICATION_CQRS_ARCHITECTURE.md](JWT_AUTHENTICATION_CQRS_ARCHITECTURE.md) - Architecture review
+3. üß™ [TEST_AUTHENTICATION_GUIDE.md](TEST_AUTHENTICATION_GUIDE.md) - Verify implementation
 
 **Focus Areas:**
 - JWT signing and validation (HS256)
@@ -344,10 +344,10 @@ Authentication System (100% Complete)
 ### **For Team Leads**
 
 **Evaluation Checklist:**
-1. ?? [JWT_AUTHENTICATION_CQRS_ARCHITECTURE.md](JWT_AUTHENTICATION_CQRS_ARCHITECTURE.md) - Architecture maturity
-2. ?? [TEST_AUTHENTICATION_GUIDE.md](TEST_AUTHENTICATION_GUIDE.md) - Testing coverage
-3. ??? [API-SECURITY-IMPLEMENTATION-GUIDE.md](API-SECURITY-IMPLEMENTATION-GUIDE.md) - Security posture
-4. ?? Implementation files - Code quality review
+1. üìñ [JWT_AUTHENTICATION_CQRS_ARCHITECTURE.md](JWT_AUTHENTICATION_CQRS_ARCHITECTURE.md) - Architecture maturity
+2. üìñ [TEST_AUTHENTICATION_GUIDE.md](TEST_AUTHENTICATION_GUIDE.md) - Testing coverage
+3. üìñ [API-SECURITY-IMPLEMENTATION-GUIDE.md](API-SECURITY-IMPLEMENTATION-GUIDE.md) - Security posture
+4. üìù Implementation files - Code quality review
 
 **Team Onboarding:**
 - Use TEST_AUTHENTICATION_GUIDE for hands-on training
@@ -356,7 +356,7 @@ Authentication System (100% Complete)
 
 ---
 
-## ? Quick Reference
+## üìã Quick Reference
 
 ### **CQRS Components Summary**
 
@@ -378,12 +378,12 @@ Authentication System (100% Complete)
 
 | Endpoint | Method | Auth | Role | CQRS Type |
 |----------|--------|------|------|-----------|
-| `/api/v1/auth/login` | POST | ? No | None | Command |
-| `/api/v1/auth/token` | GET | ? No | None | Direct |
-| `/api/v1/auth/logout` | POST | ? Yes | User | Command |
-| `/api/v1/token-blacklist/status` | GET | ? Yes | User | Query |
-| `/api/v1/token-blacklist/stats` | GET | ? Yes | Admin | Query |
-| `/api/v1/token-blacklist/health` | GET | ? No | None | Direct |
+| `/api/v1/auth/login` | POST | ‚ùå No | None | Command |
+| `/api/v1/auth/token` | GET | ‚ùå No | None | Direct |
+| `/api/v1/auth/logout` | POST | ‚úÖ Yes | User | Command |
+| `/api/v1/token-blacklist/status` | GET | ‚úÖ Yes | User | Query |
+| `/api/v1/token-blacklist/stats` | GET | ‚úÖ Yes | Admin | Query |
+| `/api/v1/token-blacklist/health` | GET | ‚ùå No | None | Direct |
 
 ---
 
@@ -392,10 +392,10 @@ Authentication System (100% Complete)
 ```
 Core/Application/Features/Authentication/
 +-- Commands/
-¶   +-- LoginUserCommand.cs                    [CQRS Command]
-¶   +-- LoginUserCommandHandler.cs             [Handler + Validation]
-¶   +-- BlacklistTokenCommand.cs               [CQRS Command]
-¶   +-- BlacklistTokenCommandHandler.cs        [Handler + Cache]
+ÔøΩ   +-- LoginUserCommand.cs                    [CQRS Command]
+ÔøΩ   +-- LoginUserCommandHandler.cs             [Handler + Validation]
+ÔøΩ   +-- BlacklistTokenCommand.cs               [CQRS Command]
+ÔøΩ   +-- BlacklistTokenCommandHandler.cs        [Handler + Cache]
 +-- Queries/
     +-- IsTokenBlacklistedQuery.cs             [CQRS Query + ICacheable]
     +-- IsTokenBlacklistedQueryHandler.cs      [Handler + Cache]
@@ -404,9 +404,9 @@ Core/Application/Features/Authentication/
 
 Infrastructure/
 +-- Security/
-¶   +-- JwtTokenGenerator.cs                   [JWT Creation]
+ÔøΩ   +-- JwtTokenGenerator.cs                   [JWT Creation]
 +-- Services/
-¶   +-- TokenBlacklistService.cs               [Dual-Cache Service]
+ÔøΩ   +-- TokenBlacklistService.cs               [Dual-Cache Service]
 +-- Middleware/
     +-- JwtBlacklistValidationMiddleware.cs    [HTTP Pipeline]
 
@@ -417,33 +417,33 @@ Presentation/Controllers/v1/
 
 ---
 
-## ?? Security Features
+## üîí Security Features
 
 ### **1. JWT Bearer Authentication**
-- ? HS256 signing algorithm
-- ? Configurable expiration (default: 30 min)
-- ? Role-based claims (User, Admin)
-- ? Issuer and audience validation
-- ? JTI (JWT ID) for tracking
+- ‚úÖ HS256 signing algorithm
+- ‚úÖ Configurable expiration (default: 30 min)
+- ‚úÖ Role-based claims (User, Admin)
+- ‚úÖ Issuer and audience validation
+- ‚úÖ JTI (JWT ID) for tracking
 
 ### **2. Token Blacklisting**
-- ? Dual-cache strategy (Memory + Distributed)
-- ? Automatic expiration cleanup
-- ? <1ms memory cache lookups
-- ? Multi-instance consistency with distributed cache
+- ‚úÖ Dual-cache strategy (Memory + Distributed)
+- ‚úÖ Automatic expiration cleanup
+- ‚úÖ <1ms memory cache lookups
+- ‚úÖ Multi-instance consistency with distributed cache
 
 ### **3. CQRS Integration**
-- ? Commands for write operations (Login, Logout)
-- ? Queries for read operations (Validation, Statistics)
-- ? Automatic caching via MediatR pipeline
-- ? Consistent error handling with Result<T>
+- ‚úÖ Commands for write operations (Login, Logout)
+- ‚úÖ Queries for read operations (Validation, Statistics)
+- ‚úÖ Automatic caching via MediatR pipeline
+- ‚úÖ Consistent error handling with Result<T>
 
 ### **4. Rate Limiting**
-- ? 60 requests per minute per IP
-- ? 1000 requests per hour per IP
-- ? Configurable in appsettings.json
+- ‚úÖ 60 requests per minute per IP
+- ‚úÖ 1000 requests per hour per IP
+- ‚úÖ Configurable in appsettings.json
 
 ### **5. CORS & Headers**
-- ? Whitelist-based origin validation
-- ? Security headers (XSS, Clickjacking, MIME-sniffing protection)
-- ? HTTPS enforcement in production
+- ‚úÖ Whitelist-based origin validation
+- ‚úÖ Security headers (XSS, Clickjacking, MIME-sniffing protection)
+- ‚úÖ HTTPS enforcement in production

@@ -1,14 +1,14 @@
 # Architecture Patterns Explained: Clean Architecture + Domain-Driven Design
 
 > *"Good architecture makes the system easy to understand, easy to develop, easy to maintain, and easy to deploy. The goal of software architecture is to minimize the human resources required to build and maintain the required system."*  
-> — **Robert C. Martin (Uncle Bob)**, Clean Architecture
+> ï¿½ **Robert C. Martin (Uncle Bob)**, Clean Architecture
 
 > *"The domain model is the heart of the software. It is where the business logic lives, and it should be protected from external concerns."*  
-> — **Eric Evans**, Domain-Driven Design
+> ï¿½ **Eric Evans**, Domain-Driven Design
 
 ---
 
-## ?? Table of Contents
+## ğŸ“‘ Table of Contents
 
 1. [Overview](#-overview)
 2. [Why Both Patterns?](#-why-both-patterns)
@@ -25,7 +25,7 @@
 
 ---
 
-## ?? Overview
+## ğŸ“– Overview
 
 **SecureCleanApiWaf implements a hybrid architecture** that combines two complementary patterns:
 
@@ -41,44 +41,44 @@ This document explains:
 
 ---
 
-## ?? Why Both Patterns?
+## ğŸ’¡ Why Both Patterns?
 
 ### The Problem: Monolithic Applications
 
 Traditional layered architectures often suffer from:
 
 ```
-? TRADITIONAL N-TIER ARCHITECTURE (PROBLEMS)
+âŒ TRADITIONAL N-TIER ARCHITECTURE (PROBLEMS)
 
 +--------------------------------------+
-¦   Presentation Layer (UI)            ¦
-¦   - Controllers tightly coupled      ¦
-¦   - Business logic leaks here        ¦
+ï¿½   Presentation Layer (UI)            ï¿½
+ï¿½   - Controllers tightly coupled      ï¿½
+ï¿½   - Business logic leaks here        ï¿½
 +--------------------------------------+
-                 ¦ depends on
+                 ï¿½ depends on
 +----------------?---------------------+
-¦   Business Logic Layer               ¦
-¦   - Mixed concerns                   ¦
-¦   - Framework dependencies           ¦
-¦   - Hard to test                     ¦
+ï¿½   Business Logic Layer               ï¿½
+ï¿½   - Mixed concerns                   ï¿½
+ï¿½   - Framework dependencies           ï¿½
+ï¿½   - Hard to test                     ï¿½
 +--------------------------------------+
-                 ¦ depends on
+                 ï¿½ depends on
 +----------------?---------------------+
-¦   Data Access Layer                  ¦
-¦   - Anemic domain models             ¦
-¦   - Database-centric design          ¦
-¦   - EF Core everywhere               ¦
+ï¿½   Data Access Layer                  ï¿½
+ï¿½   - Anemic domain models             ï¿½
+ï¿½   - Database-centric design          ï¿½
+ï¿½   - EF Core everywhere               ï¿½
 +--------------------------------------+
-                 ¦
+                 ï¿½
             [Database]
 
 Problems:
-? Business logic scattered across layers
-? Database-centric design (not domain-centric)
-? Framework dependencies in business logic
-? Hard to test (requires database)
-? Tight coupling makes changes expensive
-? No domain modeling, just CRUD operations
+âŒ Business logic scattered across layers
+âŒ Database-centric design (not domain-centric)
+âŒ Framework dependencies in business logic
+âŒ Hard to test (requires database)
+âŒ Tight coupling makes changes expensive
+âŒ No domain modeling, just CRUD operations
 ```
 
 ---
@@ -86,47 +86,47 @@ Problems:
 ### The Solution: Clean Architecture + DDD
 
 ```
-? CLEAN ARCHITECTURE + DDD (SOLUTION)
+âœ… CLEAN ARCHITECTURE + DDD (SOLUTION)
 
                     +-------------------------+
-                    ¦   Presentation Layer    ¦
-                    ¦   (Controllers, Blazor)  ¦
+                    ï¿½   Presentation Layer    ï¿½
+                    ï¿½   (Controllers, Blazor)  ï¿½
                     +-------------------------+
-                                ¦ depends on
+                                ï¿½ depends on
                     +-----------?-------------+
-                    ¦   Application Layer     ¦
-                    ¦   (Use Cases, CQRS)     ¦
+                    ï¿½   Application Layer     ï¿½
+                    ï¿½   (Use Cases, CQRS)     ï¿½
                     +-------------------------+
-                                ¦ depends on
+                                ï¿½ depends on
         +-----------------------?-----------------------+
-        ¦         Domain Layer (DDD PATTERNS)           ¦
-        ¦  +--------------------------------------+    ¦
-        ¦  ¦ • Entities (User, Token)              ¦    ¦
-        ¦  ¦ • Value Objects (Email, Role)         ¦    ¦
-        ¦  ¦ • Domain Events (UserRegisteredEvent) ¦    ¦
-        ¦  ¦ • Business Rules (in entities)        ¦    ¦
-        ¦  ¦ • Aggregates (consistency boundaries) ¦    ¦
-        ¦  ¦ • Factory Methods (User.Create())     ¦    ¦
-        ¦  +--------------------------------------+    ¦
+        ï¿½         Domain Layer (DDD PATTERNS)           ï¿½
+        ï¿½  +--------------------------------------+    ï¿½
+        ï¿½  ï¿½ ï¿½ Entities (User, Token)              ï¿½    ï¿½
+        ï¿½  ï¿½ ï¿½ Value Objects (Email, Role)         ï¿½    ï¿½
+        ï¿½  ï¿½ ï¿½ Domain Events (UserRegisteredEvent) ï¿½    ï¿½
+        ï¿½  ï¿½ ï¿½ Business Rules (in entities)        ï¿½    ï¿½
+        ï¿½  ï¿½ ï¿½ Aggregates (consistency boundaries) ï¿½    ï¿½
+        ï¿½  ï¿½ ï¿½ Factory Methods (User.Create())     ï¿½    ï¿½
+        ï¿½  +--------------------------------------+    ï¿½
         +-----------------------------------------------+
                                 ? implements
                     +-------------------------+
-                    ¦   Infrastructure Layer   ¦
-                    ¦   (EF Core, APIs, Cache) ¦
+                    ï¿½   Infrastructure Layer   ï¿½
+                    ï¿½   (EF Core, APIs, Cache) ï¿½
                     +-------------------------+
 
 Benefits:
-? Business logic protected in Domain Layer
-? Domain-centric design (not database-centric)
-? Framework-independent business logic
-? Easy to test (no database needed for domain)
-? Loose coupling via dependency inversion
-? Rich domain models (not anemic)
+âŒ Business logic protected in Domain Layer
+âœ… Domain-centric design (not database-centric)
+âœ… Framework-independent business logic
+âœ… Easy to test (no database needed for domain)
+âœ… Loose coupling via dependency inversion
+âœ… Rich domain models (not anemic)
 ```
 
 ---
 
-## ??? Clean Architecture Explained
+## ğŸ›ï¸ Clean Architecture Explained
 
 ### What is Clean Architecture?
 
@@ -140,54 +140,54 @@ Benefits:
 
 ```
 +---------------------------------------------------------+
-¦                                                         ¦
-¦    Presentation Layer (Web, API, Blazor)               ¦
-¦    -----------------------------------                 ¦
-¦    • Controllers                                        ¦
-¦    • Razor Components                                   ¦
-¦    • Middleware                                         ¦
-¦    • HTTP concerns                                      ¦
-¦                                                         ¦
+ï¿½                                                         ï¿½
+ï¿½    Presentation Layer (Web, API, Blazor)               ï¿½
+ï¿½    -----------------------------------                 ï¿½
+ï¿½    ï¿½ Controllers                                        ï¿½
+ï¿½    ï¿½ Razor Components                                   ï¿½
+ï¿½    ï¿½ Middleware                                         ï¿½
+ï¿½    ï¿½ HTTP concerns                                      ï¿½
+ï¿½                                                         ï¿½
 +---------------------------------------------------------+
-                         ¦ depends on (knows about)
+                         ï¿½ depends on (knows about)
                          ?
 +---------------------------------------------------------+
-¦                                                         ¦
-¦    Application Layer (Use Cases, Orchestration)        ¦
-¦    ----------------------------------------            ¦
-¦    • CQRS Commands/Queries                             ¦
-¦    • MediatR Handlers                                   ¦
-¦    • Pipeline Behaviors                                 ¦
-¦    • DTOs                                               ¦
-¦    • Interface Abstractions (IApiIntegrationService)   ¦
-¦                                                         ¦
+ï¿½                                                         ï¿½
+ï¿½    Application Layer (Use Cases, Orchestration)        ï¿½
+ï¿½    ----------------------------------------            ï¿½
+ï¿½    ï¿½ CQRS Commands/Queries                             ï¿½
+ï¿½    ï¿½ MediatR Handlers                                   ï¿½
+ï¿½    ï¿½ Pipeline Behaviors                                 ï¿½
+ï¿½    ï¿½ DTOs                                               ï¿½
+ï¿½    ï¿½ Interface Abstractions (IApiIntegrationService)   ï¿½
+ï¿½                                                         ï¿½
 +---------------------------------------------------------+
-                         ¦ depends on (knows about)
+                         ï¿½ depends on (knows about)
                          ?
 +---------------------------------------------------------+
-¦                                                         ¦
-¦    Domain Layer (Business Logic, DDD Patterns)         ¦
-¦    -----------------------------------------           ¦
-¦    • Entities (User, Token, ApiDataItem)               ¦
-¦    • Value Objects (Email, Role)                       ¦
-¦    • Domain Events (UserRegisteredEvent)               ¦
-¦    • Business Rules                                     ¦
-¦    • Domain Exceptions                                  ¦
-¦    • ? NO DEPENDENCIES ON OTHER LAYERS                 ¦
-¦                                                         ¦
+ï¿½                                                         ï¿½
+ï¿½    Domain Layer (Business Logic, DDD Patterns)         ï¿½
+ï¿½    -----------------------------------------           ï¿½
+ï¿½    ï¿½ Entities (User, Token, ApiDataItem)               ï¿½
+ï¿½    ï¿½ Value Objects (Email, Role)                       ï¿½
+ï¿½    ï¿½ Domain Events (UserRegisteredEvent)               ï¿½
+ï¿½    ï¿½ Business Rules                                     ï¿½
+ï¿½    ï¿½ Domain Exceptions                                  ï¿½
+ï¿½    ï¿½ âœ… NO DEPENDENCIES ON OTHER LAYERS                 ï¿½
+ï¿½                                                         ï¿½
 +---------------------------------------------------------+
-                         ? implemented by (knows about)
-                         ¦
+                         â¬…ï¸ implemented by (knows about)
+                         ï¿½
 +---------------------------------------------------------+
-¦                                                         ¦
-¦    Infrastructure Layer (External Concerns)            ¦
-¦    ----------------------------------------            ¦
-¦    • EF Core (Database)                                ¦
-¦    • HttpClient (External APIs)                        ¦
-¦    • Redis (Caching)                                   ¦
-¦    • SMTP (Email)                                      ¦
-¦    • File System                                        ¦
-¦                                                         ¦
+ï¿½                                                         ï¿½
+ï¿½    Infrastructure Layer (External Concerns)            ï¿½
+ï¿½    ----------------------------------------            ï¿½
+ï¿½    ï¿½ EF Core (Database)                                ï¿½
+ï¿½    ï¿½ HttpClient (External APIs)                        ï¿½
+ï¿½    ï¿½ Redis (Caching)                                   ï¿½
+ï¿½    ï¿½ SMTP (Email)                                      ï¿½
+ï¿½    ï¿½ File System                                        ï¿½
+ï¿½                                                         ï¿½
 +---------------------------------------------------------+
 ```
 
@@ -203,7 +203,7 @@ Infrastructure Layer provides **how** it works (implementations).
 **Example from SecureCleanApiWaf:**
 
 ```csharp
-// ? Application Layer defines the interface (what)
+// ğŸ“¦ Application Layer defines the interface (what)
 namespace SecureCleanApiWaf.Core.Application.Common.Interfaces;
 
 public interface IApiIntegrationService
@@ -214,7 +214,7 @@ public interface IApiIntegrationService
 ```
 
 ```csharp
-// ? Infrastructure Layer implements (how)
+// ğŸ”§ Infrastructure Layer implements (how)
 namespace SecureCleanApiWaf.Infrastructure.Services;
 
 public class ApiIntegrationService : IApiIntegrationService
@@ -232,7 +232,7 @@ public class ApiIntegrationService : IApiIntegrationService
 ```
 
 ```csharp
-// ? Application Layer uses the interface (doesn't know about HttpClient!)
+// ğŸ“¦ Application Layer uses the interface (doesn't know about HttpClient!)
 namespace SecureCleanApiWaf.Core.Application.Features.SampleData.Queries;
 
 public class GetApiDataQueryHandler : IRequestHandler<GetApiDataQuery, Result<List<SampleDataDto>>>
@@ -251,8 +251,8 @@ public class GetApiDataQueryHandler : IRequestHandler<GetApiDataQuery, Result<Li
 **Benefits:**
 - ? Application doesn't know about HttpClient, EF Core, or Redis
 - ? Easy to swap implementations (HTTP ? gRPC, SQL ? MongoDB)
-- ? Easy to test (mock the interface)
-- ? Business logic protected from infrastructure changes
+- âœ… Easy to test (mock the interface)
+- âŒ Business logic protected from infrastructure changes
 
 ---
 
@@ -261,7 +261,7 @@ public class GetApiDataQueryHandler : IRequestHandler<GetApiDataQuery, Result<Li
 The Domain and Application layers should work **without** ASP.NET Core, EF Core, or any framework.
 
 ```csharp
-// ? Domain Layer: Pure C#, no framework dependencies
+// ğŸ’ Domain Layer: Pure C#, no framework dependencies
 namespace SecureCleanApiWaf.Core.Domain.Entities;
 
 public class User : BaseEntity
@@ -289,7 +289,7 @@ public class User : BaseEntity
 **Contrast with Framework-Dependent Code:**
 
 ```csharp
-// ? BAD: Business logic coupled to Entity Framework
+// âŒ BAD: Business logic coupled to Entity Framework
 public class User
 {
     [Required]
@@ -300,7 +300,7 @@ public class User
     public string Email { get; set; } // Data annotation leak!
 }
 
-// ? BAD: Validation in controller (wrong layer!)
+// âŒ BAD: Validation in controller (wrong layer!)
 [ApiController]
 public class UserController : ControllerBase
 {
@@ -329,7 +329,7 @@ public class UserController : ControllerBase
 
 ---
 
-## ?? Domain-Driven Design Explained
+## ğŸ¯ Domain-Driven Design Explained
 
 ### What is Domain-Driven Design?
 
@@ -348,7 +348,7 @@ DDD provides **tactical patterns** for building the Domain Layer that Clean Arch
 **Example from SecureCleanApiWaf:**
 
 ```csharp
-// ? Rich Entity with business rules
+// âœ… Rich Entity with business rules
 public class User : BaseEntity
 {
     private readonly List<Role> _roles = new(); // Encapsulated collection
@@ -388,7 +388,7 @@ public class User : BaseEntity
             _roles.Add(role);
     }
     
-    // ? Business logic in domain
+    // âŒ Business logic in domain
     public bool CanLogin()
     {
         return !IsDeleted && Status == UserStatus.Active;
@@ -399,7 +399,7 @@ public class User : BaseEntity
 **Contrast with Anemic Domain Model (Anti-pattern):**
 
 ```csharp
-// ? Anemic Entity: Just a data bag
+// âŒ Anemic Entity: Just a data bag
 public class User
 {
     public Guid Id { get; set; }
@@ -411,7 +411,7 @@ public class User
     // ? No business logic, no validation, no rules!
 }
 
-// ? Business logic leaks to Application Layer (wrong!)
+// âŒ Business logic leaks to Application Layer (wrong!)
 public class RegisterUserHandler
 {
     public async Task Handle(RegisterUserCommand request)
@@ -446,7 +446,7 @@ public class RegisterUserHandler
 **Example from SecureCleanApiWaf:**
 
 ```csharp
-// ? Email Value Object
+// âœ… Email Value Object
 public class Email : ValueObject
 {
     public string Value { get; private set; }
@@ -480,7 +480,7 @@ public class Email : ValueObject
 **Why Value Objects?**
 
 ```csharp
-// ? Without Value Objects (primitive obsession)
+// âŒ Without Value Objects (primitive obsession)
 public class User
 {
     public string Email { get; set; } // Just a string!
@@ -492,7 +492,7 @@ public class User
     // - Duplicated across codebase?
 }
 
-// ? With Value Objects (encapsulation)
+// âœ… With Value Objects (encapsulation)
 public class User
 {
     public Email Email { get; private set; } // Self-validating!
@@ -511,7 +511,7 @@ public class User
 **Example from SecureCleanApiWaf:**
 
 ```csharp
-// ? Domain Event
+// âœ… Domain Event
 public class UserRegisteredEvent : BaseDomainEvent
 {
     public Guid UserId { get; init; }
@@ -537,7 +537,7 @@ public class UserRegisteredEvent : BaseDomainEvent
 ```
 
 ```csharp
-// ? Entity raises domain event
+// âœ… Entity raises domain event
 public class User : BaseEntity
 {
     private readonly List<IDomainEvent> _domainEvents = new();
@@ -563,7 +563,7 @@ public class User : BaseEntity
 ```
 
 ```csharp
-// ? Application Layer publishes events
+// ğŸ“¦ Application Layer publishes events
 public class RegisterUserCommandHandler
 {
     public async Task Handle(RegisterUserCommand request, CancellationToken ct)
@@ -585,7 +585,7 @@ public class RegisterUserCommandHandler
 ```
 
 ```csharp
-// ? Event Handlers (decoupled side effects)
+// âœ… Event Handlers (decoupled side effects)
 public class SendWelcomeEmailHandler : INotificationHandler<UserRegisteredEvent>
 {
     public async Task Handle(UserRegisteredEvent evt, CancellationToken ct)
@@ -604,10 +604,10 @@ public class CreateAuditLogHandler : INotificationHandler<UserRegisteredEvent>
 ```
 
 **Why Domain Events?**
-- ? **Decoupling:** User registration doesn't know about email, audit logs, or analytics
-- ? **Single Responsibility:** Each handler does one thing
-- ? **Extensibility:** Add new handlers without modifying User entity
-- ? **Testability:** Test each handler independently
+- âœ… **Decoupling:** User registration doesn't know about email, audit logs, or analytics
+- âœ… **Single Responsibility:** Each handler does one thing
+- âœ… **Extensibility:** Add new handlers without modifying User entity
+- âœ… **Testability:** Test each handler independently
 
 ---
 
@@ -753,13 +753,13 @@ In the context of User aggregate, invariants could be:
 **Example from SecureCleanApiWaf:**
 
 ```csharp
-// ? User is an Aggregate Root
+// âœ… User is an Aggregate Root
 public class User : BaseEntity // Aggregate Root
 {
     private readonly List<Role> _roles = new(); // Part of aggregate
     private readonly List<IDomainEvent> _domainEvents = new(); // Part of aggregate
     
-    // ? Aggregate ensures consistency
+    // âœ… Aggregate ensures consistency
     public void AssignRole(Role role)
     {
         // Invariant 1: Role cannot be null
@@ -781,10 +781,10 @@ public class User : BaseEntity // Aggregate Root
         UpdatedAt = DateTime.UtcNow;
     }
     
-    // ? Aggregate exposes read-only collection (protects invariants)
+    // âœ… Aggregate exposes read-only collection (protects invariants)
     public IReadOnlyCollection<Role> Roles => _roles.AsReadOnly();
     
-    // ? WRONG: No direct manipulation of _roles from outside!
+    // âŒ WRONG: No direct manipulation of _roles from outside!
     // public List<Role> Roles { get; set; } // Would expose internal state!
 }
 ```
@@ -792,46 +792,46 @@ public class User : BaseEntity // Aggregate Root
 ---
 
 **Why Aggregates?**
-- ? **Consistency:** All changes go through aggregate root, invariants always enforced
-- ? **Transactional Boundary:** One aggregate = one transaction = one consistency check
-- ? **Encapsulation:** Internal state protected, only valid operations allowed
-- ? **Clear Responsibility:** Aggregate root is responsible for maintaining its own consistency
+- âœ… **Consistency:** All changes go through aggregate root, invariants always enforced
+- âœ… **Transactional Boundary:** One aggregate = one transaction = one consistency check
+- âœ… **Encapsulation:** Internal state protected, only valid operations allowed
+- âœ… **Clear Responsibility:** Aggregate root is responsible for maintaining its own consistency
 
 ---
 
-## ?? How They Work Together
+## ğŸ¤ How They Work Together
 
 ### The Relationship Diagram
 
 ```
 +------------------------------------------------------------------+
-¦                                                                  ¦
-¦         CLEAN ARCHITECTURE (Structure & Organization)            ¦
-¦         -------------------------------------------             ¦
-¦                                                                  ¦
-¦   Defines:                                                       ¦
-¦   • How to organize code into layers                            ¦
-¦   • Which layers can depend on which                            ¦
-¦   • How to invert dependencies (DIP)                            ¦
-¦   • How to achieve testability and framework independence       ¦
-¦                                                                  ¦
-¦   +----------------------------------------------------+       ¦
-¦   ¦                                                     ¦       ¦
-¦   ¦   DOMAIN-DRIVEN DESIGN (Domain Modeling)           ¦       ¦
-¦   ¦   --------------------------------------          ¦       ¦
-¦   ¦                                                     ¦       ¦
-¦   ¦   Defines:                                          ¦       ¦
-¦   ¦   • How to model entities (rich vs anemic)         ¦       ¦
-¦   ¦   • When to use value objects                      ¦       ¦
-¦   ¦   • How to implement domain events                 ¦       ¦
-¦   ¦   • How to define aggregates                       ¦       ¦
-¦   ¦   • Where business rules belong                    ¦       ¦
-¦   ¦   • How to use ubiquitous language                 ¦       ¦
-¦   ¦                                                     ¦       ¦
-¦   ¦   ?                                                 ¦       ¦
-¦   ¦   +- DDD enriches the Domain Layer of Clean Arch   ¦       ¦
-¦   +----------------------------------------------------+       ¦
-¦                                                                  ¦
+ï¿½                                                                  ï¿½
+ï¿½         CLEAN ARCHITECTURE (Structure & Organization)            ï¿½
+ï¿½         -------------------------------------------             ï¿½
+ï¿½                                                                  ï¿½
+ï¿½   Defines:                                                       ï¿½
+ï¿½   ï¿½ How to organize code into layers                            ï¿½
+ï¿½   ï¿½ Which layers can depend on which                            ï¿½
+ï¿½   ï¿½ How to invert dependencies (DIP)                            ï¿½
+ï¿½   ï¿½ How to achieve testability and framework independence       ï¿½
+ï¿½                                                                  ï¿½
+ï¿½   +----------------------------------------------------+       ï¿½
+ï¿½   ï¿½                                                     ï¿½       ï¿½
+ï¿½   ï¿½   DOMAIN-DRIVEN DESIGN (Domain Modeling)           ï¿½       ï¿½
+ï¿½   ï¿½   --------------------------------------          ï¿½       ï¿½
+ï¿½   ï¿½                                                     ï¿½       ï¿½
+ï¿½   ï¿½   Defines:                                          ï¿½       ï¿½
+ï¿½   ï¿½   ï¿½ How to model entities (rich vs anemic)         ï¿½       ï¿½
+ï¿½   ï¿½   ï¿½ When to use value objects                      ï¿½       ï¿½
+ï¿½   ï¿½   ï¿½ How to implement domain events                 ï¿½       ï¿½
+ï¿½   ï¿½   ï¿½ How to define aggregates                       ï¿½       ï¿½
+ï¿½   ï¿½   ï¿½ Where business rules belong                    ï¿½       ï¿½
+ï¿½   ï¿½   ï¿½ How to use ubiquitous language                 ï¿½       ï¿½
+ï¿½   ï¿½                                                     ï¿½       ï¿½
+ï¿½   ï¿½   ?                                                 ï¿½       ï¿½
+ï¿½   ï¿½   +- DDD enriches the Domain Layer of Clean Arch   ï¿½       ï¿½
+ï¿½   +----------------------------------------------------+       ï¿½
+ï¿½                                                                  ï¿½
 +------------------------------------------------------------------+
 ```
 
@@ -844,8 +844,8 @@ public class User : BaseEntity // Aggregate Root
 | **Domain Modeling** | Use "domain layer" | ? Entities, Value Objects, Aggregates |
 | **Business Rules** | Keep in Domain Layer | ? In entities/value objects, not handlers |
 | **Validation** | Domain Layer validates | ? In factory methods and entity methods |
-| **Side Effects** | Decouple from core logic | ? Domain Events |
-| **Testability** | Test without infrastructure | ? Rich domain models enable pure unit tests |
+| **Side Effects** | Decouple from core logic | âœ… Domain Events |
+| **Testability** | Test without infrastructure | âœ… Rich domain models enable pure unit tests |
 | **Framework Independence** | ? No framework in Domain/Application | Domain has no framework code |
 
 ---
@@ -853,38 +853,38 @@ public class User : BaseEntity // Aggregate Root
 ### The Perfect Marriage
 
 ```csharp
-// ? CLEAN ARCHITECTURE provides the structure
-namespace SecureCleanApiWaf.Core.Domain.Entities; // ? Clean Arch: Domain Layer
+// ğŸ›ï¸ CLEAN ARCHITECTURE provides the structure
+namespace SecureCleanApiWaf.Core.Domain.Entities; // ğŸ›ï¸ Clean Arch: Domain Layer
 
-// ? DDD provides the implementation approach
-public class User : BaseEntity // ? DDD: Entity with identity
+// ğŸ¯ DDD provides the implementation approach
+public class User : BaseEntity // ğŸ¯ DDD: Entity with identity
 {
-    // ? DDD: Value Object instead of primitive
+    // ğŸ¯ DDD: Value Object instead of primitive
     public Email Email { get; private set; }
     
-    // ? DDD: Enum for type-safety
+    // ğŸ¯ DDD: Enum for type-safety
     public UserStatus Status { get; private set; }
     
-    // ? DDD: Factory method with validation
+    // ğŸ¯ DDD: Factory method with validation
     public static User Create(string username, Email email, string passwordHash)
     {
-        // ? DDD: Business rule in domain
+        // ğŸ¯ DDD: Business rule in domain
         if (username.Length < 3)
             throw new DomainException("Username must be at least 3 characters");
         
         var user = new User { /* ... */ };
         
-        // ? DDD: Domain event
+        // ğŸ¯ DDD: Domain event
         user._domainEvents.Add(new UserRegisteredEvent(...));
         
         return user;
     }
     
-    // ? DDD: Business logic in entity
+    // ğŸ¯ DDD: Business logic in entity
     public bool CanLogin()
     {
-        // ? CLEAN ARCH: No framework dependencies!
-        // ? DDD: Business rule encapsulated
+        // ğŸ›ï¸ CLEAN ARCH: No framework dependencies!
+        // ğŸ¯ DDD: Business rule encapsulated
         return !IsDeleted && Status == UserStatus.Active;
     }
 }
@@ -892,7 +892,7 @@ public class User : BaseEntity // ? DDD: Entity with identity
 
 ---
 
-## ?? Evidence in SecureCleanApiWaf
+## ğŸ” Evidence in SecureCleanApiWaf
 
 ### Clean Architecture Evidence
 
@@ -938,11 +938,11 @@ public class User : BaseEntity // ? DDD: Entity with identity
 
 ---
 
-## ?? When to Reference Each Pattern
+## ğŸ“š When to Reference Each Pattern
 
 ### Reference "Clean Architecture" When Discussing:
 
-? **Structural/Organizational Topics:**
+âœ… **Structural/Organizational Topics:**
 - Layer dependencies (what can depend on what)
 - Project structure (`Core/Domain/`, `Infrastructure/`)
 - Dependency Inversion Principle (interfaces vs implementations)
@@ -960,7 +960,7 @@ public class User : BaseEntity // ? DDD: Entity with identity
 
 ### Reference "DDD" When Discussing:
 
-? **Domain Modeling/Tactical Patterns:**
+âœ… **Domain Modeling/Tactical Patterns:**
 - How to design entities (rich vs anemic)
 - When to use value objects vs primitives
 - How to enforce business rules
@@ -995,28 +995,28 @@ public class User : BaseEntity // ? DDD: Entity with identity
 
 ---
 
-## ?? Industry Perspective
+## ğŸ¢ Industry Perspective
 
 ### This is the Standard Approach
 
 Major companies and reference architectures combine Clean Architecture + DDD:
 
 #### **Microsoft eShopOnWeb**
-- ? Clean Architecture structure (4 layers)
+- ğŸ›ï¸ Clean Architecture structure (4 layers)
 - ? DDD tactical patterns (Entities, Value Objects, Aggregates)
 - ? CQRS with MediatR
-- ? Domain Events
+- âœ… Domain Events
 
 **Source:** [https://github.com/dotnet-architecture/eShopOnWeb](https://github.com/dotnet-architecture/eShopOnWeb)
 
 ---
 
 #### **Jason Taylor's Clean Architecture Template**
-- ? Clean Architecture foundation
+- ğŸ›ï¸ Clean Architecture foundation
 - ? DDD patterns in Domain Layer
 - ? CQRS + MediatR
 - ? FluentValidation
-- ? Domain Events with MediatR
+- âœ… Domain Events with MediatR
 
 **Source:** [https://github.com/jasontaylordev/CleanArchitecture](https://github.com/jasontaylordev/CleanArchitecture)
 
@@ -1024,9 +1024,9 @@ Major companies and reference architectures combine Clean Architecture + DDD:
 
 #### **Vaughn Vernon's IDDD Samples**
 - ? DDD patterns (full tactical and strategic)
-- ? Clean Architecture structure
+- ğŸ›ï¸ Clean Architecture structure
 - ? Aggregates, Entities, Value Objects
-- ? Domain Events
+- âœ… Domain Events
 
 **Source:** [https://github.com/VaughnVernon/IDDD_Samples](https://github.com/VaughnVernon/IDDD_Samples)
 
@@ -1043,15 +1043,15 @@ Major companies and reference architectures combine Clean Architecture + DDD:
 
 ---
 
-## ? Common Misconceptions
+## âŒ Common Misconceptions
 
 ### Misconception 1: "Clean Architecture = Anemic Domain Models"
 
-**? False!**
+**âŒ False!**
 
 Clean Architecture defines the **structure** (layers), but says nothing about whether domain models should be anemic or rich.
 
-**? Reality:**
+**âœ… Reality:**
 - Clean Architecture + **Anemic Models** = Poor design (business logic leaks to Application)
 - Clean Architecture + **DDD Rich Models** = Excellent design (business logic protected in Domain) ? **SecureCleanApiWaf**
 
@@ -1081,11 +1081,11 @@ public class User : BaseEntity
 
 ### Misconception 2: "DDD Requires Microservices"
 
-**? False!**
+**âŒ False!**
 
 DDD is about **domain modeling**, not deployment architecture.
 
-**? Reality:**
+**âœ… Reality:**
 - DDD works in **monoliths** (like SecureCleanApiWaf)
 - DDD works in **microservices**
 - DDD works in **modular monoliths**
@@ -1096,11 +1096,11 @@ SecureCleanApiWaf uses DDD in a **single ASP.NET Core project** (Blazor Server).
 
 ### Misconception 3: "Clean Architecture is Too Complex for Small Projects"
 
-**? Misleading!**
+**âš ï¸ Misleading!**
 
 Clean Architecture principles (separation of concerns, dependency inversion) are **good practices** for projects of any size.
 
-**? Reality:**
+**âœ… Reality:**
 - Small projects: Use Clean Architecture principles (even in one project)
 - Large projects: Use strict layering (separate projects per layer)
 
@@ -1110,11 +1110,11 @@ SecureCleanApiWaf demonstrates Clean Architecture in a **single project** with *
 
 ### Misconception 4: "You Must Use All DDD Patterns"
 
-**? False!**
+**âŒ False!**
 
 DDD is not all-or-nothing.
 
-**? Reality:**
+**âœ… Reality:**
 - Use what fits your domain complexity
 - Simple CRUD? Maybe just Entities and Value Objects
 - Complex domain? Add Aggregates, Domain Events, Specifications
@@ -1122,18 +1122,18 @@ DDD is not all-or-nothing.
 SecureCleanApiWaf uses:
 - ? Entities
 - ? Value Objects
-- ? Domain Events
+- âœ… Domain Events
 - ? Aggregates (implicit)
 - ? Domain Services (not needed yet)
 - ? Specifications (not needed yet)
 
 ---
 
-## ?? Architecture Decision Guide
+## ğŸ¯ Architecture Decision Guide
 
 ### When to Use Clean Architecture + DDD
 
-? **Use this approach when:**
+âœ… **Use this approach when:**
 - Business logic is complex and valuable
 - Application will evolve over time
 - Multiple developers will work on the codebase
@@ -1141,7 +1141,7 @@ SecureCleanApiWaf uses:
 - You want to isolate business logic from frameworks
 - Domain concepts are rich (not just CRUD)
 
-? **Consider simpler approaches when:**
+âš ï¸ **Consider simpler approaches when:**
 - Simple CRUD operations only
 - Throw-away prototype
 - Single developer, short-term project
@@ -1155,7 +1155,7 @@ SecureCleanApiWaf uses:
 # Architecture Decision Record: Clean Architecture + DDD
 
 ## Status
-? Accepted
+âœ… Accepted
 
 ## Context
 SecureCleanApiWaf requires:
@@ -1189,7 +1189,7 @@ Implement Clean Architecture structure with DDD tactical patterns in Domain Laye
 
 ---
 
-## ?? Related Documentation
+## ğŸ“š Related Documentation
 
 ### Layer-Specific Documentation
 
@@ -1222,7 +1222,7 @@ Implement Clean Architecture structure with DDD tactical patterns in Domain Laye
 
 ---
 
-## ?? Contact & Support
+## ğŸ†˜ Contact & Support
 
 ### Project Information
 - **Project Name:** SecureCleanApiWaf - Clean Architecture + DDD Demo
@@ -1239,7 +1239,7 @@ Implement Clean Architecture structure with DDD tactical patterns in Domain Laye
 
 ### Getting Help
 
-#### ?? **Bug Reports**
+#### ?ğŸ› **Bug Reports**
 If you find issues with the architecture implementation:
 1. Check [existing issues](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues)
 2. Create a new issue with:
@@ -1248,14 +1248,14 @@ If you find issues with the architecture implementation:
    - Expected vs actual behavior
    - Code snippets
 
-#### ?? **Architecture Questions**
+#### ?ğŸ’¬ **Architecture Questions**
 For questions about architecture decisions:
 1. Review this document first
 2. Check layer-specific documentation
 3. Open a [discussion](https://github.com/dariemcarlosdev/SecureCleanApiWaf/discussions)
 4. Tag with `architecture` or `ddd`
 
-#### ?? **Documentation Improvements**
+#### ?ğŸ“ **Documentation Improvements**
 To improve this documentation:
 1. Submit a pull request with corrections
 2. Include rationale for changes
@@ -1272,7 +1272,7 @@ This architecture implementation follows patterns and practices from:
 
 ---
 
-## ?? Document Version History
+## ğŸ“ Document Version History
 
 | Version | Date | Changes | Author |
 |---------|------|---------|--------|
@@ -1281,7 +1281,7 @@ This architecture implementation follows patterns and practices from:
 ---
 
 **Last Updated:** 2024  
-**Document Status:** ? Complete and Production-Ready  
+**Document Status:** âœ… Complete and Production-Ready  
 **Review Status:** Approved for Tech Challenge Submission
 
 ---

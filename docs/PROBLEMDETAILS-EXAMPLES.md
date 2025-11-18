@@ -1,6 +1,6 @@
-# ProblemDetails Examples - Before & After Customization
+﻿# ProblemDetails Examples - Before & After Customization
 
-## ?? Table of Contents
+## 📑 Table of Contents
 
 ### **Quick Navigation**
 1. [Overview](#-overview)
@@ -44,7 +44,7 @@
 
 ---
 
-## ?? Overview
+## 📖 Overview
 
 This document shows real examples of how your API error responses look **before** and **after** the ProblemDetails customization.
 
@@ -52,7 +52,7 @@ This document shows real examples of how your API error responses look **before*
 
 ## Example 1: 400 Bad Request (Invalid Input)
 
-### ? Before Customization
+### ❌ Before Customization
 
 ```json
 {
@@ -63,7 +63,7 @@ This document shows real examples of how your API error responses look **before*
 }
 ```
 
-### ? After Customization
+### ✅ After Customization
 
 ```json
 {
@@ -87,7 +87,7 @@ This document shows real examples of how your API error responses look **before*
 
 ## Example 2: 401 Unauthorized (Missing Token)
 
-### ? Before Customization
+### ❌ Before Customization
 
 ```json
 {
@@ -98,7 +98,7 @@ This document shows real examples of how your API error responses look **before*
 }
 ```
 
-### ? After Customization
+### ✅ After Customization
 
 ```json
 {
@@ -126,7 +126,7 @@ This document shows real examples of how your API error responses look **before*
 ### Scenario
 User token trying to access admin-only endpoint
 
-### ? Before Customization
+### ❌ Before Customization
 
 ```json
 {
@@ -137,7 +137,7 @@ User token trying to access admin-only endpoint
 }
 ```
 
-### ? After Customization
+### ✅ After Customization
 
 ```json
 {
@@ -161,7 +161,7 @@ User token trying to access admin-only endpoint
 
 ## Example 4: 404 Not Found (Resource Doesn't Exist)
 
-### ? Before Customization
+### ❌ Before Customization
 
 ```json
 {
@@ -172,7 +172,7 @@ User token trying to access admin-only endpoint
 }
 ```
 
-### ? After Customization
+### ✅ After Customization
 
 ```json
 {
@@ -196,7 +196,7 @@ User token trying to access admin-only endpoint
 
 ## Example 5: 429 Too Many Requests (Rate Limit Exceeded)
 
-### ? Before Customization
+### ❌ Before Customization
 
 ```json
 {
@@ -207,7 +207,7 @@ User token trying to access admin-only endpoint
 }
 ```
 
-### ? After Customization
+### ✅ After Customization
 
 ```json
 {
@@ -231,7 +231,7 @@ User token trying to access admin-only endpoint
 
 ## Example 6: 500 Internal Server Error (Unhandled Exception)
 
-### ? Before Customization
+### ❌ Before Customization
 
 ```json
 {
@@ -242,7 +242,7 @@ User token trying to access admin-only endpoint
 }
 ```
 
-### ? After Customization
+### ✅ After Customization
 
 ```json
 {
@@ -269,7 +269,7 @@ User token trying to access admin-only endpoint
 ### Scenario
 User requested a resource that is temporarily located at a different URI.
 
-### ? Before Customization
+### ❌ Before Customization
 
 ```json
 {
@@ -280,7 +280,7 @@ User requested a resource that is temporarily located at a different URI.
 }
 ```
 
-### ? After Customization
+### ✅ After Customization
 
 ```json
 {
@@ -310,7 +310,7 @@ User requested a resource that is temporarily located at a different URI.
 ### Scenario
 The server is temporarily unable to handle the request.
 
-### ? Before Customization
+### ❌ Before Customization
 
 ```json
 {
@@ -321,7 +321,7 @@ The server is temporarily unable to handle the request.
 }
 ```
 
-### ? After Customization
+### ✅ After Customization
 
 ```json
 {
@@ -345,29 +345,29 @@ The server is temporarily unable to handle the request.
 
 ---
 
-## ?? Comparison Table
+## 📊 Comparison Table
 
 | Property | Before | After |
 |----------|--------|-------|
-| `type` | ? Included | ? Included |
-| `title` | ? Generic | ? **Customized & User-Friendly** |
-| `status` | ? Included | ? Included |
-| `traceId` | ? Included | ? Included |
-| `timestamp` | ? Missing | ? **Added** |
-| `machineName` | ? Missing | ? **Added** |
-| `environment` | ? Missing | ? **Added** |
-| `apiVersion` | ? Missing | ? **Added** |
-| `path` | ? Missing | ? **Added** |
-| `method` | ? Missing | ? **Added** |
-| `userId` | ? Missing | ? **Added (if authenticated)** |
-| `supportContact` | ? Missing | ? **Added** |
-| `documentationUrl` | ? Missing | ? **Added** |
-| `redirectUrl` | ? Missing | ? **Added (if applicable)** |
-| `retryAfter` | ? Missing | ? **Added (if applicable)** |
+| `type` | ✅ Included | ✅ Included |
+| `title` | ✅ Generic | ✅ **Customized & User-Friendly** |
+| `status` | ✅ Included | ✅ Included |
+| `traceId` | ✅ Included | ✅ Included |
+| `timestamp` | ❌ Missing | ✅ **Added** |
+| `machineName` | ❌ Missing | ✅ **Added** |
+| `environment` | ❌ Missing | ✅ **Added** |
+| `apiVersion` | ❌ Missing | ✅ **Added** |
+| `path` | ❌ Missing | ✅ **Added** |
+| `method` | ❌ Missing | ✅ **Added** |
+| `userId` | ❌ Missing | ✅ **Added (if authenticated)** |
+| `supportContact` | ❌ Missing | ✅ **Added** |
+| `documentationUrl` | ❌ Missing | ✅ **Added** |
+| `redirectUrl` | ❌ Missing | ✅ **Added (if applicable)** |
+| `retryAfter` | ❌ Missing | ✅ **Added (if applicable)** |
 
 ---
 
-## ?? How to Test
+## 🧪 How to Test
 
 ### 1. Test in Swagger UI
 
@@ -422,37 +422,37 @@ curl -X GET "https://localhost:7000/api/v1/endpoint" \
 
 The customized `ProblemDetails` schema will appear in Swagger under **Schemas** section:
 
-**Location**: Scroll down to "Schemas" in Swagger UI ? Find "ProblemDetails"
+**Location**: Scroll down to "Schemas" in Swagger UI → Find "ProblemDetails"
 
 You'll see all your custom properties listed!
 
 ---
 
-## ?? Benefits of Customization
+## 🎯 Benefits of Customization
 
 ### For Developers
-- ? **Better Debugging**: `traceId` correlates with application logs
-- ? **Environment Awareness**: Know which environment the error came from
-- ? **Request Context**: See the exact path and method that failed
-- ? **User Context**: Identify which user experienced the error
+- ✅ **Better Debugging**: `traceId` correlates with application logs
+- ✅ **Environment Awareness**: Know which environment the error came from
+- ✅ **Request Context**: See the exact path and method that failed
+- ✅ **User Context**: Identify which user experienced the error
 
 ### For Support Teams
-- ? **Quick Triage**: `timestamp` and `traceId` for log correlation
-- ? **User Identification**: `userId` to identify affected users
-- ? **Contact Info**: `supportContact` for escalation
-- ? **Documentation**: `documentationUrl` for troubleshooting guides
+- ✅ **Quick Triage**: `timestamp` and `traceId` for log correlation
+- ✅ **User Identification**: `userId` to identify affected users
+- ✅ **Contact Info**: `supportContact` for escalation
+- ✅ **Documentation**: `documentationUrl` for troubleshooting guides
 
 ### For Clients/Frontend
-- ? **User-Friendly Titles**: Clear error messages
-- ? **Support Links**: Direct links to documentation and support
-- ? **Consistent Format**: All errors have the same structure
-- ? **Detailed Context**: More information for error handling
+- ✅ **User-Friendly Titles**: Clear error messages
+- ✅ **Support Links**: Direct links to documentation and support
+- ✅ **Consistent Format**: All errors have the same structure
+- ✅ **Detailed Context**: More information for error handling
 
 ---
 
-## ?? Security Considerations
+## 🔒 Security Considerations
 
-### ? Safe to Include (Already Added)
+### ✅ Safe to Include (Already Added)
 - Timestamp
 - TraceId (correlation only)
 - Status code
@@ -462,22 +462,22 @@ You'll see all your custom properties listed!
 - Documentation URL
 - User ID (username only, not sensitive data)
 
-### ? Never Include
-- ? Stack traces (only in Development)
-- ? Database queries
-- ? Connection strings
-- ? API keys
-- ? Passwords
-- ? Internal server paths
-- ? Sensitive business data
+### ❌ Never Include
+- ❌ Stack traces (only in Development)
+- ❌ Database queries
+- ❌ Connection strings
+- ❌ API keys
+- ❌ Passwords
+- ❌ Internal server paths
+- ❌ Sensitive business data
 
-### ?? Environment-Specific Data
+### ⚙️ Environment-Specific Data
 
 Some properties like `machineName` and `environment` are **only useful in Development**. In production, consider removing or limiting these.
 
 ---
 
-## ?? Production Recommendations
+## 🚀 Production Recommendations
 
 ### 1. Remove Development-Only Properties
 
@@ -520,7 +520,7 @@ _logger.LogError("Error occurred. TraceId: {TraceId}, Status: {Status}, User: {U
 
 ---
 
-## ?? Summary
+## 📝 Summary
 
 Your API now returns **enriched error responses** with:
 
@@ -534,10 +534,10 @@ Your API now returns **enriched error responses** with:
 | **Support Info** | Direct contact and documentation links |
 
 These customizations make your API:
-- ? **Easier to debug**
-- ? **Easier to support**
-- ? **Easier to monitor**
-- ? **Better for clients**
+- ✅ **Easier to debug**
+- ✅ **Easier to support**
+- ✅ **Easier to monitor**
+- ✅ **Better for clients**
 
 ---
 
