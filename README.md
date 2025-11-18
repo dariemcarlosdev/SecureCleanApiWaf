@@ -54,7 +54,7 @@
    - [Cloud & DevOps](#cloud--devops)
    - [Code Quality & Maintainability](#code-quality--maintainability)
    - [Real-World Application](#real-world-application)
-   - [Contact & Contributions](#contact--contributions)
+   - [Support & Contact](#support--contact)
 8. [Clean Architecture](#-clean-architecture)
    - [Clean Architecture Documentation](#-clean-architecture-documentation)
 9. [Service Alignment & Architecture Integration](#-service-alignment--architecture-integration)
@@ -71,7 +71,7 @@
     - [Security Features Implemented](#-security-features-implemented)
       - [JWT Bearer Authentication with CQRS](#1-jwt-bearer-authentication-with-cqrs-) 🔄 UPDATED
       - [External API Security](#2-external-api-security-apikeyhandler-) 🔄 UPDATED
-11. [Contact](#-contact)
+11. [Support & Contact](#-support--contact)
 
 ---
 
@@ -222,16 +222,15 @@ Blazor UI → API Controllers → MediatR (CQRS) → Services → Azure/External
 #### **📚 Documentation Hubs (START HERE)**
 - 🏛️ **[Clean Architecture Hub](docs/CleanArchitecture/CLEAN-DDD_ARCH_README.md)** - Complete DDD & architecture documentation 🆕 NEW
 - 🔐 **[Authentication & Authorization Hub](docs/AuthenticationAuthorization/AUTHENT-AUTHORIT_README.md)** - Complete security documentation 🆕 NEW
-- 🌐 **[API Design Hub](docs/APIDesign/API-README.md)** - Complete API design documentation 🆕 NEW
+- 🌐 **[API Design Hub](docs/APIDesign/API_README.md)** - Complete API design documentation 🆕 NEW
 - 🧪 **[Testing Documentation Hub](docs/Testing/TEST_README.md)** - Navigate all testing guides (API, Architecture, Unit Tests) 🆕 NEW
 - 🚀 **[Deployment Hub](docs/Deployment/DEPLOYMENT_README.md)** - All deployment options and guides 🆕 NEW
-- 🐳 **[Docker Hub](docs/Deployment/Docker/DOCKER_README.md)** - Complete containerization documentation 🆕 NEW
 
 #### **🔧 Specific Implementation Guides**
 - 🔐 **[CQRS Authentication](#1-jwt-bearer-authentication-with-cqrs-)** - See the complete implementation
 - 🧪 **[Clean Architecture Testing Strategy](docs/Testing/CLEAN_ARCHITECTURE_TESTING_STRATEGY.md)** - Unit, Integration & Architecture tests
-- 🌐 **[Api Testing Guide](docs/Testing/API_ENDPOINT_TESTING_GUIDE.md)** - How to test all 10 endpoints effectively
-- 🔒 **[Api Security Guide](docs/AuthenticationAuthorization/API_SECURITY_IMPLEMENTATION.md)** - Understand security layers
+- 🌐 **[API Testing Guide](docs/Testing/API_ENDPOINT_TESTING_GUIDE.md)** - How to test all 10 endpoints effectively
+- 🔒 **[API Security Guide](docs/AuthenticationAuthorization/API-SECURITY-IMPLEMENTATION-GUIDE.md)** - Understand security layers
 - ✅ **[Authentication Testing Guide](docs/AuthenticationAuthorization/TEST_AUTHENTICATION_GUIDE.md)** - Try it yourself in 5 minutes
 - 🏛️ **[Clean Architecture](docs/CleanArchitecture/CLEAN_ARCHITECTURE_GUIDE.md)** - Understand the design decisions
 - 📖 **[Implementation Details](#-key-backend-topics-demonstrated-in-this-project)** - Full feature breakdown
@@ -290,8 +289,6 @@ For comprehensive deployment guides across multiple platforms and environments, 
   - Application Insights integration
   - Complete deployment checklist
   - **Estimated time:** 10-15 minutes
-
-- **[Azure App Service Overview](docs/Deployment/AzureAppService/README.md)** - Features and architecture (13 KB guide)
 
 #### **🐳 Docker Deployment**
 - **[Complete Docker Guide](docs/Deployment/Docker/DOCKER_DEPLOYMENT.md)** - Full containerization guide (11 KB)
@@ -356,7 +353,7 @@ Swagger (OpenAPI) support is enabled for API documentation and testing. The inte
 
 **Note:** Swagger is only available in Development mode for security reasons.
 
-For more details on API testing and usage, see the [API Testing Guide](docs/ApiDesign/TESTING_API_ENDPOINTS_GUIDE.md).
+For more details on API testing and usage, see the [API Testing Guide](docs/Testing/API_ENDPOINT_TESTING_GUIDE.md).
 
 ---
 
@@ -368,7 +365,7 @@ I have implemented a variety of backend development concepts and best practices 
 - ✅ **Blazor Server Architecture** - Real-time UI updates, server-side rendering, and SignalR integration (`App.razor`, `Home.razor`, `Routes.razor`)
   - 📖 [Web/Presentation Layer Guide](docs/CleanArchitecture/Projects/05-Web-Presentation-Layer.md)
 - ✅ **RESTful API Design** - Controllers with versioning, model binding, and validation (`SampleController.cs`)
-  - 🌐 **[API Design Hub](docs/APIDesign/API-README.md)** - Complete API design documentation 🆕 NEW
+  - 🌐 **[API Design Hub](docs/APIDesign/API_README.md)** - Complete API design documentation 🆕 NEW
   - 📖 [API Design Guide](docs/APIDesign/API_DESIGN_GUIDE.md)
   - 📖 [API Contracts Examples](docs/APIDesign/API_CONTRACTS_EXAMPLES.md)
 - ✅ **CQRS Pattern with MediatR** - Separation of commands and queries for authentication and data operations
@@ -390,8 +387,7 @@ I have implemented a variety of backend development concepts and best practices 
   - 📖 [Web/Presentation Layer Guide](docs/CleanArchitecture/Projects/05-Web-Presentation-Layer.md)
 - ✅ **Clean Architecture** - Evolving towards a multi-project Clean Architecture structure with clear layer boundaries and responsibilities
   - 📖 [Clean Architecture Guide](docs/CleanArchitecture/CLEAN_ARCHITECTURE_GUIDE.md)
-  - 📖 [Clean Architecture Index](docs/CleanArchitecture/CLEAN_ARCHITECTURE_INDEX.md)
-  - 📖 [Single-Project Quick Start](docs/CleanArchitecture/SINGLE_PROJECT_CLEAN_ARCHITECTURE_QUICK_START.md)
+  - 📖 [Clean Architecture Hub](docs/CleanArchitecture/CLEAN-DDD_ARCH_README.md)
   - 📖 [Migration Guide](docs/CleanArchitecture/MIGRATION_GUIDE.md)
 
 ### **Enterprise Patterns**
@@ -472,20 +468,20 @@ I have implemented a variety of backend development concepts and best practices 
 - ✅ **Swagger/OpenAPI Support** - API documentation and testing via Swagger UI (`Program.cs`, `WebApplicationBuilderServicesExtensions.cs`)
   - 📖 [API Testing Guide](docs/Testing/API_ENDPOINT_TESTING_GUIDE.md)
   - 📖 [Test Authentication Guide](docs/AuthenticationAuthorization/TEST_AUTHENTICATION_GUIDE.md)
-  - 📖 **[Testing Documentation Index](docs/Testing/TEST_INDEX.md)** - Complete testing guide navigation 🆕 NEW
+  - 📖 **[Testing Documentation Hub](docs/Testing/TEST_README.md)** - Complete testing guide navigation 🆕 NEW
 - ✅ **Error Handling** - Global try-catch in controllers and services, error pages (`SampleController.cs`, `Error.razor`)
   - 📖 [API Design Guide - Error Handling](docs/APIDesign/API_DESIGN_GUIDE.md#error-handling)
   - 📖 [Web/Presentation Layer Guide](docs/CleanArchitecture/Projects/05-Web-Presentation-Layer.md)
 - ✅ **Testing Strategy** - Comprehensive unit, integration, and architecture testing strategies
-  - 📖 **[Testing Documentation Index](docs/Testing/TEST_INDEX.md)** - Central hub for all testing guides 🆕 NEW
+  - 📖 **[Testing Documentation Hub](docs/Testing/TEST_README.md)** - Central hub for all testing guides 🆕 NEW
   - 📖 **[Clean Architecture Testing Strategy](docs/Testing/CLEAN_ARCHITECTURE_TESTING_STRATEGY.md)** - Complete testing strategy guide 🆕 NEW
   - 📖 [API Testing Guide](docs/Testing/API_ENDPOINT_TESTING_GUIDE.md)
   - 📖 [Test Authentication Guide](docs/AuthenticationAuthorization/TEST_AUTHENTICATION_GUIDE.md)
 - ✅ **Comprehensive Documentation** - Full documentation of architecture, patterns, and implementation details in `docs/` folder
-  - 📖 [Clean Architecture Index](docs/CleanArchitecture/CLEAN_ARCHITECTURE_INDEX.md)
-  - 📖 [Authentication Index](docs/AuthenticationAuthorization/AUTHENTICATION_INDEX.md)
-  - 📖 **[Testing Index](docs/Testing/TEST_INDEX.md)** - Navigate all testing documentation 🆕 NEW
-  - 📖 [Deployment README](docs/Deployment/DEPLOYMENT_README.md)
+  - 📖 [Clean Architecture Hub](docs/CleanArchitecture/CLEAN-DDD_ARCH_README.md)
+  - 📖 [Authentication Hub](docs/AuthenticationAuthorization/AUTHENT-AUTHORIT_README.md)
+  - 📖 **[Testing Hub](docs/Testing/TEST_README.md)** - Navigate all testing documentation 🆕 NEW
+  - 📖 [Deployment Hub](docs/Deployment/DEPLOYMENT_README.md)
 
 ---
 
@@ -534,7 +530,6 @@ For comprehensive Clean Architecture implementation details, see:
 - **[03-Infrastructure-Layer.md](docs/CleanArchitecture/Projects/03-Infrastructure-Layer.md)** - External services
 - **[04-Infrastructure-Azure-Layer.md](docs/CleanArchitecture/Projects/04-Infrastructure-Azure-Layer.md)** - Azure integration
 - **[05-Web-Presentation-Layer.md](docs/CleanArchitecture/Projects/05-Web-Presentation-Layer.md)** - API and UI
-- **[06-Testing-Strategy.md](docs/CleanArchitecture/Projects/06-Testing-Strategy.md)** - Testing approach
 
 **🚀 Implementation Guides:**
 - **[MIGRATION_GUIDE.md](docs/CleanArchitecture/MIGRATION_GUIDE.md)** - Step-by-step migration guide
@@ -1076,7 +1071,7 @@ Authentication Feature:
 
 ---
 
-## 📞 Contact
+## 📞 Support & Contact
 
 **Project Maintainer:** Dariemcarlos  
 **Email:** softevolutionsl@gmail.com  
