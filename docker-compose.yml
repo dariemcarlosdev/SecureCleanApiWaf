@@ -169,4 +169,10 @@ services:
 # Q: "Container crashes immediately"
 # A: Run "docker-compose logs securecleanapiwaf" to see error messages
 #
+# Q: "Environment variable not applied"
+# A: Ensure no typos and restart container after changes
+#
+# Q: "Changes not reflected after rebuild"
+# A: Ensure no cached layers are used: docker-compose build --no-cache
+
 ################################################################################
