@@ -1,7 +1,15 @@
-﻿@page "/"
+@page "/"
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
+<div class="home-bg flex flex-col items-center justify-center">
+    <div class="home-card">
+        <h1 class="home-title">Welcome to my BlueTread Demo Project</h1>
+        <p class="home-desc">
+            This project is aimed to demonstrate my abilities in backend development explicitly. Explore the APIs and see how backend features are implemented in a modern .NET 8 Blazor application.
+        </p>
+        <NavLink href="/swagger" target="_blank" class="home-link">
+            Go to Swagger UI to test APIs
+        </NavLink>
+    </div>
+</div>
