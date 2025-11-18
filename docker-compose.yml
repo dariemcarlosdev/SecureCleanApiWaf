@@ -1,0 +1,172 @@
+﻿################################################################################
+# 🐳 DOCKER COMPOSE CONFIGURATION FOR SECURECLEANAPIWAF
+# For more details, see README.md and documentation at: Docs/Deployment/Docker/DEPLOYMENT_README.md
+################################################################################
+#
+# WHAT IS DOCKER COMPOSE?
+# ========================
+# Docker Compose is a tool that lets you define and run multi-container 
+# applications using a simple YAML configuration file. Instead of running 
+# multiple 'docker run' commands, you define all services (containers) in 
+# one file and start them all with a single command: 'docker-compose up'
+#
+# Think of it as a blueprint for your entire application stack!
+#
+# WHEN TO USE DOCKER COMPOSE?
+# =============================
+# ✅ USE FOR:
+#   • Local development environments (like this project)
+#   • Testing and QA workflows
+#   • CI/CD pipelines and automated testing
+#   • Single-host deployments
+#   • Team onboarding (everyone gets same environment)
+#   • Documentation (yml file shows architecture)
+#
+# ❌ DON'T USE FOR:
+#   • Large-scale production deployments → Use Kubernetes instead
+#   • Multi-machine distributed systems → Use Docker Swarm or Kubernetes
+#   • Applications requiring auto-scaling → Use cloud platforms (Azure, AWS)
+#
+# BEST PRACTICES FOR THIS PROJECT:
+# ==================================
+# 1. Use environment variables (.env file) for sensitive data
+# 2. Implement health checks to verify service readiness
+# 3. Use meaningful service names for clarity
+# 4. Keep images small and optimized
+# 5. Use specific version tags (not just 'latest')
+# 6. Document why each setting exists (like we're doing here!)
+#
+################################################################################
+
+# Root key that defines all services in this application stack
+services:
+
+  # SERVICE: securecleanapiwaf
+  # Description: The main Blazor web application for SecureCleanApiWaf
+  # Purpose: Serves the web UI and handles user interactions
+  securecleanapiwaf:
+    
+    # BUILD SECTION: Instructions for building the Docker image
+    # This tells Docker how to create a custom image for this application
+    build:
+      # Current directory context - Docker looks here for Dockerfile and source files
+      # The "." means: use the current directory as the build context
+      context: .
+      
+      # Which Dockerfile to use for building the image
+      # This file contains step-by-step instructions to build the image
+      dockerfile: Dockerfile
+      
+      # Use host network during build to bypass Docker's DNS issues
+      # This allows the build process to access external package repositories (NuGet)
+      # IMPORTANT: This is only used during build, not during runtime
+      network: host
+    
+    # Give the running container a meaningful, fixed name
+    # This makes it easier to identify the container when running 'docker ps'
+    # Without this, Docker generates random names like 'securecleanapiwaf_securecleanapiwaf_1'
+    container_name: securecleanapiwaf
+    
+    # Image name and tag format: repository:tag
+    # ":latest" means it always uses the newest version built locally
+    # TIP: In production, use specific versions like "securecleanapiwaf:v1.0.0"
+    #      This prevents unexpected changes when rebuilding
+    image: securecleanapiwaf:latest
+    
+    # PORT MAPPING: Make the application accessible from your computer
+    # Format: "host_port:container_port"
+    # This means:
+    #   - Access the app from your browser at: http://localhost:8080
+    #   - The app runs on port 8080 inside the container
+    #   - The host machine forwards traffic from 8080 to the container's 8080
+    # BEST PRACTICE: Use ports 8000-9000 for development to avoid conflicts
+    ports:
+      - "8080:8080"
+    
+    # DNS CONFIGURATION: Tells the container which DNS servers to use
+    # Useful for resolving external service URLs (like the third-party API)
+    # Using Google's public DNS servers (8.8.8.8, 8.8.4.4) is a fallback
+    # This helps bypass organizational or ISP DNS issues
+    # NOTE: Docker usually handles DNS automatically, only use if you have issues
+    dns:
+      # Google's primary public DNS server
+      - 8.8.8.8
+      # Google's secondary public DNS server (fallback if primary fails)
+      - 8.8.4.4
+    
+    # ENVIRONMENT VARIABLES: Configuration passed to the running application
+    # These are the application's settings - think of them as startup parameters
+    # The application reads these variables to determine how to behave
+    environment:
+      # ASP.NET Core reads this variable to determine its execution mode
+      # Values: Development (shows detailed errors), Staging, Production (minimal errors)
+      # Development = best for debugging, shows stack traces and detailed error pages
+      # TIP: Change to "Production" when deploying to live environments
+      - ASPNETCORE_ENVIRONMENT=Development
+      
+      # Custom configuration for the third-party API integration
+      # The "__" (double underscore) is how .NET reads nested config in environment variables
+      # This maps to appsettings.json: { "ThirdPartyApi": { "BaseUrl": "..." } }
+      # JSONPlaceholder is a fake API used for testing/demo purposes
+      # In production, change this URL to your real API endpoint
+      # BEST PRACTICE: Store sensitive URLs in .env file, not in source code
+      - ThirdPartyApi__BaseUrl=https://jsonplaceholder.typicode.com/
+    
+    # RESTART POLICY: What Docker does if the container crashes
+    # Options: "no", "always", "unless-stopped", "on-failure"
+    # "unless-stopped" means:
+    #   ✅ Auto-restart if container crashes unexpectedly
+    #   ✅ Stay stopped if you manually stop it (docker-compose stop)
+    #   This is the best default for development - prevents silent failures
+    # BEST PRACTICE: Use "unless-stopped" for development, "always" for production
+    restart: unless-stopped
+
+################################################################################
+# USEFUL DOCKER COMPOSE COMMANDS FOR THIS PROJECT
+# ==================================================
+# Start all services (and build if needed):
+#   docker-compose up
+#
+# Start services in background mode:
+#   docker-compose up -d
+#
+# View status of running services:
+#   docker-compose ps
+#
+# View application logs (helpful for debugging):
+#   docker-compose logs -f securecleanapiwaf
+#
+# Stop all services (containers are kept, data preserved):
+#   docker-compose stop
+#
+# Remove everything (containers, networks) but keep volumes:
+#   docker-compose down
+#
+# Rebuild images and restart everything:
+#   docker-compose up -d --build
+#
+# ADVANCED TIPS:
+# ==============
+# 1. Create a .env file for environment-specific settings:
+#    ASPNETCORE_ENVIRONMENT=Development
+#    ThirdPartyApi__BaseUrl=https://api.example.com/
+#
+# 2. Use docker-compose.override.yml for local changes:
+#    This file overrides settings in docker-compose.yml
+#    Perfect for personal development preferences
+#
+# 3. Use different compose files for different environments:
+#    docker-compose -f docker-compose.yml -f docker-compose.prod.yml up
+#
+# TROUBLESHOOTING:
+# ================
+# Q: "Port 8080 already in use"
+# A: Change the port mapping: "8081:8080" instead of "8080:8080"
+#
+# Q: "DNS resolution failed for third-party API"
+# A: The DNS settings here should fix it. If not, check your network connection.
+#
+# Q: "Container crashes immediately"
+# A: Run "docker-compose logs securecleanapiwaf" to see error messages
+#
+################################################################################

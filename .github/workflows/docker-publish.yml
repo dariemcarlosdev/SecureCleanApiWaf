@@ -1,0 +1,220 @@
+name: Docker Build and Push
+
+# ===========================================================================================
+# GitHub Actions Workflow - BlueTreadApp Docker Publishing
+# ===========================================================================================
+# This workflow automatically builds and pushes Docker images to Docker Hub
+# Triggers:
+# - Push to main/master branch
+# - Creating new tags (e.g., v1.0.0)
+# - Manual trigger
+# - For more details, see the setup instructions at the bottom and visit documentation at: #   Docs/Deployment/Docker/DEPLOYMENT_README.md 
+# ===========================================================================================
+
+on:
+  # Trigger on push to main/master branches
+  push:
+    branches:
+      - master
+    # Trigger on version tags
+    tags:
+      - 'v*.*.*'
+  
+  # Allow manual trigger from Actions tab
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Docker image tag (e.g., v1.0.0)'
+        required: false
+        default: 'latest'
+
+# Environment variables
+env:
+  DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+  IMAGE_NAME: bluetreadapp
+  DOTNET_VERSION: '8.0.x'
+
+jobs:
+  # ===== BUILD AND PUSH JOB =====
+  build-and-push:
+    name: Build and Push Docker Image
+    runs-on: ubuntu-latest
+    
+    steps:
+      # ===== STEP 1: CHECKOUT CODE =====
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      # ===== STEP 2: SETUP .NET =====
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+      
+      # ===== STEP 3: DOCKER METADATA =====
+      # Generate tags and labels for Docker image
+      - name: Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}
+          tags: |
+            # Tag as 'latest' on push to main/master
+            type=raw,value=latest,enable={{is_default_branch}}
+            # Tag with version on tag push (e.g., v1.0.0 -> 1.0.0)
+            type=semver,pattern={{version}}
+            # Tag with major.minor on tag push (e.g., v1.0.0 -> 1.0)
+            type=semver,pattern={{major}}.{{minor}}
+            # Tag with major on tag push (e.g., v1.0.0 -> 1)
+            type=semver,pattern={{major}}
+            # Tag with branch name
+            type=ref,event=branch
+            # Tag with PR number on pull request
+            type=ref,event=pr
+            # Tag with SHA
+            type=sha,prefix={{branch}}-
+      
+      # ===== STEP 4: SETUP QEMU =====
+      # Required for multi-platform builds (ARM, AMD64, etc.)
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      
+      # ===== STEP 5: SETUP DOCKER BUILDX =====
+      # BuildX enables advanced Docker build features
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      
+      # ===== STEP 6: LOGIN TO DOCKER HUB =====
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+      
+      # ===== STEP 7: BUILD AND PUSH =====
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          # Build for multiple platforms (optional)
+          # platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
+          # Cache layers to speed up builds
+          cache-from: type=registry,ref=${{ env.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}:buildcache
+          cache-to: type=registry,ref=${{ env.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}:buildcache,mode=max
+      
+      # ===== STEP 8: IMAGE SCAN (Security) =====
+      - name: Scan Docker image for vulnerabilities
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ env.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL,HIGH'
+        continue-on-error: true
+      
+      # ===== STEP 9: UPLOAD SCAN RESULTS =====
+      - name: Upload Trivy scan results to GitHub Security
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy-results.sarif'
+        if: always()
+      
+      # ===== STEP 10: CREATE RELEASE (on tag) =====
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref_name }}
+          release_name: Release ${{ github.ref_name }}
+          body: |
+            ## Docker Image
+            
+            Pull the image:
+            ```bash
+            docker pull ${{ env.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}
+            ```
+            
+            Run the container:
+            ```bash
+            docker run -d -p 8080:8080 ${{ env.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}
+            ```
+            
+            ## What's Changed
+            - See commit history for details
+          draft: false
+          prerelease: false
+      
+      # ===== STEP 11: UPDATE DOCKER HUB DESCRIPTION =====
+      - name: Update Docker Hub description
+        uses: peter-evans/dockerhub-description@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+          repository: ${{ env.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}
+          short-description: "BlueTreadApp - Blazor .NET 8 Application"
+          readme-filepath: ./Docs/Deployment/Docker/DOCKER_DEPLOYMENT.md
+        continue-on-error: true
+
+# ===========================================================================================
+# SETUP INSTRUCTIONS
+# ===========================================================================================
+#
+# To use this workflow, you need to configure GitHub Secrets:
+#
+# 1. Go to your GitHub repository
+# 2. Settings > Secrets and variables > Actions
+# 3. Add the following secrets:
+#
+#    DOCKER_HUB_USERNAME: Your Docker Hub username
+#    DOCKER_HUB_TOKEN: Your Docker Hub access token (not password!)
+#
+# To create Docker Hub access token:
+# 1. Login to Docker Hub
+# 2. Account Settings > Security > New Access Token
+# 3. Give it a name (e.g., "GitHub Actions")
+# 4. Copy the token and save as GitHub secret
+#
+# ===========================================================================================
+# TRIGGERING THE WORKFLOW
+# ===========================================================================================
+#
+# Automatic triggers:
+# 1. Push to main/master branch:
+#    git push origin main
+#
+# 2. Create and push a version tag:
+#    git tag v1.0.0
+#    git push origin v1.0.0
+#
+# Manual trigger:
+# 1. Go to Actions tab in GitHub
+# 2. Select "Docker Build and Push" workflow
+# 3. Click "Run workflow"
+# 4. Enter custom tag (optional)
+# 5. Click "Run workflow" button
+#
+# ===========================================================================================
+# OUTPUT
+# ===========================================================================================
+#
+# This workflow produces:
+# - Docker image pushed to Docker Hub
+# - Multiple tags (latest, version, branch, SHA)
+# - Security scan results
+# - GitHub release (for version tags)
+# - Updated Docker Hub description
+#
+# View workflow runs:
+# - GitHub repository > Actions tab
+#
+# View Docker images:
+# - https://hub.docker.com/r/yourusername/bluetreadapp
+#
+# ===========================================================================================
