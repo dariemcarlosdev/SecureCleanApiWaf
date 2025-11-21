@@ -60,7 +60,11 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         /// </summary>
         /// <param name="id">The token's unique identifier.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
-        /// <returns>The token if found, null otherwise.</returns>
+        /// <summary>
+/// Retrieves a token by its unique identifier.
+/// </summary>
+/// <param name="id">The token's unique identifier.</param>
+/// <returns>The token with the specified identifier, or null if not found.</returns>
         Task<Token?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -72,7 +76,15 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         /// <remarks>
         /// Primary method for token validation during authentication.
         /// Should be optimized with database index on TokenId.
-        /// </remarks>
+        /// <summary>
+/// Retrieves a token by its JTI (token identifier).
+/// </summary>
+/// <param name="tokenId">The token's JTI (JWT ID) to look up.</param>
+/// <param name="cancellationToken">Cancellation token to cancel the operation.</param>
+/// <returns>The matching <see cref="Token"/> if found, or `null` if no token exists for the specified `tokenId`.</returns>
+/// <remarks>
+/// This lookup is intended for fast validation paths and is typically backed by an index on the token identifier.
+/// </remarks>
         Task<Token?> GetByTokenIdAsync(string tokenId, CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -84,7 +96,11 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         /// <remarks>
         /// Used for user session management and security auditing.
         /// Returns all tokens (active, revoked, expired).
-        /// </remarks>
+        /// <summary>
+/// Retrieves all tokens associated with the specified user, including active, revoked, and expired tokens.
+/// </summary>
+/// <param name="userId">The unique identifier of the user whose tokens are being retrieved.</param>
+/// <returns>An IReadOnlyList of Token entities belonging to the user; the list may include active, revoked, and expired tokens.</returns>
         Task<IReadOnlyList<Token>> GetTokensByUserIdAsync(Guid userId, CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -96,7 +112,11 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         /// <remarks>
         /// Used to display current user sessions or revoke all sessions.
         /// Only returns tokens with Active status and not expired.
-        /// </remarks>
+        /// <summary>
+/// Gets active (not revoked and not expired) tokens for the specified user.
+/// </summary>
+/// <param name="userId">The unique identifier of the user whose active tokens to retrieve.</param>
+/// <returns>A read-only list of tokens that are active for the specified user; the list is empty if none are found.</returns>
         Task<IReadOnlyList<Token>> GetActiveTokensByUserIdAsync(Guid userId, CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -105,7 +125,12 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         /// <param name="userId">The user's unique identifier.</param>
         /// <param name="tokenType">The token type (Access or Refresh).</param>
         /// <param name="cancellationToken">Cancellation token.</param>
-        /// <returns>List of tokens of the specified type.</returns>
+        /// <summary>
+/// Retrieves tokens belonging to the specified user filtered by the given token type.
+/// </summary>
+/// <param name="userId">The unique identifier of the user whose tokens to retrieve.</param>
+/// <param name="tokenType">The token type to filter by (e.g., Access or Refresh).</param>
+/// <returns>An IReadOnlyList of tokens of the specified type for the user; empty if none are found.</returns>
         Task<IReadOnlyList<Token>> GetTokensByUserAndTypeAsync(Guid userId, TokenType tokenType, CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -116,7 +141,10 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         /// <remarks>
         /// Used for security auditing and blacklist management.
         /// Consider pagination for production use.
-        /// </remarks>
+        /// <summary>
+/// Retrieves all tokens that have been revoked for auditing and blacklist management.
+/// </summary>
+/// <returns>A read-only list of revoked Token entities; empty if none are found.</returns>
         Task<IReadOnlyList<Token>> GetRevokedTokensAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -127,7 +155,10 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         /// <remarks>
         /// Used by background cleanup jobs to remove old token records.
         /// Consider pagination for production use.
-        /// </remarks>
+        /// <summary>
+/// Retrieves tokens that have passed their expiration time and are candidates for cleanup.
+/// </summary>
+/// <returns>An IReadOnlyList of tokens that are expired and eligible for removal.</returns>
         Task<IReadOnlyList<Token>> GetExpiredTokensAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -139,7 +170,11 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         /// <remarks>
         /// Optimized query for fast token validation during authentication.
         /// Should use indexed queries for performance.
-        /// </remarks>
+        /// <summary>
+/// Determines whether a token with the specified token ID (JTI) exists and is currently valid.
+/// </summary>
+/// <param name="tokenId">The token's unique identifier (JTI).</param>
+/// <returns>`true` if the token exists and is not revoked or expired, `false` otherwise.</returns>
         Task<bool> IsTokenValidAsync(string tokenId, CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -151,7 +186,11 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         /// <remarks>
         /// Used during authentication to reject blacklisted tokens.
         /// Should be fast query with database index.
-        /// </remarks>
+        /// <summary>
+/// Determines whether a token identified by its JTI is blacklisted.
+/// </summary>
+/// <param name="tokenId">The token's unique identifier (JTI).</param>
+/// <returns>`true` if the token is blacklisted (revoked), `false` otherwise.</returns>
         Task<bool> IsTokenBlacklistedAsync(string tokenId, CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -163,7 +202,13 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         /// <remarks>
         /// Creates a new token record in the database.
         /// Typically called after JWT generation.
-        /// </remarks>
+        /// <summary>
+/// Adds a new Token entity to the repository.
+/// </summary>
+/// <param name="token">The Token entity to add (typically created after JWT issuance).</param>
+/// <remarks>
+/// The addition is staged in the repository; call SaveChangesAsync to persist changes to the underlying store.
+/// </remarks>
         Task AddAsync(Token token, CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -175,7 +220,11 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         /// <remarks>
         /// Updates token status, revocation info, etc.
         /// Should handle domain events if any were raised.
-        /// </remarks>
+        /// <summary>
+/// Updates an existing token entity in the repository.
+/// </summary>
+/// <param name="token">The token entity with changes to apply (must identify an existing token).</param>
+/// <param name="cancellationToken">A token to observe while waiting for the task to complete.</param>
         Task UpdateAsync(Token token, CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -187,7 +236,10 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         /// <remarks>
         /// Hard delete for expired tokens cleanup.
         /// For revocation, use Update with token.Revoke() instead.
-        /// </remarks>
+        /// <summary>
+/// Permanently removes the specified token from the repository.
+/// </summary>
+/// <param name="token">The token entity to delete.</param>
         Task DeleteAsync(Token token, CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -199,7 +251,11 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         /// <remarks>
         /// Optimized batch operation for cleanup jobs.
         /// More efficient than deleting one by one.
-        /// </remarks>
+        /// <summary>
+/// Deletes the provided expired tokens in a single batch operation.
+/// </summary>
+/// <param name="tokens">Collection of expired Token entities to remove.</param>
+/// <returns>The number of tokens that were deleted.</returns>
         Task<int> DeleteExpiredTokensAsync(IEnumerable<Token> tokens, CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -212,7 +268,12 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         /// <remarks>
         /// Used for "logout all sessions" functionality or security actions.
         /// Bulk operation that revokes all user's active tokens.
-        /// </remarks>
+        /// <summary>
+/// Revokes all active tokens belonging to the specified user.
+/// </summary>
+/// <param name="userId">The unique identifier of the user whose tokens will be revoked.</param>
+/// <param name="reason">A brief reason to record for the revocation (audit/metadata).</param>
+/// <returns>The number of tokens that were revoked.</returns>
         Task<int> RevokeAllUserTokensAsync(Guid userId, string reason, CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -223,7 +284,10 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         /// <remarks>
         /// Provides insights for security monitoring and capacity planning.
         /// Returns counts of active, revoked, expired tokens.
-        /// </remarks>
+        /// <summary>
+/// Retrieves aggregated token usage and lifecycle metrics for monitoring and auditing.
+/// </summary>
+/// <returns>A <see cref="TokenStatistics"/> instance containing counts of active, revoked, and expired tokens, counts by token type (access/refresh), deltas for the last 24 hours, and the timestamp when the metrics were calculated.</returns>
         Task<TokenStatistics> GetTokenStatisticsAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -234,7 +298,10 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         /// <remarks>
         /// Commits the unit of work transaction.
         /// Should be called after Add/Update/Delete operations.
-        /// </remarks>
+        /// <summary>
+/// Persists pending repository changes to the underlying data store.
+/// </summary>
+/// <returns>The number of state entries written to the data store.</returns>
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 

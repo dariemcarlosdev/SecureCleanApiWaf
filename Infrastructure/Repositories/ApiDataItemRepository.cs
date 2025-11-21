@@ -40,7 +40,10 @@ namespace SecureCleanApiWaf.Infrastructure.Repositories
         /// <summary>
         /// Initializes a new instance of the ApiDataItemRepository.
         /// </summary>
-        /// <param name="context">EF Core database context.</param>
+        /// <summary>
+        /// Initializes a new instance of <see cref="ApiDataItemRepository"/> using the provided EF Core <see cref="ApplicationDbContext"/>.
+        /// </summary>
+        /// <param name="context">The application's EF Core database context used for data access; must not be null.</param>
         public ApiDataItemRepository(ApplicationDbContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
@@ -77,7 +80,10 @@ namespace SecureCleanApiWaf.Infrastructure.Repositories
                 .ToListAsync(cancellationToken);
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Retrieves all ApiDataItem entities, including soft-deleted items, ordered by creation time descending.
+        /// </summary>
+        /// <returns>A read-only list of all ApiDataItem entities ordered by CreatedAt descending.</returns>
         public async Task<IReadOnlyList<ApiDataItem>> GetAllItemsAsync(CancellationToken cancellationToken = default)
         {
             // Note: This ignores the global query filter to include deleted items
@@ -99,7 +105,11 @@ namespace SecureCleanApiWaf.Infrastructure.Repositories
                 .ToListAsync(cancellationToken);
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Retrieves items whose LastSyncedAt is older than the specified maximum age, prioritizing the oldest first.
+        /// </summary>
+        /// <param name="maxAge">Maximum allowed age since an item's LastSyncedAt; items older than this value are included.</param>
+        /// <returns>A read-only list of ApiDataItem instances with Status not equal to Deleted and LastSyncedAt earlier than (UtcNow - maxAge), ordered from oldest to newest LastSyncedAt.</returns>
         public async Task<IReadOnlyList<ApiDataItem>> GetItemsNeedingRefreshAsync(TimeSpan maxAge, CancellationToken cancellationToken = default)
         {
             var cutoffDate = DateTime.UtcNow - maxAge;
@@ -145,7 +155,16 @@ namespace SecureCleanApiWaf.Infrastructure.Repositories
                 .ToListAsync(cancellationToken);
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Retrieves ApiDataItem entities that contain the specified metadata key, optionally filtered to those whose metadata value equals the provided value.
+        /// </summary>
+        /// <param name="metadataKey">The metadata key to match. If null or whitespace, an empty list is returned.</param>
+        /// <param name="metadataValue">Optional metadata value to match; when null, any item that has the key is included.</param>
+        /// <param name="cancellationToken">Token to observe while waiting for the task to complete.</param>
+        /// <returns>A list of items that have the specified metadata key and, if <paramref name="metadataValue"/> is provided, whose metadata value equals it.</returns>
+        /// <remarks>
+        /// Filtering is performed in memory after loading all items from the database; this may be inefficient for large datasets.
+        /// </remarks>
         public async Task<IReadOnlyList<ApiDataItem>> GetItemsByMetadataAsync(
             string metadataKey,
             object? metadataValue = null,
@@ -182,7 +201,11 @@ namespace SecureCleanApiWaf.Infrastructure.Repositories
                 .AnyAsync(x => x.ExternalId == externalId && x.Status != DataStatus.Deleted, cancellationToken);
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Registers an <see cref="ApiDataItem"/> with the repository for insertion on the next unit-of-work save.
+        /// </summary>
+        /// <param name="item">The <see cref="ApiDataItem"/> to add; must not be null.</param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="item"/> is null.</exception>
         public async Task AddAsync(ApiDataItem item, CancellationToken cancellationToken = default)
         {
             if (item == null)
@@ -219,7 +242,13 @@ namespace SecureCleanApiWaf.Infrastructure.Repositories
             await Task.CompletedTask; // Maintain async signature
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Updates a collection of ApiDataItem entities in the context and persists the changes.
+        /// </summary>
+        /// <param name="items">The items to update; must not be null or empty.</param>
+        /// <param name="cancellationToken">Token to cancel the operation.</param>
+        /// <returns>The number of state entries written to the database.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="items"/> is null.</exception>
         public async Task<int> UpdateRangeAsync(IEnumerable<ApiDataItem> items, CancellationToken cancellationToken = default)
         {
             if (items == null)
@@ -234,7 +263,12 @@ namespace SecureCleanApiWaf.Infrastructure.Repositories
             return await SaveChangesAsync(cancellationToken);
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Marks the given ApiDataItem as deleted in the DbContext without persisting the change.
+        /// </summary>
+        /// <param name="item">The ApiDataItem to mark as deleted; expected to have been marked deleted prior to calling.</param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="item"/> is null.</exception>
+        /// <remarks>Does not call SaveChangesAsync — the caller is responsible for persisting the change.</remarks>
         public async Task DeleteAsync(ApiDataItem item, CancellationToken cancellationToken = default)
         {
             if (item == null)
@@ -246,7 +280,11 @@ namespace SecureCleanApiWaf.Infrastructure.Repositories
             await Task.CompletedTask; // Maintain async signature
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Permanently removes items that were soft-deleted before the specified cutoff date.
+        /// </summary>
+        /// <param name="olderThan">Items with a non-null <c>DeletedAt</c> earlier than this UTC timestamp will be hard-deleted.</param>
+        /// <returns>The number of items that were removed from the database.</returns>
         public async Task<int> PermanentlyDeleteOldItemsAsync(DateTime olderThan, CancellationToken cancellationToken = default)
         {
             // Find items to permanently delete
@@ -263,7 +301,12 @@ namespace SecureCleanApiWaf.Infrastructure.Repositories
             return await SaveChangesAsync(cancellationToken);
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Marks all active ApiDataItem entities that share the given source URL as stale.
+        /// </summary>
+        /// <param name="sourceUrl">The source URL whose active items should be marked stale; if null or whitespace no items are modified.</param>
+        /// <param name="cancellationToken">Cancellation token to cancel the operation.</param>
+        /// <returns>The number of entries persisted to the database (0 if no items were modified).</returns>
         public async Task<int> MarkSourceAsStaleAsync(string sourceUrl, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(sourceUrl))
@@ -286,7 +329,18 @@ namespace SecureCleanApiWaf.Infrastructure.Repositories
             return await SaveChangesAsync(cancellationToken);
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Aggregates diagnostic statistics for ApiDataItem entities.
+        /// </summary>
+        /// <param name="cancellationToken">Token to cancel the database queries.</param>
+        /// <returns>
+        /// An ApiDataStatisticsDto containing:
+        /// - total counts of active, stale, and deleted items (deleted count ignores global query filters),
+        /// - average, oldest, and newest ages computed from LastSyncedAt,
+        /// - count of distinct source URLs,
+        /// - counts of items synced or marked stale in the last 24 hours,
+        /// - the UTC timestamp when the statistics were calculated.
+        /// </returns>
         public async Task<ApiDataStatisticsDto> GetStatisticsAsync(CancellationToken cancellationToken = default)
         {
             var now = DateTime.UtcNow;

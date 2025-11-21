@@ -57,7 +57,15 @@ namespace SecureCleanApiWaf.Core.Application.Features.Authentication.Commands
         /// <param name="password">Password for authentication</param>
         /// <param name="role">Requested role (User or Admin)</param>
         /// <param name="clientIpAddress">Client IP address for audit logging</param>
-        /// <param name="userAgent">Client user agent for audit logging</param>
+        /// <summary>
+        /// Creates a command to authenticate a user and initiate generation of a login response (token and claims).
+        /// </summary>
+        /// <param name="username">Username used for authentication (required).</param>
+        /// <param name="password">Password used for authentication (required).</param>
+        /// <param name="role">Requested user role; defaults to "User" when not provided.</param>
+        /// <param name="clientIpAddress">Optional client IP address for audit and logging.</param>
+        /// <param name="userAgent">Optional client user agent string for audit and logging.</param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="username"/> or <paramref name="password"/> is null.</exception>
         public LoginUserCommand(
             string username,
             string password,

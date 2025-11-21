@@ -215,7 +215,10 @@ namespace SecureCleanApiWaf.Infrastructure.Data
         /// - Valid retry configuration
         /// 
         /// Call this during startup to fail fast if misconfigured.
-        /// </remarks>
+        /// <summary>
+        /// Validates the database configuration values against required constraints.
+        /// </summary>
+        /// <returns>`true` if the ConnectionString is not empty, CommandTimeout is greater than 0, MaxRetryCount is between 0 and 10 inclusive, and MaxRetryDelay is greater than 0; `false` otherwise.</returns>
         public bool IsValid()
         {
             if (string.IsNullOrWhiteSpace(ConnectionString))
@@ -243,7 +246,10 @@ namespace SecureCleanApiWaf.Infrastructure.Data
         /// Example:
         /// Input: "Server=localhost;Database=MyDb;User=sa;Password=secret123;"
         /// Output: "Server=localhost;Database=MyDb;User=sa;Password=***;"
-        /// </remarks>
+        /// <summary>
+        /// Produces a connection string with embedded passwords redacted for safe logging.
+        /// </summary>
+        /// <returns>An empty string if <see cref="ConnectionString"/> is null or whitespace; otherwise the connection string with password values replaced with `***`.</returns>
         public string GetSanitizedConnectionString()
         {
             if (string.IsNullOrWhiteSpace(ConnectionString))

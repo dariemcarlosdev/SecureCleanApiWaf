@@ -51,7 +51,11 @@ namespace SecureCleanApiWaf.Presentation.Controllers.v1
         /// - Testable (can mock dependencies)
         /// - Loosely coupled (no direct service dependencies)
         /// - Follows SOLID principles (Dependency Inversion)
-        /// </remarks>
+        /// <summary>
+        /// Initializes a new instance of the SampleController with its dependencies.
+        /// </summary>
+        /// <param name="mediator">MediatR mediator used to dispatch queries and commands to handlers.</param>
+        /// <param name="logger">Structured logger for recording controller events and diagnostics.</param>
         public SampleController(IMediator mediator, ILogger<SampleController> logger)
         {
             _mediator = mediator;
@@ -88,7 +92,14 @@ namespace SecureCleanApiWaf.Presentation.Controllers.v1
         /// <response code="200">Returns the requested data</response>
         /// <response code="400">If the external API call fails</response>
         /// <response code="401">If the user is not authenticated</response>
-        /// <response code="500">If an unexpected error occurs</response>
+        /// <summary>
+        /// Retrieves all sample data from the configured external API.
+        /// </summary>
+        /// <returns>HTTP 200 with a collection of SampleDtoModel on success; HTTP 400 with `{ error }` when the external call fails; HTTP 401 when the caller is unauthorized; HTTP 500 with an error payload for unexpected server errors.</returns>
+        /// <response code="200">Returns a collection of SampleDtoModel.</response>
+        /// <response code="400">When the external API or query handler reports a failure; response contains `{ error }`.</response>
+        /// <response code="401">When the caller is not authenticated.</response>
+        /// <response code="500">When an unexpected server error occurs; response contains a generic error message and diagnostic details.</response>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -203,7 +214,10 @@ namespace SecureCleanApiWaf.Presentation.Controllers.v1
         /// **Security Note:**
         /// This endpoint leaks minimal information (just that API is running)
         /// No sensitive data or system details exposed
-        /// </remarks>
+        /// <summary>
+        /// Provides a public health-check endpoint that reports service status and the current UTC timestamp.
+        /// </summary>
+        /// <returns>An HTTP 200 OK response with a JSON object containing `status` (human-readable message) and `timestamp` (UTC DateTime).</returns>
         [HttpGet("status")]
         [AllowAnonymous] // Public endpoint for health checks (overrides [Authorize] at class level)
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -244,6 +258,15 @@ namespace SecureCleanApiWaf.Presentation.Controllers.v1
         /// <response code="400">If the external API call fails or ID is invalid</response>
         /// <response code="401">If the user is not authenticated</response>
         /// <response code="404">If the resource is not found</response>
+        /// <summary>
+        /// Retrieves a single SampleDtoModel by its identifier.
+        /// </summary>
+        /// <param name="id">Identifier of the resource to retrieve; cannot be null, empty, or whitespace.</param>
+        /// <returns>HTTP 200 with the requested resource when found; HTTP 400 with an error message for validation failures or API-reported errors; HTTP 401 if the caller is not authenticated; HTTP 404 if the resource does not exist; HTTP 500 with error details for unexpected failures.</returns>
+        /// <response code="200">Resource found and returned.</response>
+        /// <response code="400">Invalid request or external API returned an error.</response>
+        /// <response code="401">Authentication is required or has failed.</response>
+        /// <response code="404">Resource with the specified ID was not found.</response>
         /// <response code="500">If an unexpected error occurs</response>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -375,7 +398,13 @@ namespace SecureCleanApiWaf.Presentation.Controllers.v1
         /// - System configuration APIs
         /// - Audit log access
         /// - Reporting and analytics
+        /// <summary>
+        /// Provides an admin-only endpoint that returns a simple confirmation payload.
+        /// </summary>
+        /// <remarks>
+        /// Requires the caller to satisfy the "AdminOnly" authorization policy. Access is logged for audit purposes using the caller's identity.
         /// </remarks>
+        /// <returns>An HTTP 200 response containing a JSON object with a confirmation message and the current user's username.</returns>
         [HttpGet("admin")]
         [Authorize(Policy = "AdminOnly")] // Only users with Admin role can access (additional authorization check)
         [ProducesResponseType(StatusCodes.Status200OK)]

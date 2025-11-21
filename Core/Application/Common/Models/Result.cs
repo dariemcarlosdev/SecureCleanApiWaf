@@ -16,9 +16,17 @@ namespace SecureCleanApiWaf.Core.Application.Common.Models
     /// langword="null"/>.</param>
     public record Result<T>(bool Success, T Data, string Error)
     {
-        // Factory method that returns an instance of a Result<T>, encapsulate the creation logic, used to create a successful result with data.
+        /// <summary>
+/// Create a successful Result&lt;T&gt; that contains the provided data.
+/// </summary>
+/// <param name="data">The value to assign to the result's Data when the operation succeeds.</param>
+/// <returns>A Result&lt;T&gt; with Success = true, Data set to the provided value, and Error = null.</returns>
         public static Result<T> Ok(T data) => new Result<T>(true, data, null);
-        // Factory method for failed result. The Data is set to default value of T. Here, default means null for reference types and zero or equivalent for value types.
+        /// <summary>
+/// Create a failed Result&lt;T&gt; containing the provided error message.
+/// </summary>
+/// <param name="error">Error message describing the failure.</param>
+/// <returns>A Result&lt;T&gt; with Success = false, Data = default(T), and Error set to the provided message.</returns>
         public static Result<T> Fail(string error) => new Result<T>(false, default, error);
     }
 }

@@ -140,7 +140,9 @@ namespace SecureCleanApiWaf.Core.Domain.Entities
 
         /// <summary>
         /// Private constructor for EF Core.
-        /// </summary>
+        /// <summary>
+/// Initializes a new instance of the <see cref="User"/> class for use by Entity Framework Core and other ORMs.
+/// </summary>
         private User() { }
 
         /// <summary>
@@ -162,7 +164,19 @@ namespace SecureCleanApiWaf.Core.Domain.Entities
         /// - Initializing user preferences
         /// - Integrating with external systems (CRM, analytics)
         /// </remarks>
-        //3. Factory method to create new User instances with validation and event raising
+        /// <summary>
+        /// Create a new active User with the provided credentials, assign the default User role, and enqueue a UserRegisteredEvent.
+        /// </summary>
+        /// <param name="username">Desired username (3–50 characters; letters, digits, '.', '_', and '-' only).</param>
+        /// <param name="email">Verified email value object for the user.</param>
+        /// <param name="passwordHash">Non-empty hashed password for the user.</param>
+        /// <param name="ipAddress">Optional IP address associated with the registration.</param>
+        /// <param name="userAgent">Optional user agent string associated with the registration.</param>
+        /// <param name="registrationMethod">Non-empty identifier of how the user registered (e.g., "Email").</param>
+        /// <returns>The newly created User instance.</returns>
+        /// <exception cref="DomainException">Thrown when any validation fails:
+        /// username is empty, too short (<3) or too long (>50), contains invalid characters;
+        /// email is null; passwordHash is empty; or registrationMethod is empty.</exception>
         public static User Create(
             string username,
             Email email,
@@ -229,7 +243,12 @@ namespace SecureCleanApiWaf.Core.Domain.Entities
         /// </summary>
         /// <param name="role">The role to assign.</param>
         /// <exception cref="DomainException">Thrown when role assignment violates business rules.</exception>
-        // 4. Business methods enforcing rules and updating state
+        /// <summary>
+        /// Assigns the specified role to the user if the user's status allows role changes.
+        /// </summary>
+        /// <param name="role">The role to assign; must not be null. If the user already has this role, the call is ignored.</param>
+        /// <exception cref="DomainException">Thrown when <paramref name="role"/> is null.</exception>
+        /// <exception cref="InvalidDomainOperationException">Thrown when the user's current status does not permit assigning roles (for example, when suspended or locked).</exception>
         public void AssignRole(Role role)
         {
             if (role == null)
@@ -254,7 +273,12 @@ namespace SecureCleanApiWaf.Core.Domain.Entities
         /// Removes a role from the user.
         /// </summary>
         /// <param name="role">The role to remove.</param>
-        /// <exception cref="DomainException">Thrown when removal violates business rules.</exception>
+        /// <summary>
+        /// Removes the specified role from the user while enforcing that the user retains at least one role.
+        /// </summary>
+        /// <param name="role">The role to remove.</param>
+        /// <exception cref="DomainException">Thrown when <paramref name="role"/> is null.</exception>
+        /// <exception cref="InvalidDomainOperationException">Thrown when removing the role would leave the user with no roles.</exception>
         public void RemoveRole(Role role)
         {
             if (role == null)
@@ -278,7 +302,12 @@ namespace SecureCleanApiWaf.Core.Domain.Entities
         /// Records a successful login attempt.
         /// </summary>
         /// <param name="ipAddress">The IP address of the login.</param>
-        /// <param name="userAgent">The user agent string.</param>
+        /// <summary>
+        /// Record a successful login and update the user's last-login tracking and authentication state.
+        /// </summary>
+        /// <param name="ipAddress">The client's IP address, or null if not available.</param>
+        /// <param name="userAgent">The client's user-agent string, or null if not available.</param>
+        /// <exception cref="InvalidDomainOperationException">Thrown if the user is not allowed to log in (e.g., not active or otherwise blocked).</exception>
         public void RecordLogin(string? ipAddress, string? userAgent)
         {
             // Business Rule: Can only login if active
@@ -301,7 +330,11 @@ namespace SecureCleanApiWaf.Core.Domain.Entities
         /// Records a failed login attempt and locks account if threshold exceeded.
         /// </summary>
         /// <param name="maxAttempts">Maximum allowed failed attempts before locking (default: 5).</param>
-        /// <param name="lockoutDuration">Duration of lockout (default: 15 minutes).</param>
+        /// <summary>
+        /// Records a failed login attempt for the user and locks the account when the configured threshold is reached.
+        /// </summary>
+        /// <param name="maxAttempts">Number of failed attempts required to trigger an account lock (default: 5).</param>
+        /// <param name="lockoutDuration">Duration to lock the account when the threshold is reached (default: 15 minutes; null means a permanent lock).</param>
         public void RecordFailedLogin(int maxAttempts = 5, TimeSpan? lockoutDuration = null)
         {
             FailedLoginAttempts++;
@@ -317,7 +350,16 @@ namespace SecureCleanApiWaf.Core.Domain.Entities
 
         /// <summary>
         /// Deactivates the user account (voluntary user action).
+        /// <summary>
+        /// Mark the user account as inactive.
         /// </summary>
+        /// <remarks>
+        /// This operation is idempotent: if the account is already inactive it does nothing.
+        /// On success it sets the user's status to <see cref="UserStatus.Inactive"/> and updates the <see cref="BaseEntity.UpdatedAt"/> timestamp.
+        /// </remarks>
+        /// <exception cref="InvalidDomainOperationException">
+        /// Thrown when the current user status is not <see cref="UserStatus.Active"/> (and not already inactive).
+        /// </exception>
         public void Deactivate()
         {
             if (Status == UserStatus.Inactive)
@@ -336,7 +378,13 @@ namespace SecureCleanApiWaf.Core.Domain.Entities
 
         /// <summary>
         /// Activates the user account.
+        /// <summary>
+        /// Activates the user account.
         /// </summary>
+        /// <remarks>
+        /// No-op if the account is already active. Throws <see cref="InvalidDomainOperationException"/> when the account is suspended and requires admin approval to reactivate. On success, sets the status to Active, resets failed login attempts, clears any temporary lock, and updates the UpdatedAt timestamp.
+        /// </remarks>
+        /// <exception cref="InvalidDomainOperationException">Thrown when attempting to activate a suspended account.</exception>
         public void Activate()
         {
             if (Status == UserStatus.Active)
@@ -359,7 +407,14 @@ namespace SecureCleanApiWaf.Core.Domain.Entities
         /// <summary>
         /// Suspends the user account (admin action).
         /// </summary>
-        /// <param name="reason">Reason for suspension (required for audit).</param>
+        /// <summary>
+        /// Suspends the user account and records an audit reason.
+        /// </summary>
+        /// <remarks>
+        /// No-op if the user is already suspended.
+        /// </remarks>
+        /// <param name="reason">Non-empty reason for suspension used for auditing.</param>
+        /// <exception cref="DomainException">Thrown when <paramref name="reason"/> is null, empty, or whitespace.</exception>
         public void Suspend(string reason)
         {
             if (string.IsNullOrWhiteSpace(reason))
@@ -379,7 +434,12 @@ namespace SecureCleanApiWaf.Core.Domain.Entities
         /// Locks the user account due to security concerns.
         /// </summary>
         /// <param name="reason">Reason for locking.</param>
-        /// <param name="duration">Optional lock duration (permanent if null).</param>
+        /// <summary>
+        /// Locks the user account with a specified reason and optional duration.
+        /// </summary>
+        /// <param name="reason">A non-empty explanation for the lock; required.</param>
+        /// <param name="duration">Optional lock duration; when null the lock is permanent.</param>
+        /// <exception cref="DomainException">Thrown when <paramref name="reason"/> is null, empty, or whitespace.</exception>
         public void Lock(string reason, TimeSpan? duration = null)
         {
             if (string.IsNullOrWhiteSpace(reason))
@@ -395,7 +455,10 @@ namespace SecureCleanApiWaf.Core.Domain.Entities
 
         /// <summary>
         /// Unlocks a locked user account (admin action).
+        /// <summary>
+        /// Unlocks a locked user account, sets its status to Active, resets failed login attempts, clears any temporary lock expiration, and updates the modification timestamp.
         /// </summary>
+        /// <exception cref="InvalidDomainOperationException">Thrown if the account is not currently in the Locked status.</exception>
         public void Unlock()
         {
             if (Status != UserStatus.Locked)
@@ -414,7 +477,11 @@ namespace SecureCleanApiWaf.Core.Domain.Entities
         /// <summary>
         /// Updates the user's email address.
         /// </summary>
-        /// <param name="newEmail">The new email address.</param>
+        /// <summary>
+        /// Replaces the user's email with the provided value and updates the entity's timestamp.
+        /// </summary>
+        /// <param name="newEmail">The new email value object to set.</param>
+        /// <exception cref="DomainException">Thrown if <paramref name="newEmail"/> is null.</exception>
         public void UpdateEmail(Email newEmail)
         {
             if (newEmail == null)
@@ -430,7 +497,11 @@ namespace SecureCleanApiWaf.Core.Domain.Entities
         /// <summary>
         /// Updates the user's password hash.
         /// </summary>
-        /// <param name="newPasswordHash">The new hashed password.</param>
+        /// <summary>
+        /// Update the user's stored password hash and reset related authentication state.
+        /// </summary>
+        /// <param name="newPasswordHash">The new password hash (must be a non-empty hashed value).</param>
+        /// <exception cref="DomainException">Thrown when <paramref name="newPasswordHash"/> is null, empty, or whitespace.</exception>
         public void UpdatePassword(string newPasswordHash)
         {
             if (string.IsNullOrWhiteSpace(newPasswordHash))
@@ -447,13 +518,19 @@ namespace SecureCleanApiWaf.Core.Domain.Entities
         /// <summary>
         /// Checks if the user account is currently active.
         /// </summary>
-        /// <returns>True if status is Active, false otherwise.</returns>
+        /// <summary>
+/// Determines whether the user is currently active.
+/// </summary>
+/// <returns>`true` if the user's status is Active, `false` otherwise.</returns>
         public bool IsActive() => Status == UserStatus.Active;
 
         /// <summary>
         /// Checks if the user can log in.
         /// </summary>
-        /// <returns>True if login is allowed, false otherwise.</returns>
+        /// <summary>
+        /// Determines whether the user is permitted to log in given their current status and lock state.
+        /// </summary>
+        /// <returns>`true` if the user is not deleted and either has status `Active` or had a temporary `Locked` status that has expired; `false` otherwise.</returns>
         public bool CanLogin()
         {
             // Cannot login if account is deleted
@@ -481,7 +558,11 @@ namespace SecureCleanApiWaf.Core.Domain.Entities
         /// Checks if the user has a specific role.
         /// </summary>
         /// <param name="role">The role to check.</param>
-        /// <returns>True if user has the role, false otherwise.</returns>
+        /// <summary>
+        /// Determines whether the user has the specified role.
+        /// </summary>
+        /// <param name="role">The role to check; if null, it is treated as not present.</param>
+        /// <returns>`true` if the user has the specified role, `false` otherwise.</returns>
         public bool HasRole(Role role)
         {
             return role != null && _roles.Contains(role);
@@ -490,7 +571,10 @@ namespace SecureCleanApiWaf.Core.Domain.Entities
         /// <summary>
         /// Checks if the user has any admin privileges.
         /// </summary>
-        /// <returns>True if user has Admin or SuperAdmin role, false otherwise.</returns>
+        /// <summary>
+        /// Determines whether the user has an administrative role.
+        /// </summary>
+        /// <returns>`true` if the user has an administrative role (Admin or SuperAdmin), `false` otherwise.</returns>
         public bool IsAdmin()
         {
             return _roles.Any(r => r.IsAdmin());
@@ -499,7 +583,10 @@ namespace SecureCleanApiWaf.Core.Domain.Entities
         /// <summary>
         /// Checks if the user has SuperAdmin privileges.
         /// </summary>
-        /// <returns>True if user has SuperAdmin role, false otherwise.</returns>
+        /// <summary>
+        /// Determines whether the user has the SuperAdmin role.
+        /// </summary>
+        /// <returns>`true` if the user has the SuperAdmin role, `false` otherwise.</returns>
         public bool IsSuperAdmin()
         {
             return _roles.Any(r => r.IsSuperAdmin());
@@ -509,7 +596,10 @@ namespace SecureCleanApiWaf.Core.Domain.Entities
         /// Validates username format.
         /// </summary>
         /// <param name="username">Username to validate.</param>
-        /// <returns>True if valid format, false otherwise.</returns>
+        /// <summary>
+        /// Determines whether a username contains only allowed characters.
+        /// </summary>
+        /// <returns>`true` if the username consists exclusively of letters, digits, '.', '_', or '-', `false` otherwise.</returns>
         private static bool IsValidUsername(string username)
         {
             // Allow: letters, numbers, dots, underscores, hyphens
@@ -539,6 +629,11 @@ namespace SecureCleanApiWaf.Core.Domain.Entities
         /// 
         /// user.ClearDomainEvents();
         /// </code>
+        /// <summary>
+        /// Removes all domain events accumulated by the aggregate.
+        /// </summary>
+        /// <remarks>
+        /// Call after domain events have been published to prevent re-publishing.
         /// </remarks>
         public void ClearDomainEvents()
         {

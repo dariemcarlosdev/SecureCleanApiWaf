@@ -19,6 +19,7 @@ namespace SecureCleanApiWaf.Core.Application.Features.SampleData.Queries
     {
         private readonly IApiIntegrationService _apiService;
 
+        /// <summary>Initializes a new instance of GetApiDataByIdQueryHandler with the required API integration service.</summary>
         public GetApiDataByIdQueryHandler(IApiIntegrationService apiIntegrationService)
         {
             _apiService = apiIntegrationService;
@@ -29,7 +30,11 @@ namespace SecureCleanApiWaf.Core.Application.Features.SampleData.Queries
         /// </summary>
         /// <param name="request">The query containing the API path and the identifier of the data to retrieve.</param>
         /// <param name="cancellationToken">A cancellation token that can be used to cancel the asynchronous operation.</param>
-        /// <returns>A result object containing the requested data if found; otherwise, a failure result with an error message.</returns>
+        /// <summary>
+        /// Handles a GetApiDataByIdQuery by retrieving the specified resource from the API and returning it wrapped in a Result<T>.
+        /// </summary>
+        /// <param name="request">Query containing the API path and the resource ID to retrieve.</param>
+        /// <returns>A Result&lt;T&gt; containing the fetched data when the API call succeeds; otherwise a failure Result with an error message.</returns>
         public async Task<Result<T>> Handle(GetApiDataByIdQuery<T> request, CancellationToken cancellationToken)
         {
             try

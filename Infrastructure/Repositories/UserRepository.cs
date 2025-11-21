@@ -32,7 +32,11 @@ namespace SecureCleanApiWaf.Infrastructure.Repositories
         /// <summary>
         /// Initializes a new instance of the UserRepository.
         /// </summary>
-        /// <param name="context">EF Core database context.</param>
+        /// <summary>
+        /// Initializes a new instance of <see cref="UserRepository"/> using the provided application database context.
+        /// </summary>
+        /// <param name="context">The application's EF Core <see cref="ApplicationDbContext"/> used for data access.</param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="context"/> is null.</exception>
         public UserRepository(ApplicationDbContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
@@ -68,7 +72,12 @@ namespace SecureCleanApiWaf.Infrastructure.Repositories
                 .FirstOrDefaultAsync(x => x.Email == email, cancellationToken);
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Retrieves users assigned to the specified role, ordered by username.
+        /// </summary>
+        /// <param name="role">Role to filter users by. If null, the method returns an empty list.</param>
+        /// <param name="cancellationToken">Token to cancel the asynchronous operation.</param>
+        /// <returns>A read-only list of users that have the specified role, ordered by Username; empty if no users match or if <paramref name="role"/> is null.</returns>
         public async Task<IReadOnlyList<User>> GetUsersByRoleAsync(Role role, CancellationToken cancellationToken = default)
         {
             if (role == null)
@@ -83,7 +92,12 @@ namespace SecureCleanApiWaf.Infrastructure.Repositories
                 .ToListAsync(cancellationToken);
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Adds a new User entity to the DbContext change tracker so it will be inserted on the next save.
+        /// </summary>
+        /// <param name="user">The User entity to add; must not be null.</param>
+        /// <param name="cancellationToken">Token to observe while waiting for the add operation to complete.</param>
+        /// <exception cref="System.ArgumentNullException">Thrown when <paramref name="user"/> is null.</exception>
         public async Task AddAsync(User user, CancellationToken cancellationToken = default)
         {
             if (user == null)
@@ -102,7 +116,12 @@ namespace SecureCleanApiWaf.Infrastructure.Repositories
             await Task.CompletedTask;
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Marks the provided user entity as deleted by updating it in the DbContext (soft delete).
+        /// </summary>
+        /// <param name="user">The user entity to mark deleted; must not be null and should already have deletion flags set.</param>
+        /// <param name="cancellationToken">The cancellation token to observe.</param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="user"/> is null.</exception>
         public async Task DeleteAsync(User user, CancellationToken cancellationToken = default)
         {
             if (user == null)
@@ -135,7 +154,11 @@ namespace SecureCleanApiWaf.Infrastructure.Repositories
                 .AnyAsync(x => x.Email == email, cancellationToken);
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Retrieves users whose failed login attempts meet or exceed the specified threshold, ordered by attempts descending.
+        /// </summary>
+        /// <param name="threshold">Minimum number of failed login attempts a user must have to be included.</param>
+        /// <returns>A read-only list of users with FailedLoginAttempts greater than or equal to <paramref name="threshold"/>, ordered from highest to lowest attempts.</returns>
         public async Task<IReadOnlyList<User>> GetUsersWithFailedLoginAttemptsAsync(int threshold, CancellationToken cancellationToken = default)
         {
             return await _context.Users

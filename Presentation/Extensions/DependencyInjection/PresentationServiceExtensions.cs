@@ -32,6 +32,10 @@ namespace SecureCleanApiWaf.Presentation.Extensions.DependencyInjection
     /// </remarks>
     public static class PresentationServiceExtensions
     {
+        /// <summary>
+        /// Registers and configures presentation-layer services into the dependency injection container, including ProblemDetails, JWT authentication, authorization policies, rate limiting, CORS, Blazor server components, API controllers, Swagger/OpenAPI, and health checks.
+        /// </summary>
+        /// <returns>The same <see cref="IServiceCollection"/> instance with presentation services registered.</returns>
         public static IServiceCollection AddPresentationServices(this IServiceCollection services, IConfiguration configuration)
         {
             // ===========================================================================================

@@ -72,7 +72,10 @@ namespace SecureCleanApiWaf.Core.Domain.ValueObjects
         /// <summary>
         /// Private constructor to enforce factory method usage.
         /// </summary>
-        /// <param name="name">The role name.</param>
+        /// <summary>
+        /// Initializes a Role instance with the specified canonical role name.
+        /// </summary>
+        /// <param name="name">The canonical role name (for example: "User", "Admin", "SuperAdmin").</param>
         private Role(string name)
         {
             Name = name;
@@ -161,7 +164,12 @@ namespace SecureCleanApiWaf.Core.Domain.ValueObjects
         /// - Consistent error messages
         /// - Easy to extend with new roles
         /// - Thread-safe for predefined roles
-        /// </remarks>
+        /// <summary>
+        /// Creates a Role from a string representation, validating and mapping it to a predefined Role instance.
+        /// </summary>
+        /// <param name="roleName">The role name to parse; accepts "User", "Admin", "SuperAdmin" (also "Super-Admin"), matched case-insensitively.</param>
+        /// <returns>The corresponding predefined <see cref="Role"/> instance.</returns>
+        /// <exception cref="DomainException">Thrown when <paramref name="roleName"/> is null, empty, whitespace, or does not match a valid predefined role.</exception>
         public static Role Create(string roleName)
         {
             if (string.IsNullOrWhiteSpace(roleName))
@@ -205,7 +213,10 @@ namespace SecureCleanApiWaf.Core.Domain.ValueObjects
         ///     // Proceed with deletion
         /// }
         /// ```
-        /// </remarks>
+        /// <summary>
+        /// Determines whether the role has administrator privileges.
+        /// </summary>
+        /// <returns>`true` if the role is `Admin` or `SuperAdmin`, `false` otherwise.</returns>
         public bool IsAdmin()
         {
             return this == Admin || this == SuperAdmin;
@@ -233,7 +244,10 @@ namespace SecureCleanApiWaf.Core.Domain.ValueObjects
         ///     // Proceed with changes
         /// }
         /// ```
-        /// </remarks>
+        /// <summary>
+        /// Determines whether this role is the SuperAdmin role.
+        /// </summary>
+        /// <returns>`true` if the role is SuperAdmin, `false` otherwise.</returns>
         public bool IsSuperAdmin()
         {
             return this == SuperAdmin;
@@ -254,7 +268,10 @@ namespace SecureCleanApiWaf.Core.Domain.ValueObjects
         ///     await _rateLimiter.CheckLimitAsync(currentUser.Id);
         /// }
         /// ```
-        /// </remarks>
+        /// <summary>
+        /// Determines whether the role represents the standard User role.
+        /// </summary>
+        /// <returns>true if this role is User; false otherwise.</returns>
         public bool IsUser()
         {
             return this == User;
@@ -281,7 +298,11 @@ namespace SecureCleanApiWaf.Core.Domain.ValueObjects
         ///     return currentUser.Roles.Any(r => r.HasPermission(Role.Admin));
         /// }
         /// ```
-        /// </remarks>
+        /// <summary>
+        /// Determines whether the current role satisfies a required role according to the role hierarchy.
+        /// </summary>
+        /// <param name="requiredRole">The minimum role required for the operation; if null, the requirement is not satisfied.</param>
+        /// <returns>`true` if the current role meets or exceeds the required role in the hierarchy (SuperAdmin &gt; Admin &gt; User), `false` otherwise.</returns>
         public bool HasPermission(Role requiredRole)
         {
             if (requiredRole == null)
@@ -313,7 +334,10 @@ namespace SecureCleanApiWaf.Core.Domain.ValueObjects
         /// - Role.User ? "User"
         /// - Role.Admin ? "Administrator"
         /// - Role.SuperAdmin ? "Super Administrator"
-        /// </remarks>
+        /// <summary>
+        /// Gets a user-friendly display name for the role.
+        /// </summary>
+        /// <returns>The display name: "User" for User, "Administrator" for Admin, "Super Administrator" for SuperAdmin; otherwise the raw role name.</returns>
         public string GetDisplayName()
         {
             return Name switch
@@ -328,7 +352,10 @@ namespace SecureCleanApiWaf.Core.Domain.ValueObjects
         /// <summary>
         /// Returns the role name.
         /// </summary>
-        /// <returns>The role name string.</returns>
+        /// <summary>
+        /// Gets the role's name for display or logging.
+        /// </summary>
+        /// <returns>The underlying role name.</returns>
         public override string ToString()
         {
             return Name;
@@ -341,7 +368,10 @@ namespace SecureCleanApiWaf.Core.Domain.ValueObjects
         /// <remarks>
         /// Roles are compared by their name.
         /// Role.Create("Admin") == Role.Admin returns true.
-        /// </remarks>
+        /// <summary>
+        /// Provides the components used to determine value equality for this Role.
+        /// </summary>
+        /// <returns>An enumerable of equality-significant components; yields the role's <c>Name</c>.</returns>
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return Name;
@@ -376,7 +406,10 @@ namespace SecureCleanApiWaf.Core.Domain.ValueObjects
         ///     });
         /// }
         /// ```
-        /// </remarks>
+        /// <summary>
+        /// Enumerates all predefined Role instances.
+        /// </summary>
+        /// <returns>An enumerable containing the predefined Role instances: User, Admin, and SuperAdmin.</returns>
         public static IEnumerable<Role> GetAllRoles()
         {
             yield return User;

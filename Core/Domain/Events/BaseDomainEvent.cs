@@ -227,6 +227,12 @@ public abstract class BaseDomainEvent : IDomainEvent
     /// 
     /// <para>These values are immutable and cannot be changed after creation,
     /// ensuring event integrity and consistency.</para>
+    /// <summary>
+    /// Initializes a new BaseDomainEvent with a unique event identifier and a UTC occurrence timestamp.
+    /// </summary>
+    /// <remarks>
+    /// Sets <see cref="EventId"/> to a newly generated GUID and <see cref="OccurredOn"/> to the current UTC time.
+    /// These properties are init-only to preserve event immutability and represent the event's creation moment (not processing time).
     /// </remarks>
     protected BaseDomainEvent()
     {

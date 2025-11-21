@@ -46,7 +46,14 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         /// Error Handling:
         /// - Invalid tokens are logged but don't throw exceptions
         /// - Cache failures are logged and handled gracefully
-        /// </remarks>
+        /// <summary>
+/// Add the given JWT to the blacklist to prevent its future use.
+/// </summary>
+/// <param name="jwtToken">The JWT to blacklist; the token's JTI (unique identifier) and expiration are used to control the blacklist entry lifetime.</param>
+/// <param name="cancellationToken">Cancellation token to cancel the operation.</param>
+/// <remarks>
+/// The service extracts the token identifier (JTI) and stores only that identifier with an expiration aligned to the token's expiry. Malformed or invalid tokens are handled gracefully and do not cause exceptions to be thrown; cache or storage errors are logged and handled without propagating sensitive details.
+/// </remarks>
         Task BlacklistTokenAsync(string jwtToken, CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -68,7 +75,12 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         /// - Handles malformed tokens gracefully
         /// - Logs suspicious token validation attempts
         /// - Never throws exceptions that could leak information
-        /// </remarks>
+        /// <summary>
+/// Determines whether the provided JWT is currently present in the token blacklist.
+/// </summary>
+/// <param name="jwtToken">The JWT string to check (expected to contain a JTI).</param>
+/// <param name="cancellationToken">A token to observe while waiting for the operation to complete.</param>
+/// <returns>`true` if the token is blacklisted, `false` otherwise.</returns>
         Task<bool> IsTokenBlacklistedAsync(string jwtToken, CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -92,7 +104,13 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         /// 
         /// Note: In distributed cache scenarios (Redis), expired entries
         /// are often cleaned up automatically by the cache provider.
-        /// </remarks>
+        /// <summary>
+/// Removes expired entries from the token blacklist to reclaim resources.
+/// </summary>
+/// <remarks>
+/// Intended to be executed periodically (e.g., at startup, shutdown, or by a background task) to purge tokens that have passed their expiration. In distributed-cache scenarios, some expirations may be handled by the cache provider and therefore not require manual cleanup.
+/// </remarks>
+/// <returns>The number of blacklist entries removed during this cleanup operation.</returns>
         Task<int> CleanupExpiredTokensAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -112,7 +130,10 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         /// - Administrative dashboards
         /// - Performance monitoring
         /// - Capacity planning
-        /// </remarks>
+        /// <summary>
+/// Retrieve monitoring and debugging statistics for the token blacklist.
+/// </summary>
+/// <returns>A <see cref="TokenBlacklistStats"/> containing total blacklisted tokens, expired tokens pending cleanup, estimated memory usage in bytes, an optional cache hit rate percentage, and the UTC timestamp when the statistics were last calculated.</returns>
         Task<TokenBlacklistStats> GetBlacklistStatsAsync(CancellationToken cancellationToken = default);
     }
 
