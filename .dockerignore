@@ -1,0 +1,132 @@
+# ===========================================================================================
+# .dockerignore - BlueTreadApp
+# ===========================================================================================
+# Prevents unnecessary files from being copied to Docker build context
+# Benefits:
+# - Faster builds (smaller context to upload)
+# - Smaller images (excludes unnecessary files)
+# - Better security (excludes sensitive files)
+# - Cleaner builds (no build artifacts or temporary files)
+# ===========================================================================================
+
+# ===== BUILD ARTIFACTS & OUTPUT DIRECTORIES =====
+# Exclude compiled binaries and build output
+# These are regenerated during Docker build
+**/bin/
+**/obj/
+**/out/
+# NOTE: /publish/ is NOT ignored because we use pre-published apps in the Dockerfile
+**/build/
+
+# ===== VISUAL STUDIO & RIDER FILES =====
+# IDE-specific files and folders
+.vs/
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.userprefs
+.DS_Store
+
+# ===== NUGET PACKAGES =====
+# NuGet packages are restored during docker build
+# No need to copy local packages
+**/packages/
+*.nupkg
+*.snupkg
+
+# ===== GIT FILES =====
+# Version control files not needed in container
+.git/
+.gitignore
+.gitattributes
+.github/
+
+# ===== DOCKER FILES =====
+# Don't include Docker-related files in the build context
+# (except Dockerfile itself, which is automatically excluded)
+.dockerignore
+docker-compose*.yml
+*.Dockerfile
+Dockerfile*
+
+# ===== DOCUMENTATION & README FILES =====
+# Exclude documentation files
+*.md
+README*
+LICENSE
+CHANGELOG*
+docs/
+documentation/
+
+# ===== TEST FILES & COVERAGE =====
+# Exclude test projects and code coverage
+**/*Tests/
+**/*.Tests/
+**/TestResults/
+**/coverage/
+**/*.coverage
+**/*.coveragexml
+
+# ===== NODE.JS (if you have frontend build tools) =====
+# Exclude Node.js dependencies if using npm/yarn for frontend
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# ===== ENVIRONMENT & CONFIGURATION FILES =====
+# Exclude local environment files
+# Production config should be injected via environment variables
+.env
+.env.local
+.env.*.local
+*.local.json
+appsettings.Development.json
+
+# ===== TEMPORARY FILES =====
+# Exclude temporary and cache files
+**/tmp/
+**/temp/
+*.tmp
+*.cache
+*.log
+*.bak
+*.swp
+*~
+
+# ===== AZURE & CLOUD FILES =====
+# Exclude Azure-specific files not needed in container
+**/.azure/
+azds.yaml
+charts/
+
+# ===== DEPLOYMENT SCRIPTS =====
+# Exclude deployment and infrastructure files
+deploy/
+scripts/
+*.sh
+*.ps1
+*.bat
+*.cmd
+
+# ===== MISCELLANEOUS =====
+# Other files to exclude
+*.DotSettings
+*.ncrunch*
+*.VisualState.xml
+TestResult.xml
+_ReSharper*/
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.pidb
+*.svclog
+*.scc
+
+# ===== KEEP THESE (Examples of files to NOT ignore) =====
+# !appsettings.json (already included by default)
+# !appsettings.Production.json (if needed)
+# !wwwroot/** (static files - automatically included)

@@ -1,0 +1,380 @@
+# ===========================================================================================
+# DOCKERFILE - BlueTreadApp (Blazor .NET 8 Application)
+# ===========================================================================================
+# Multi-stage build for optimal image size and security
+# Stage 1: Build - Full SDK image with build tools
+# Stage 2: Runtime - Minimal runtime image with only necessary dependencies
+# 
+# Benefits of multi-stage builds:
+# - Smaller final image (runtime-only, no build tools)
+# - Better security (fewer components = smaller attack surface)
+# - Faster deployments (smaller images transfer faster)
+# - Layer caching (faster rebuilds)
+# ===========================================================================================
+
+# ===========================================================================================
+# STAGE 1: BUILD
+# ===========================================================================================
+# Use official .NET 8 SDK image for building the application
+# This image includes:
+# - .NET 8 SDK (compiler, build tools)
+# - NuGet package manager
+# - MSBuild
+# - All build-time dependencies
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+
+# Set working directory for build
+# All subsequent commands run in this directory
+WORKDIR /src
+
+# ===== CONFIGURE NUGET FOR BETTER RELIABILITY =====
+# Add explicit NuGet source with increased timeout and retry settings
+# This resolves most "Unable to load service index" errors
+RUN dotnet nuget list source || true \
+    && dotnet nuget add source https://api.nuget.org/v3/index.json \
+       --name nuget.org \
+       --configfile /root/.nuget/NuGet/NuGet.Config \
+       || echo "NuGet source already exists" \
+    && echo "Configured NuGet sources:" \
+    && dotnet nuget list source
+
+# ===== COPY PROJECT FILE FIRST (LAYER CACHING OPTIMIZATION) =====
+# Copy only .csproj first to leverage Docker layer caching
+# If project file hasn't changed, Docker reuses cached NuGet restore layer
+# This significantly speeds up rebuilds when only source code changes
+COPY ["BlueTreadApp.csproj", "./"]
+
+# ===== RESTORE NUGET PACKAGES =====
+# Restore NuGet packages separately for better caching
+# Docker caches this layer and only re-runs if .csproj changes
+# Uses NuGet package cache to speed up restoration
+# Added flags for better reliability:
+# --disable-parallel: Prevent parallel restore issues that can cause network errors
+# --verbosity normal: Provide useful output without being too verbose
+# --force-evaluate: Re-evaluate all dependencies
+RUN echo "Starting NuGet restore..." \
+    && dotnet restore "BlueTreadApp.csproj" \
+       --disable-parallel \
+       --verbosity normal \
+       --runtime linux-x64 \
+    && echo "NuGet restore completed successfully"
+
+# ===== COPY SOURCE CODE =====
+# Copy all application source files
+# Done after restore to maximize cache hits
+# If only code changes (not dependencies), restore layer is cached
+COPY . .
+
+# ===== BUILD APPLICATION =====
+# Build the application in Release configuration
+# Release mode optimizations:
+# - Code optimization enabled
+# - Debug symbols removed
+# - Smaller output size
+# - Better runtime performance
+RUN echo "Starting build..." \
+    && dotnet build "BlueTreadApp.csproj" \
+       --configuration Release \
+       --no-restore \
+       --output /app/build \
+    && echo "Build completed successfully"
+
+# ===========================================================================================
+# STAGE 2: PUBLISH
+# ===========================================================================================
+# Publish application for deployment
+# Creates optimized, self-contained deployment package
+FROM build AS publish
+
+# ===== PUBLISH APPLICATION =====
+# Publish creates deployment-ready output
+# Options:
+# --configuration Release: Production optimizations
+# --no-build: Reuse build from previous stage
+# --output: Destination directory for published files
+# 
+# Published output includes:
+# - Compiled assemblies (.dll)
+# - Configuration files (appsettings.json)
+# - Static files (wwwroot)
+# - Runtime dependencies
+RUN echo "Starting publish..." \
+    && dotnet publish "BlueTreadApp.csproj" \
+       --configuration Release \
+       --no-build \
+       --output /app/publish \
+       /p:UseAppHost=false \
+    && echo "Publish completed successfully"
+
+# ===========================================================================================
+# STAGE 3: RUNTIME (FINAL IMAGE)
+# ===========================================================================================
+# Use minimal ASP.NET Core runtime image
+# This image includes ONLY:
+# - ASP.NET Core runtime (no SDK)
+# - Kestrel web server
+# - Minimal OS dependencies
+# 
+# Size comparison:
+# - SDK image: ~700 MB
+# - Runtime image: ~200 MB
+# - Final image: ~220 MB (with your app)
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
+
+# ===== CREATE NON-ROOT USER (SECURITY BEST PRACTICE) =====
+# Running as non-root reduces security risks
+# If container is compromised, attacker has limited privileges
+RUN addgroup --system --gid 1000 appuser && \
+    adduser --system --uid 1000 --ingroup appuser --shell /bin/sh appuser
+
+# ===== SET WORKING DIRECTORY =====
+WORKDIR /app
+
+# ===== EXPOSE PORTS =====
+# Document which ports the application listens on
+# Note: EXPOSE is documentation only, doesn't actually publish ports
+# Use -p flag when running container: docker run -p 8080:8080
+# 
+# Port 8080: Standard HTTP port for containerized apps
+# Port 8081: Alternative HTTPS port (if configured)
+EXPOSE 8080
+EXPOSE 8081
+
+# ===== COPY PUBLISHED APPLICATION =====
+# Copy published output from publish stage
+# --chown: Set ownership to non-root user
+# --from=publish: Copy from previous build stage
+COPY --chown=appuser:appuser --from=publish /app/publish .
+
+# ===== SWITCH TO NON-ROOT USER =====
+# All subsequent commands and container runtime use this user
+# Security: Container doesn't run as root
+USER appuser
+
+# ===== CONFIGURE ENVIRONMENT =====
+# Set ASP.NET Core to listen on all network interfaces
+# Required for container networking (localhost won't work)
+# 0.0.0.0 means "listen on all available network interfaces"
+ENV ASPNETCORE_URLS=http://+:8080
+
+# Optional: Set environment to Production
+# Can be overridden with docker run -e ASPNETCORE_ENVIRONMENT=Development
+# ENV ASPNETCORE_ENVIRONMENT=Production
+
+# ===== HEALTH CHECK =====
+# Built-in health check without requiring curl
+# Uses dotnet's built-in HTTP client
+# Note: This requires .NET 8 which has built-in health check support
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+    CMD dotnet /app/BlueTreadApp.dll --urls "http://localhost:8080" --check || exit 1
+
+# ===== DEFINE ENTRY POINT =====
+# Command to run when container starts
+# Starts the Kestrel web server with your application
+# DLL name must match your project name
+ENTRYPOINT ["dotnet", "BlueTreadApp.dll"]
+
+# ===========================================================================================
+# BUILD & RUN INSTRUCTIONS
+# ===========================================================================================
+#
+# BUILD IMAGE:
+# docker build -t bluetreadapp:latest .
+# docker build -t yourdockerhubusername/bluetreadapp:latest .
+# docker build -t yourdockerhubusername/bluetreadapp:v1.0.0 .
+#
+# BUILD WITH NETWORK MODE (if DNS issues persist):
+# docker build --network=host -t bluetreadapp:latest .
+#
+# BUILD WITH BUILDKIT (RECOMMENDED):
+# DOCKER_BUILDKIT=1 docker build -t bluetreadapp:latest .
+#
+# RUN CONTAINER (Basic):
+# docker run -d -p 8080:8080 --name bluetreadapp bluetreadapp:latest
+#
+# RUN CONTAINER (with environment variables):
+# docker run -d \
+#   -p 8080:8080 \
+#   --name bluetreadapp \
+#   -e ASPNETCORE_ENVIRONMENT=Production \
+#   -e JwtSettings__SecretKey="YourProductionSecretKey" \
+#   -e ThirdPartyApi__ApiKey="YourActualApiKey" \
+#   -e Azure__KeyVaultUri="https://your-vault.vault.azure.net/" \
+#   bluetreadapp:latest
+#
+# RUN CONTAINER (with Azure Key Vault):
+# docker run -d \
+#   -p 8080:8080 \
+#   --name bluetreadapp \
+#   -e ASPNETCORE_ENVIRONMENT=Production \
+#   -e Azure__KeyVaultUri="https://your-vault.vault.azure.net/" \
+#   -e AZURE_CLIENT_ID="your-managed-identity-client-id" \
+#   -e AZURE_CLIENT_SECRET="your-service-principal-secret" \
+#   -e AZURE_TENANT_ID="your-tenant-id" \
+#   bluetreadapp:latest
+#
+# PUSH TO DOCKER HUB:
+# docker login
+# docker push yourdockerhubusername/bluetreadapp:latest
+# docker push yourdockerhubusername/bluetreadapp:v1.0.0
+#
+# PULL FROM DOCKER HUB:
+# docker pull yourdockerhubusername/bluetreadapp:latest
+#
+# VIEW RUNNING CONTAINERS:
+# docker ps
+#
+# VIEW LOGS:
+# docker logs bluetreadapp
+# docker logs -f bluetreadapp  (follow logs in real-time)
+#
+# STOP CONTAINER:
+# docker stop bluetreadapp
+#
+# REMOVE CONTAINER:
+# docker rm bluetreadapp
+#
+# REMOVE IMAGE:
+# docker rmi bluetreadapp:latest
+#
+# ===========================================================================================
+# TROUBLESHOOTING CONNECTIVITY ISSUES
+# ===========================================================================================
+#
+# If you see apt-get or NuGet connectivity errors (exit code: 100):
+#
+# 1. CHECK DOCKER DNS:
+#    - Docker Desktop -> Settings -> Docker Engine
+#    - Add DNS configuration:
+#      {
+#        "dns": ["8.8.8.8", "8.8.4.4"]
+#      }
+#    - Click "Apply & Restart"
+#
+# 2. BUILD WITH HOST NETWORK:
+#    docker build --network=host -t bluetreadapp:latest .
+#    docker-compose build  (already configured with host network)
+#
+# 3. USE BUILDKIT:
+#    DOCKER_BUILDKIT=1 docker build --network=host -t bluetreadapp:latest .
+#
+# 4. CLEAR BUILD CACHE:
+#    docker builder prune -a
+#    docker build --no-cache -t bluetreadapp:latest .
+#
+# 5. RESTART DOCKER DESKTOP:
+#    - Quit Docker Desktop completely
+#    - Wait 10 seconds
+#    - Start Docker Desktop
+#    - Wait for green icon in system tray
+#    - Retry build
+#
+# 6. DISABLE VPN/PROXY TEMPORARILY:
+#    - Disconnect from VPN
+#    - Retry build
+#    - If successful, configure VPN to allow Docker
+#
+# 7. CHECK INTERNET CONNECTION:
+#    - Ensure stable internet connection
+#    - Test: curl https://api.nuget.org/v3/index.json
+#    - Test: curl http://deb.debian.org
+#
+# ===========================================================================================
+# DOCKER COMPOSE EXAMPLE
+# ===========================================================================================
+# Create docker-compose.yml for easier management:
+#
+# services:
+#   bluetreadapp:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile
+#       network: host
+#     image: bluetreadapp:latest
+#     container_name: bluetreadapp
+#     ports:
+#       - "8080:8080"
+#     dns:
+#       - 8.8.8.8
+#       - 8.8.4.4
+#     environment:
+#       - ASPNETCORE_ENVIRONMENT=Production
+#       - JwtSettings__SecretKey=${JWT_SECRET_KEY}
+#       - ThirdPartyApi__ApiKey=${THIRDPARTY_API_KEY}
+#     restart: unless-stopped
+#
+# Run with docker-compose:
+# docker-compose up -d --build
+# docker-compose down
+# docker-compose logs -f
+#
+# ===========================================================================================
+# PRODUCTION DEPLOYMENT NOTES
+# ===========================================================================================
+#
+# AZURE CONTAINER INSTANCES (ACI):
+# az container create \
+#   --resource-group myResourceGroup \
+#   --name bluetreadapp \
+#   --image yourdockerhubusername/bluetreadapp:latest \
+#   --dns-name-label bluetreadapp \
+#   --ports 8080 \
+#   --environment-variables \
+#     ASPNETCORE_ENVIRONMENT=Production \
+#     Azure__KeyVaultUri=https://your-vault.vault.azure.net/
+#
+# AZURE CONTAINER APPS:
+# az containerapp create \
+#   --name bluetreadapp \
+#   --resource-group myResourceGroup \
+#   --environment myEnvironment \
+#   --image yourdockerhubusername/bluetreadapp:latest \
+#   --target-port 8080 \
+#   --ingress external \
+#   --env-vars \
+#     ASPNETCORE_ENVIRONMENT=Production \
+#     Azure__KeyVaultUri=https://your-vault.vault.azure.net/
+#
+# AZURE KUBERNETES SERVICE (AKS):
+# kubectl create deployment bluetreadapp --image=yourdockerhubusername/bluetreadapp:latest
+# kubectl expose deployment bluetreadapp --type=LoadBalancer --port=80 --target-port=8080
+#
+# AWS ECS/Fargate:
+# Use AWS Console or CLI to create ECS service with this image
+#
+# GOOGLE CLOUD RUN:
+# gcloud run deploy bluetreadapp \
+#   --image yourdockerhubusername/bluetreadapp:latest \
+#   --platform managed \
+#   --region us-central1 \
+#   --allow-unauthenticated
+#
+# ===========================================================================================
+# SECURITY RECOMMENDATIONS
+# ===========================================================================================
+# 
+# 1. SECRETS MANAGEMENT:
+#    - Never hardcode secrets in Dockerfile
+#    - Use environment variables or Azure Key Vault
+#    - Rotate secrets regularly
+#    - Use Docker secrets or Kubernetes secrets in orchestrated environments
+#
+# 2. IMAGE SECURITY:
+#    - Scan images for vulnerabilities: docker scan bluetreadapp:latest
+#    - Use minimal base images (aspnet runtime, not SDK)
+#    - Run as non-root user (already configured)
+#    - Keep base images updated regularly
+#
+# 3. NETWORK SECURITY:
+#    - Use HTTPS in production (configure reverse proxy)
+#    - Implement rate limiting (already configured in app)
+#    - Use firewall rules to restrict access
+#    - Consider using Azure Front Door or Application Gateway
+#
+# 4. MONITORING:
+#    - Implement health checks
+#    - Set up logging (Azure Application Insights, ELK, etc.)
+#    - Monitor resource usage (CPU, memory, network)
+#    - Set up alerts for errors and performance issues
+#
+# ===========================================================================================

@@ -1,0 +1,46 @@
+.home-bg {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #dbeafe 0%, #93c5fd 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.home-card {
+    background: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    padding: 2rem;
+    max-width: 32rem;
+    width: 100%;
+    text-align: center;
+}
+
+.home-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #2563eb;
+    margin-bottom: 1rem;
+}
+
+.home-desc {
+    font-size: 1.125rem;
+    color: #374151;
+    margin-bottom: 1.5rem;
+}
+
+.home-link {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: #2563eb;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 8px rgba(37,99,235,0.12);
+    transition: background 0.2s;
+    text-decoration: none;
+}
+
+.home-link:hover {
+    background: #1d4ed8;
+}
