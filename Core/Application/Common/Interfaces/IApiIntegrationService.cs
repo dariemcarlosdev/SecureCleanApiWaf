@@ -31,7 +31,12 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         /// Example: "api/products" or "api/users"
         /// 
         /// Generic method for flexibility - use when working with DTOs or dynamic responses.
-        /// </remarks>
+        /// <summary>
+/// Retrieve and deserialize all items from the specified API endpoint.
+/// </summary>
+/// <typeparam name="T">The target type to deserialize the API response into.</typeparam>
+/// <param name="apiUrl">Relative API endpoint path to request (appended to the configured base address).</param>
+/// <returns>A <see cref="Result{T}"/> containing the deserialized data of type <typeparamref name="T"/> on success, or error information on failure.</returns>
         Task<Result<T>> GetAllDataAsync<T>(string apiUrl);
 
         /// <summary>
@@ -46,7 +51,12 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         /// Example: apiUrl="api/products", id="123" ? GET /api/products/123
         /// 
         /// Generic method for flexibility - use when working with DTOs or dynamic responses.
-        /// </remarks>
+        /// <summary>
+/// Retrieve a single resource from the specified API endpoint by its identifier and deserialize it to type <typeparamref name="T"/>.
+/// </summary>
+/// <param name="apiUrl">Relative API endpoint path appended to the configured base address (e.g., "api/products").</param>
+/// <param name="id">The resource identifier appended to <paramref name="apiUrl"/> to form the request path (e.g., "{id}").</param>
+/// <returns>A <see cref="Result{T}"/> containing the deserialized item on success, or error information on failure.</returns>
         Task<Result<T>> GetDataByIdAsync<T>(string apiUrl, string id);
 
         /// <summary>
@@ -74,7 +84,11 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         ///     }
         /// }
         /// ```
-        /// </remarks>
+        /// <summary>
+/// Fetches data from the specified API endpoint and maps the response to a list of domain ApiDataItem entities.
+/// </summary>
+/// <param name="apiUrl">Relative API endpoint path (resolved against the configured base address), e.g. "products".</param>
+/// <returns>A Result containing the mapped list of <see cref="ApiDataItem"/> on success, or error information on failure.</returns>
         Task<Result<List<ApiDataItem>>> GetApiDataItemsAsync(string apiUrl);
 
         /// <summary>
@@ -99,7 +113,12 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         ///     }
         /// }
         /// ```
-        /// </remarks>
+        /// <summary>
+/// Retrieve a single API data item by ID and map it to an <c>ApiDataItem</c> domain entity.
+/// </summary>
+/// <param name="apiUrl">Relative API endpoint path to which the <paramref name="id"/> will be appended (for example, "api/products").</param>
+/// <param name="id">Identifier of the resource to fetch.</param>
+/// <returns>A <c>Result&lt;ApiDataItem&gt;</c> containing the mapped domain entity on success, or error information on failure.</returns>
         Task<Result<ApiDataItem>> GetApiDataItemByIdAsync(string apiUrl, string id);
 
         /// <summary>
@@ -124,7 +143,11 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         ///     _logger.LogWarning("External API unavailable, using cached data");
         /// }
         /// ```
-        /// </remarks>
+        /// <summary>
+/// Checks whether the specified API endpoint is available and responsive.
+/// </summary>
+/// <param name="apiUrl">Relative path of the API endpoint to probe (based on the configured base address).</param>
+/// <returns>A Result containing `true` if the API responded and is healthy, `false` if it responded but is unhealthy or unresponsive, or error information on failure.</returns>
         Task<Result<bool>> CheckApiHealthAsync(string apiUrl);
 
         /// <summary>
@@ -146,7 +169,16 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         ///     page: 1, 
         ///     pageSize: 50);
         /// ```
-        /// </remarks>
+        /// <summary>
+/// Retrieve a single page of items from the specified API endpoint and map the response into a paginated DTO.
+/// </summary>
+/// <remarks>
+/// The <paramref name="apiUrl"/> should be a relative endpoint appended to the configured API base address; the implementation will add paging query parameters for <paramref name="page"/> and <paramref name="pageSize"/> when calling the upstream API.
+/// </remarks>
+/// <param name="apiUrl">Relative API path (for example, "products").</param>
+/// <param name="page">Page number to retrieve (starting at 1).</param>
+/// <param name="pageSize">Number of items per page.</param>
+/// <returns>A Result containing a PaginatedResponseDto of items of type <typeparamref name="T"/> on success, or error information on failure.</returns>
         Task<Result<PaginatedResponseDto<T>>> GetPaginatedDataAsync<T>(string apiUrl, int page, int pageSize);
     }
 }

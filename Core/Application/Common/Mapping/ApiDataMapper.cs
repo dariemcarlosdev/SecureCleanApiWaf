@@ -46,6 +46,10 @@ namespace SecureCleanApiWaf.Core.Application.Common.Mapping
     {
         private readonly ILogger<ApiDataMapper> _logger;
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="ApiDataMapper"/> using the provided logger.
+        /// </summary>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="logger"/> is null.</exception>
         public ApiDataMapper(ILogger<ApiDataMapper> logger)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -59,7 +63,12 @@ namespace SecureCleanApiWaf.Core.Application.Common.Mapping
         /// <returns>ApiDataItem domain entity.</returns>
         /// <remarks>
         /// Handles common API response structures. Customize based on your actual API format.
-        /// </remarks>
+        /// <summary>
+        /// Maps a single dynamic API response item to an ApiDataItem domain entity.
+        /// </summary>
+        /// <param name="apiItem">The dynamic API response object containing fields such as id, name, description, and other metadata.</param>
+        /// <param name="sourceUrl">The originating API URL to record as the data source.</param>
+        /// <returns>An ApiDataItem populated from the API item, or `null` if required fields are missing or an error occurs during mapping.</returns>
         public ApiDataItem? MapToApiDataItem(dynamic apiItem, string sourceUrl)
         {
             try
@@ -104,7 +113,12 @@ namespace SecureCleanApiWaf.Core.Application.Common.Mapping
         /// <typeparam name="T">The type of API response collection.</typeparam>
         /// <param name="apiResponse">The API response containing items.</param>
         /// <param name="sourceUrl">The source API URL.</param>
-        /// <returns>List of ApiDataItem domain entities.</returns>
+        /// <summary>
+        /// Map a dynamic API response into a list of ApiDataItem domain entities.
+        /// </summary>
+        /// <param name="apiResponse">The API response to map; may be an IEnumerable<dynamic>, an object containing a collection under `data`, `items`, or `results`, or a single item object.</param>
+        /// <param name="sourceUrl">The source URL used to populate the ApiDataItem's external source information.</param>
+        /// <returns>A list of ApiDataItem created from the response; the list will be empty if no mappable items are found.</returns>
         public List<ApiDataItem> MapToApiDataItems<T>(T apiResponse, string sourceUrl)
         {
             var results = new List<ApiDataItem>();
@@ -162,7 +176,12 @@ namespace SecureCleanApiWaf.Core.Application.Common.Mapping
         /// </summary>
         /// <param name="existingItem">The existing domain entity to update.</param>
         /// <param name="apiItem">The fresh API response item.</param>
-        /// <returns>True if updated successfully, false otherwise.</returns>
+        /// <summary>
+        /// Update an existing ApiDataItem with values extracted from a dynamic API response item.
+        /// </summary>
+        /// <param name="existingItem">The domain entity to update; it will be modified in place.</param>
+        /// <param name="apiItem">The dynamic API response object to extract values from (e.g., fields like "name"/"title", "description", and metadata).</param>
+        /// <returns>`true` if the existingItem was updated and its metadata refreshed; `false` if required data was missing or an error occurred.</returns>
         public bool UpdateFromApiResponse(ApiDataItem existingItem, dynamic apiItem)
         {
             try
@@ -198,7 +217,15 @@ namespace SecureCleanApiWaf.Core.Application.Common.Mapping
         /// Extracts metadata from API item and adds to domain entity.
         /// </summary>
         /// <param name="apiDataItem">The domain entity to add metadata to.</param>
-        /// <param name="apiItem">The API response item.</param>
+        /// <summary>
+        /// Extracts common metadata fields from a dynamic API item and adds them to the provided ApiDataItem.
+        /// </summary>
+        /// <param name="apiDataItem">The domain entity to receive metadata entries.</param>
+        /// <param name="apiItem">The dynamic API response item to extract metadata from.</param>
+        /// <remarks>
+        /// Attempts to extract and add the following metadata keys when present: "category", "price", "rating", "tags", "status", and "source_timestamp".
+        /// Extraction failures are logged and do not prevent the method from completing.
+        /// </remarks>
         private void AddMetadataFromApiItem(ApiDataItem apiDataItem, dynamic apiItem)
         {
             try
@@ -254,7 +281,12 @@ namespace SecureCleanApiWaf.Core.Application.Common.Mapping
         /// </summary>
         /// <param name="obj">The dynamic object.</param>
         /// <param name="propertyNames">Possible property names to try.</param>
-        /// <returns>The property value if found, null otherwise.</returns>
+        /// <summary>
+        /// Retrieve the first matching property value from a dynamic object using multiple candidate names.
+        /// </summary>
+        /// <param name="obj">The dynamic object or dictionary to read properties from.</param>
+        /// <param name="propertyNames">Candidate property names to try in order (matching is case-insensitive).</param>
+        /// <returns>The value of the first property found, or null if none is present or an error occurs.</returns>
         private static object? GetPropertyValue(dynamic obj, params string[] propertyNames)
         {
             if (obj == null) return null;

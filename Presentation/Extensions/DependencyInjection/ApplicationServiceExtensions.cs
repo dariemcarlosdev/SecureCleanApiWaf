@@ -18,6 +18,10 @@ namespace SecureCleanApiWaf.Presentation.Extensions.DependencyInjection
     /// </summary>
     public static class ApplicationServiceExtensions
     {
+        /// <summary>
+        /// Registers application-layer services into the dependency injection container, including MediatR handlers, AutoMapper profiles, the ApiDataMapper, concrete closed generic request handlers for DTOs, authentication CQRS handlers, and MediatR pipeline behaviors (e.g., caching).
+        /// </summary>
+        /// <returns>The same <see cref="IServiceCollection"/> instance with application services registered.</returns>
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             // Get the assembly containing Application layer code
@@ -52,6 +56,13 @@ namespace SecureCleanApiWaf.Presentation.Extensions.DependencyInjection
             return services;
         }
 
+        /// <summary>
+        /// Registers closed generic MediatR handlers for concrete DTO/model types required by the application.
+        /// </summary>
+        /// <remarks>
+        /// Adds transient registrations that map specific request types (for example, <c>GetApiDataQuery&lt;T&gt;</c> and <c>GetApiDataByIdQuery&lt;T&gt;</c>) to their concrete handler implementations.
+        /// Extend this method with additional registrations when new DTO/model types are introduced (see the <c>SampleDtoModel</c> example).
+        /// </remarks>
         private static void RegisterConcreteGenericHandlers(IServiceCollection services)
         {
             // Register closed generic handlers for each concrete type you need
@@ -95,6 +106,15 @@ namespace SecureCleanApiWaf.Presentation.Extensions.DependencyInjection
         /// - Implement proper logging and error handling
         /// - Support caching through ICacheable interface where appropriate
         /// - Integrate with existing infrastructure services
+        /// <summary>
+        /// Registers authentication-related MediatR request handlers into the DI container.
+        /// </summary>
+        /// <remarks>
+        /// Adds transient registrations for command and query handlers used by the authentication flow:
+        /// - LoginUserCommand -> LoginUserCommandHandler (IRequestHandler&lt;LoginUserCommand, Result&lt;LoginResponseDto&gt;&gt;)
+        /// - BlacklistTokenCommand -> BlacklistTokenCommandHandler (IRequestHandler&lt;BlacklistTokenCommand, Result&lt;BlacklistTokenResponse&gt;&gt;)
+        /// - IsTokenBlacklistedQuery -> IsTokenBlacklistedQueryHandler (IRequestHandler&lt;IsTokenBlacklistedQuery, Result&lt;TokenBlacklistStatusDto&gt;&gt;)
+        /// - GetTokenBlacklistStatsQuery -> GetTokenBlacklistStatsQueryHandler (IRequestHandler&lt;GetTokenBlacklistStatsQuery, Result&lt;TokenBlacklistStatisticsDto&gt;&gt;)
         /// </remarks>
         private static void RegisterAuthenticationHandlers(IServiceCollection services)
         {

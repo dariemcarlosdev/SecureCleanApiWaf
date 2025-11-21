@@ -350,7 +350,17 @@ public class TokenRevokedEvent : BaseDomainEvent
     /// </exception>
     /// <exception cref="ArgumentException">
     /// Thrown when <paramref name="tokenId"/> or <paramref name="userId"/> is empty GUID.
-    /// </exception>
+    /// <summary>
+    /// Creates a TokenRevokedEvent capturing details about a JWT token that was explicitly revoked before its expiration.
+    /// </summary>
+    /// <param name="tokenId">The token's unique identifier (JTI) used as the blacklist key.</param>
+    /// <param name="userId">The unique identifier of the user who owned the token.</param>
+    /// <param name="username">The username of the user at the time of revocation.</param>
+    /// <param name="tokenType">The type of token that was revoked (e.g., AccessToken or RefreshToken).</param>
+    /// <param name="expiresAt">The original expiration time of the token.</param>
+    /// <param name="reason">A human-readable reason for the revocation.</param>
+    /// <exception cref="ArgumentException">Thrown when <paramref name="tokenId"/> or <paramref name="userId"/> is <see cref="Guid.Empty"/>.</exception>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="username"/> or <paramref name="reason"/> is null, empty, or whitespace.</exception>
     public TokenRevokedEvent(
         Guid tokenId,
         Guid userId,

@@ -29,7 +29,11 @@ namespace SecureCleanApiWaf.Core.Application.Features.SampleData.Queries
         /// </summary>
         /// <param name="apiUrl">The URL of the API endpoint to query. Cannot be null or empty.</param>
         /// <param name="bypassCache">Specifies whether to bypass any cached data and retrieve fresh results from the API. Set to <see
-        /// langword="true"/> to ignore cached responses; otherwise, <see langword="false"/>.</param>
+        /// <summary>
+        /// Initializes a new <see cref="GetApiDataQuery{T}"/> for the specified API endpoint.
+        /// </summary>
+        /// <param name="apiUrl">The base URL of the API endpoint to retrieve data from.</param>
+        /// <param name="bypassCache">If <see langword="true"/>, bypass cached responses and fetch fresh data; otherwise allow using cached results.</param>
         public GetApiDataQuery(string apiUrl, bool bypassCache = false)
         {
             ApiUrl = apiUrl;

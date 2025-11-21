@@ -47,7 +47,12 @@ namespace SecureCleanApiWaf.Infrastructure.Middleware
         /// </summary>
         /// <param name="next">The next middleware in the pipeline</param>
         /// <param name="mediator">MediatR instance for CQRS queries</param>
-        /// <param name="logger">Logger for security events and debugging</param>
+        /// <summary>
+        /// Middleware that validates JWT tokens against a blacklist after authentication and before authorization.
+        /// </summary>
+        /// <param name="next">The next middleware delegate in the pipeline.</param>
+        /// <param name="mediator">MediatR mediator used to dispatch queries to check token blacklist status.</param>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="next"/>, <paramref name="mediator"/>, or <paramref name="logger"/> is null.</exception>
         public JwtBlacklistValidationMiddleware(
             RequestDelegate next,
             IMediator mediator,
@@ -61,7 +66,11 @@ namespace SecureCleanApiWaf.Infrastructure.Middleware
         /// <summary>
         /// Processes HTTP requests to validate JWT tokens against the blacklist using CQRS.
         /// </summary>
-        /// <param name="context">The HTTP context for the current request</param>
+        /// <summary>
+        /// Validates a Bearer JWT from the current HTTP request against the token blacklist and either rejects blacklisted tokens or continues the pipeline.
+        /// </summary>
+        /// <param name="context">The HTTP context for the current request; used to read the Authorization header and to write a 401 response for blacklisted tokens.</param>
+        /// <returns>A task that completes when the middleware has finished processing the request.</returns>
         public async Task InvokeAsync(HttpContext context)
         {
             try
@@ -137,7 +146,11 @@ namespace SecureCleanApiWaf.Infrastructure.Middleware
         /// Extracts JWT token from the Authorization header.
         /// </summary>
         /// <param name="context">HTTP context containing the request</param>
-        /// <returns>JWT token string or null if not found</returns>
+        /// <summary>
+        /// Extracts the Bearer JWT from the request's Authorization header if present and appears to be a well-formed JWT.
+        /// </summary>
+        /// <param name="context">The current HTTP context whose request headers are inspected for a Bearer token.</param>
+        /// <returns>The Bearer JWT string when present and consisting of three dot-separated parts; `null` otherwise.</returns>
         private string? ExtractTokenFromRequest(HttpContext context)
         {
             try
@@ -190,7 +203,12 @@ namespace SecureCleanApiWaf.Infrastructure.Middleware
         /// </summary>
         /// <param name="context">HTTP context for the current request</param>
         /// <param name="token">The blacklisted token</param>
-        /// <param name="blacklistStatus">Detailed blacklist status from CQRS query</param>
+        /// <summary>
+        /// Produce a 401 Unauthorized response for a request carrying a blacklisted JWT, emit a security log, and write an enhanced JSON error payload.
+        /// </summary>
+        /// <param name="context">The current HTTP context for the request/response.</param>
+        /// <param name="token">The raw JWT string that was identified as blacklisted (used for logging/context).</param>
+        /// <param name="blacklistStatus">Detailed blacklist status returned by the CQRS query (used to populate logs and the error payload).</param>
         private async Task HandleBlacklistedToken(HttpContext context, string token, TokenBlacklistStatusDto blacklistStatus)
         {
             try
@@ -280,6 +298,13 @@ namespace SecureCleanApiWaf.Infrastructure.Middleware
         /// 2. Use CQRS queries to check tokens against the blacklist service
         /// 3. Return 401 for blacklisted tokens with detailed information
         /// 4. Allow valid tokens to continue with automatic caching benefits
+        /// <summary>
+        /// Registers the JWT blacklist validation middleware into the ASP.NET Core request pipeline.
+        /// </summary>
+        /// <param name="builder">The application builder to add the middleware to.</param>
+        /// <returns>The same <see cref="IApplicationBuilder"/> instance so additional middleware can be chained.</returns>
+        /// <remarks>
+        /// The middleware should be placed after authentication and before authorization (for example, after <c>UseAuthentication()</c> and before <c>UseAuthorization()</c>) so that authenticated tokens are checked against the blacklist prior to authorization decisions.
         /// </remarks>
         public static IApplicationBuilder UseJwtBlacklistValidation(this IApplicationBuilder builder)
         {

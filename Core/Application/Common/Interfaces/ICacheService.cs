@@ -20,7 +20,12 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         /// <returns>The cached value if found; otherwise, default(T).</returns>
         /// <remarks>
         /// Returns null for reference types and default value for value types if the key doesn't exist.
-        /// </remarks>
+        /// <summary>
+/// Retrieves a cached value for the specified key.
+/// </summary>
+/// <param name="key">The cache key to look up.</param>
+/// <param name="cancellationToken">A token to cancel the operation.</param>
+/// <returns>The cached value if present; `null` for reference types or `default(T)` for value types when the key is not found.</returns>
         Task<T?> GetAsync<T>(string key, CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -35,7 +40,16 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         /// <remarks>
         /// If an item with the same key already exists, it will be overwritten.
         /// The expiration time is absolute from the time of insertion.
-        /// </remarks>
+        /// <summary>
+/// Stores a value in the distributed cache under the specified key.
+/// </summary>
+/// <param name="key">Cache key to store the value under.</param>
+/// <param name="value">Value to store in the cache.</param>
+/// <param name="expiration">Optional absolute expiration relative to now; if null a default of 5 minutes is applied.</param>
+/// <param name="cancellationToken">Token to cancel the operation.</param>
+/// <remarks>
+/// If an entry with the same key already exists it will be overwritten. The provided expiration is absolute from the time of insertion.
+/// </remarks>
         Task SetAsync<T>(string key, T value, TimeSpan? expiration = null, CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -46,7 +60,14 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         /// <returns>A task representing the asynchronous operation.</returns>
         /// <remarks>
         /// If the key doesn't exist, the operation completes successfully without error.
-        /// </remarks>
+        /// <summary>
+/// Removes the cached entry identified by the provided key.
+/// </summary>
+/// <param name="key">The cache key to remove.</param>
+/// <param name="cancellationToken">A token to cancel the operation.</param>
+/// <remarks>
+/// Completes successfully if the key does not exist; no error is thrown for missing keys.
+/// </remarks>
         Task RemoveAsync(string key, CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -54,7 +75,11 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         /// </summary>
         /// <param name="key">The unique identifier for the cached item.</param>
         /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
-        /// <returns>True if the key exists; otherwise, false.</returns>
+        /// <summary>
+/// Determines whether a value exists in the cache for the specified key.
+/// </summary>
+/// <param name="key">The cache key to check for existence.</param>
+/// <returns>`true` if the key exists in the cache, `false` otherwise.</returns>
         Task<bool> ExistsAsync(string key, CancellationToken cancellationToken = default);
     }
 }

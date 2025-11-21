@@ -68,7 +68,13 @@ namespace SecureCleanApiWaf.Core.Application.Features.SampleData.Queries
         /// <param name="repository">Repository for ApiDataItem persistence and retrieval.</param>
         /// <param name="apiService">Service for external API integration operations.</param>
         /// <param name="mapper">Mapper for converting API responses to domain entities.</param>
-        /// <param name="logger">Logger for monitoring and debugging.</param>
+        /// <summary>
+        /// Initializes a new instance of <see cref="GetApiDataQueryHandler{T}"/> with its required dependencies.
+        /// </summary>
+        /// <param name="repository">Repository for persisting and retrieving ApiDataItem domain entities.</param>
+        /// <param name="apiService">Service used to fetch data from the external API.</param>
+        /// <param name="mapper">Mapper that converts external API responses into ApiDataItem entities.</param>
+        /// <param name="logger">Logger for the handler.</param>
         public GetApiDataQueryHandler(
             IApiDataItemRepository repository,
             IApiIntegrationService apiService,
@@ -86,7 +92,12 @@ namespace SecureCleanApiWaf.Core.Application.Features.SampleData.Queries
         /// </summary>
         /// <param name="request">The query containing the API URL for data retrieval.</param>
         /// <param name="cancellationToken">Cancellation token for async operation.</param>
-        /// <returns>A task representing the async operation with Result containing the data.</returns>
+        /// <summary>
+        /// Handles a GetApiDataQuery by returning API data using a cache-first strategy and synchronizing repository state.
+        /// </summary>
+        /// <param name="request">The query containing the API URL to fetch and the requested response type.</param>
+        /// <param name="cancellationToken">A token to cancel the operation.</param>
+        /// <returns>A Result&lt;T&gt; containing the mapped response data on success; a failure Result with an error message on failure.</returns>
         public async Task<Result<T>> Handle(GetApiDataQuery<T> request, CancellationToken cancellationToken)
         {
             try
@@ -229,7 +240,10 @@ namespace SecureCleanApiWaf.Core.Application.Features.SampleData.Queries
         /// Maps ApiDataItem entities to the expected response type T.
         /// </summary>
         /// <param name="items">List of domain entities.</param>
-        /// <returns>Result with mapped response data.</returns>
+        /// <summary>
+        /// Map domain ApiDataItem entities to the requested response shape T (e.g., List&lt;ApiDataItem&gt;, IEnumerable&lt;ApiDataItem&gt;, object, or a compatible custom DTO).
+        /// </summary>
+        /// <returns>`Result<T>` containing the mapped response value when mapping succeeds; a failed `Result<T>` with an error message when mapping fails.</returns>
         private Result<T> MapToResponseType(IReadOnlyList<ApiDataItem> items)
         {
             try

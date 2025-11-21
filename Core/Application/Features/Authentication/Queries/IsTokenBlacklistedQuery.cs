@@ -60,7 +60,12 @@ namespace SecureCleanApiWaf.Core.Application.Features.Authentication.Queries
         /// Initializes a new instance of IsTokenBlacklistedQuery.
         /// </summary>
         /// <param name="jwtToken">JWT token to check</param>
-        /// <param name="bypassCache">Whether to bypass cache for real-time results</param>
+        /// <summary>
+        /// Creates a query that checks whether the provided JWT is blacklisted and prepares its cache metadata.
+        /// </summary>
+        /// <param name="jwtToken">The JWT to check for blacklist status; used to derive the cache key.</param>
+        /// <param name="bypassCache">If true, instructs handlers to bypass cached results and obtain the latest status.</param>
+        /// <exception cref="System.ArgumentNullException">Thrown when <paramref name="jwtToken"/> is null.</exception>
         public IsTokenBlacklistedQuery(string jwtToken, bool bypassCache = false)
         {
             JwtToken = jwtToken ?? throw new ArgumentNullException(nameof(jwtToken));
@@ -74,7 +79,11 @@ namespace SecureCleanApiWaf.Core.Application.Features.Authentication.Queries
         /// Generates a secure cache key from the JWT token.
         /// </summary>
         /// <param name="token">JWT token</param>
-        /// <returns>Cache key for the token blacklist status</returns>
+        /// <summary>
+        /// Builds a cache key identifying the blacklist status for the specified JWT.
+        /// </summary>
+        /// <param name="token">The raw JWT string to derive the cache key from.</param>
+        /// <returns>`TokenBlacklist:JTI:{jti}` if the token contains a JTI claim; otherwise `TokenBlacklist:Hash:{hash}` where `{hash}` is the token's GetHashCode().</returns>
         private static string GenerateCacheKey(string token)
         {
             try

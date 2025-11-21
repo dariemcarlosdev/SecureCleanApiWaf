@@ -35,6 +35,10 @@ namespace SecureCleanApiWaf.Presentation.Extensions.HttpPipeline
     /// </remarks>
     public static class WebApplicationExtensions
     {
+        /// <summary>
+        /// Configures the application's HTTP request pipeline in a security-first, production-ready order and maps endpoints.
+        /// </summary>
+        /// <returns>The same <see cref="WebApplication"/> instance after configuring middleware, endpoints, and security headers.</returns>
         public static WebApplication ConfigurePipeline(this WebApplication app)
         {
             // ===========================================================================================

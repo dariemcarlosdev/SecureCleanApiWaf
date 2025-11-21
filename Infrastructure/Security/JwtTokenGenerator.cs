@@ -17,6 +17,9 @@ namespace SecureCleanApiWaf.Infrastructure.Security
     {
         private readonly IConfiguration _configuration;
 
+        /// <summary>
+        /// Initializes a new instance that uses the provided application configuration to read JWT settings for token generation.
+        /// </summary>
         public JwtTokenGenerator(IConfiguration configuration)
         {
             _configuration = configuration;
@@ -39,6 +42,13 @@ namespace SecureCleanApiWaf.Infrastructure.Security
         /// empty, no role claims are included.</param>
         /// <returns>A string representing the serialized JWT. The token includes user identity and role claims, and is signed
         /// using the configured secret key.</returns>
+        /// <summary>
+        /// Generate a signed JSON Web Token containing user identity and optional role claims.
+        /// </summary>
+        /// <param name="userId">The unique identifier for the user, stored as the `sub` claim.</param>
+        /// <param name="username">The user's username, stored as the `unique_name` claim.</param>
+        /// <param name="roles">Optional array of role names to include as separate role claims; pass null or an empty array to omit role claims.</param>
+        /// <returns>Compact serialized JWT string.</returns>
         /// <exception cref="InvalidOperationException">Thrown if the JWT secret key is not configured in the application settings.</exception>
         public string GenerateToken(string userId, string username, string[] roles = null)
         {
@@ -142,7 +152,11 @@ namespace SecureCleanApiWaf.Infrastructure.Security
         /// - Single role: "User"
         /// 
         /// Usage: var token = tokenGenerator.GenerateUserToken("john.doe");
-        /// </remarks>
+        /// <summary>
+        /// Generates a JWT for a standard user and includes the "User" role.
+        /// </summary>
+        /// <param name="username">The username to embed in the token; defaults to "testuser".</param>
+        /// <returns>The serialized JWT string containing the user's identity and roles.</returns>
         public string GenerateUserToken(string username = "testuser")
         {
             // Generate a user token with basic "User" role
@@ -166,7 +180,11 @@ namespace SecureCleanApiWaf.Infrastructure.Security
         /// while the "Admin" role grants access to administrative endpoints.
         /// 
         /// Usage: var token = tokenGenerator.GenerateAdminToken("admin.user");
-        /// </remarks>
+        /// <summary>
+        /// Generates a JWT for an administrative user.
+        /// </summary>
+        /// <param name="username">Username to include in the token; defaults to "admin".</param>
+        /// <returns>The serialized JWT containing both "User" and "Admin" role claims.</returns>
         public string GenerateAdminToken(string username = "admin")
         {
             // Generate an admin token with both "User" and "Admin" roles

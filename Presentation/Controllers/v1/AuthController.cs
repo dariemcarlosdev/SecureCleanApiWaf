@@ -43,7 +43,12 @@ namespace SecureCleanApiWaf.Presentation.Controllers.v1
         /// </summary>
         /// <param name="tokenGenerator">Service for creating JWT tokens</param>
         /// <param name="logger">Logger for tracking token generation requests</param>
-        /// <param name="mediator">MediatR instance for CQRS pattern</param>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AuthController"/> class with required services.
+        /// </summary>
+        /// <param name="tokenGenerator">Service that creates development/demo JWT tokens.</param>
+        /// <param name="logger">Logger for the controller.</param>
+        /// <param name="mediator">MediatR mediator used to dispatch authentication commands.</param>
         public AuthController(
             JwtTokenGenerator tokenGenerator, 
             ILogger<AuthController> logger,
@@ -87,7 +92,18 @@ namespace SecureCleanApiWaf.Presentation.Controllers.v1
         /// - Easy to extend with additional behaviors (validation, caching, etc.)
         /// </remarks>
         /// <response code="200">Returns the JWT token with metadata</response>
-        /// <response code="400">If the request is invalid</response>
+        /// <summary>
+        /// Authenticate a user via a CQRS login command and return a JWT token and related metadata on success.
+        /// </summary>
+        /// <param name="request">LoginRequest containing Username, Password, and Role. Username is required.</param>
+        /// <returns>
+        /// 200 OK with an object containing `token`, `tokenType`, `expiresIn`, `username`, `roles`, token metadata, and a message on successful authentication;
+        /// 400 Bad Request with an error object when validation fails or the login command reports failure;
+        /// 500 Internal Server Error with a generic error payload on unexpected failures.
+        /// </returns>
+        /// <remarks>
+        /// This endpoint is intended for development/demo use. In production, authentication should be handled by a secure identity provider and passwords must be validated, hashed, and protected.
+        /// </remarks>
         [HttpPost("login")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -201,7 +217,16 @@ namespace SecureCleanApiWaf.Presentation.Controllers.v1
         /// </remarks>
         /// <response code="200">Logout successful, token blacklisted</response>
         /// <response code="400">No token provided or invalid token format</response>
-        /// <response code="401">Token is already invalid or expired</response>
+        /// <summary>
+        /// Blacklists the caller's JWT to perform a logout using a CQRS command.
+        /// </summary>
+        /// <returns>
+        /// An IActionResult representing the outcome:
+        /// 200 OK with logout details when the token is successfully blacklisted;
+        /// 400 Bad Request if the Authorization token is missing or blacklisting failed;
+        /// 401 Unauthorized if the provided token is already invalid or expired;
+        /// 500 Internal Server Error for unexpected server errors.
+        /// </returns>
         [HttpPost("logout")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -317,7 +342,12 @@ namespace SecureCleanApiWaf.Presentation.Controllers.v1
         /// specified.</param>
         /// <returns>An <see cref="IActionResult"/> containing a JSON object with the generated token, token type, requested
         /// type, assigned roles, and usage instructions for the Authorization header.</returns
-        /// <response code="200">Returns the JWT token</response>
+        /// <summary>
+        /// Generates a convenience JWT for testing and returns a minimal token payload.
+        /// </summary>
+        /// <param name="type">Requested token type: use "admin" (case-insensitive) to include the Admin role; any other value produces a regular user token.</param>
+        /// <returns>An object containing `token` (the JWT string), `tokenType` ("Bearer"), `type` (echoed request), `roles` (assigned roles), and `usage` (an Authorization header example).</returns>
+        /// <remarks>Intended for development and testing only; do not use as a production authentication mechanism.</remarks>
         [HttpGet("token")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public IActionResult GetToken([FromQuery] string type = "user")
@@ -377,7 +407,10 @@ namespace SecureCleanApiWaf.Presentation.Controllers.v1
         /// <summary>
         /// Extracts JWT token from the Authorization header.
         /// </summary>
-        /// <returns>JWT token string or null if not found</returns>
+        /// <summary>
+        /// Extracts a Bearer JWT from the current request's Authorization header when present and valid.
+        /// </summary>
+        /// <returns>The JWT token string when a valid Bearer token is found; otherwise null.</returns>
         private string? ExtractTokenFromRequest()
         {
             try
