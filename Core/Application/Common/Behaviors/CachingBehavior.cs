@@ -30,7 +30,7 @@ namespace SecureCleanApiWaf.Core.Application.Common.Behaviors
     ///
     /// In a CQRS (Command Query Responsibility Segregation) architecture, MediatR is often used to dispatch commands (for state changes)
     /// and queries (for data retrieval) to their respective handlers. This caching behavior is especially useful for queries, as it can
-    /// intercept query requests, check if the result is already cached, and return the cached data if available—reducing load on the system
+    /// intercept query requests, check if the result is already cached, and return the cached data if availableï¿½reducing load on the system
     /// and improving performance. For commands, which change state, caching is typically bypassed. This ensures that queries are fast and
     /// scalable, while commands remain consistent and reliable, fully supporting the separation of read and write concerns central to CQRS.
     /// </summary>
@@ -41,6 +41,13 @@ namespace SecureCleanApiWaf.Core.Application.Common.Behaviors
         : IPipelineBehavior<TRequest, TResponse>
         where TRequest : ICacheable
     {
+        /// <summary>
+        /// Intercepts cacheable requests to return a cached response when available or invoke the handler, cache its result, and return that response.
+        /// </summary>
+        /// <param name="request">The cacheable request that provides the cache key and controls behavior (set BypassCache to skip caching; may specify SlidingExpirationInMinutes and AbsoluteExpirationInMinutes).</param>
+        /// <param name="next">The handler delegate to execute when a cached response is not available or caching is bypassed.</param>
+        /// <param name="cancellationToken">Cancellation token used for cache operations and handler execution.</param>
+        /// <returns>The cached response if present for the request's CacheKey; otherwise the response produced by invoking the handler.</returns>
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
             TResponse response;

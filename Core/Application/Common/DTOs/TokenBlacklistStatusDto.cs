@@ -48,7 +48,14 @@ namespace SecureCleanApiWaf.Core.Application.Common.DTOs
 
         /// <summary>
         /// Creates a blacklisted token status.
+        /// <summary>
+        /// Create a TokenBlacklistStatusDto representing a token that has been blacklisted.
         /// </summary>
+        /// <param name="tokenId">The token's JWT ID (jti), or null if unknown.</param>
+        /// <param name="blacklistedAt">The UTC time when the token was blacklisted, or null if not recorded.</param>
+        /// <param name="tokenExpiresAt">The token's natural expiration time, or null if unknown.</param>
+        /// <param name="fromCache">Whether the status was retrieved from cache.</param>
+        /// <returns>A TokenBlacklistStatusDto with IsBlacklisted set to `true`, Status set to "blacklisted", Details describing the blacklist, CheckedAt set to the current UTC time, and FromCache set to the provided value.</returns>
         public static TokenBlacklistStatusDto Blacklisted(
             string? tokenId, 
             DateTime? blacklistedAt, 
@@ -70,7 +77,13 @@ namespace SecureCleanApiWaf.Core.Application.Common.DTOs
 
         /// <summary>
         /// Creates a valid (not blacklisted) token status.
+        /// <summary>
+        /// Creates a TokenBlacklistStatusDto representing a valid (not blacklisted) token.
         /// </summary>
+        /// <param name="tokenId">The token's JWT ID (jti), or null if unavailable.</param>
+        /// <param name="tokenExpiresAt">The token's natural expiration time, or null if unknown.</param>
+        /// <param name="fromCache">Whether the result was retrieved from cache.</param>
+        /// <returns>A DTO indicating the token is valid; CheckedAt is set to the current UTC time.</returns>
         public static TokenBlacklistStatusDto Valid(
             string? tokenId, 
             DateTime? tokenExpiresAt, 
@@ -90,7 +103,11 @@ namespace SecureCleanApiWaf.Core.Application.Common.DTOs
 
         /// <summary>
         /// Creates an invalid token status (malformed or expired).
+        /// <summary>
+        /// Create a TokenBlacklistStatusDto representing an invalid token status.
         /// </summary>
+        /// <param name="reason">Human-readable explanation for why the token is considered invalid.</param>
+        /// <returns>A TokenBlacklistStatusDto with IsBlacklisted set to false, Status set to "invalid", Details set to the provided reason, CheckedAt set to the current UTC time, and FromCache set to false.</returns>
         public static TokenBlacklistStatusDto Invalid(string reason)
         {
             return new TokenBlacklistStatusDto

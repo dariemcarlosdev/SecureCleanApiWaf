@@ -1362,16 +1362,6 @@ Authentication Feature:
 
 ---
 
-## 📞 Support & Contact
-
-**Project Maintainer:** Dariem C Macias Mora 
-**Email:** softevolutionsl@gmail.com  
-**GitHub:** [@dariemcarlosdev](https://github.com/dariemcarlosdev)  
-**Repository:** [SecureCleanApiWaf](https://github.com/dariemcarlosdev/SecureCleanApiWaf)
-
-**Looking for collaboration or have questions?** Feel free to reach out via email or open an issue on GitHub!
-
----
 
 <div align="center">
 

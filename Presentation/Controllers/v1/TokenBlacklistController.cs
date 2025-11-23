@@ -41,7 +41,12 @@ namespace SecureCleanApiWaf.Presentation.Controllers.v1
         /// Initializes a new instance of TokenBlacklistController.
         /// </summary>
         /// <param name="mediator">MediatR instance for CQRS operations</param>
-        /// <param name="logger">Logger for audit and debugging</param>
+        /// <summary>
+        /// Initializes a new instance of <see cref="TokenBlacklistController"/> with the required MediatR mediator and logger.
+        /// </summary>
+        /// <param name="mediator">Mediator for sending CQRS queries and commands.</param>
+        /// <param name="logger">Logger for audit and debugging.</param>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="mediator"/> or <paramref name="logger"/> is null.</exception>
         public TokenBlacklistController(IMediator mediator, ILogger<TokenBlacklistController> logger)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
@@ -77,7 +82,16 @@ namespace SecureCleanApiWaf.Presentation.Controllers.v1
         /// </remarks>
         /// <response code="200">Returns detailed token blacklist status</response>
         /// <response code="400">Invalid token format or missing token</response>
-        /// <response code="401">Unauthorized - authentication required</response>
+        /// <summary>
+        /// Check whether the specified JWT is present in the token blacklist and return a detailed status payload.
+        /// </summary>
+        /// <param name="token">The JWT to check (required).</param>
+        /// <param name="bypassCache">If true, forces fresh evaluation rather than using a cached result.</param>
+        /// <returns>
+        /// 200 with a payload containing: `is_blacklisted`, `token_id`, `status`, `details`, `blacklisted_at`,
+        /// `token_expires_at`, `checked_at`, `from_cache`, and `processing_method`; 
+        /// 400 when the token is missing or the query fails; 401 when the caller is unauthorized; 500 on internal errors.
+        /// </returns>
         [HttpGet("status")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -172,7 +186,11 @@ namespace SecureCleanApiWaf.Presentation.Controllers.v1
         /// </remarks>
         /// <response code="200">Returns comprehensive blacklist statistics</response>
         /// <response code="401">Unauthorized - authentication required</response>
-        /// <response code="403">Forbidden - Admin role required</response>
+        /// <summary>
+        /// Retrieve comprehensive token blacklist statistics for administrative use.
+        /// </summary>
+        /// <param name="bypassCache">If true, force fresh statistics retrieval and bypass any cached results.</param>
+        /// <returns>An HTTP response: on success a 200 OK with a JSON object containing `basic`, `performance`, `security`, `health`, and `metadata` sections; otherwise an error response.</returns>
         [HttpGet("stats")]
         [Authorize(Roles = "Admin")] // Admin-only endpoint
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -279,7 +297,13 @@ namespace SecureCleanApiWaf.Presentation.Controllers.v1
         /// suitable for automated monitoring systems.
         /// </remarks>
         /// <response code="200">System is healthy</response>
-        /// <response code="503">System has issues</response>
+        /// <summary>
+        /// Performs a health check of the token blacklist system using a CQRS query and reports service health.
+        /// </summary>
+        /// <returns>
+        /// HTTP 200 with a JSON payload { status = "healthy", service = "token-blacklist", timestamp, method } when healthy; 
+        /// HTTP 503 with a JSON payload { status = "unhealthy", service = "token-blacklist", timestamp, warnings } when unhealthy or with { status = "unhealthy", service = "token-blacklist", error, timestamp } on failure.
+        /// </returns>
         [HttpGet("health")]
         [AllowAnonymous] // Allow health checks without authentication
         [ProducesResponseType(StatusCodes.Status200OK)]

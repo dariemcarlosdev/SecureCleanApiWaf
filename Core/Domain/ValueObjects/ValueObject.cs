@@ -85,7 +85,12 @@ namespace SecureCleanApiWaf.Core.Domain.ValueObjects
         /// 
         /// Order matters! Components should be yielded in a consistent order
         /// for proper equality comparison.
-        /// </remarks>
+        /// <summary>
+/// Provides the sequence of values that define this value object's identity for equality comparison.
+/// </summary>
+/// <returns>
+/// An ordered sequence of component values used to determine equality; elements may be null and the order of items is significant.
+/// </returns>
         protected abstract IEnumerable<object> GetEqualityComponents();
 
         /// <summary>
@@ -96,7 +101,11 @@ namespace SecureCleanApiWaf.Core.Domain.ValueObjects
         /// <remarks>
         /// Equality is determined by comparing all equality components.
         /// Two value objects are equal if all their components are equal.
-        /// </remarks>
+        /// <summary>
+        /// Determines whether this value object is equal to another object of the same runtime type by comparing their equality components.
+        /// </summary>
+        /// <param name="obj">The object to compare with the current value object.</param>
+        /// <returns><c>true</c> if <paramref name="obj"/> is a <see cref="ValueObject"/> of the same runtime type and all equality components are equal; <c>false</c> otherwise.</returns>
         public override bool Equals(object? obj)
         {
             if (obj == null || obj.GetType() != GetType())
@@ -121,7 +130,10 @@ namespace SecureCleanApiWaf.Core.Domain.ValueObjects
         /// - Dictionary/HashSet usage
         /// - Entity Framework change tracking
         /// - Caching mechanisms
-        /// </remarks>
+        /// <summary>
+        /// Produces a hash code that represents the value object's equality-defining components.
+        /// </summary>
+        /// <returns>An integer hash code derived from the value object's equality components.</returns>
         public override int GetHashCode()
         {
             return GetEqualityComponents()
@@ -158,7 +170,13 @@ namespace SecureCleanApiWaf.Core.Domain.ValueObjects
         /// <remarks>
         /// Since value objects are immutable, this performs a memberwise clone.
         /// Useful when you need a new instance for modifications in derived classes.
+        /// <summary>
+        /// Creates a shallow copy of the current value object instance.
+        /// </summary>
+        /// <remarks>
+        /// The copy is a new instance of the same runtime type containing the same component values; reference-type components are copied by reference.
         /// </remarks>
+        /// <returns>A new ValueObject instance with the same component values as the original.</returns>
         protected ValueObject GetCopy()
         {
             return (ValueObject)MemberwiseClone();

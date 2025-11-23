@@ -47,7 +47,10 @@ namespace SecureCleanApiWaf.Infrastructure.Data
         /// <summary>
         /// Initializes a new instance of the ApplicationDbContext.
         /// </summary>
-        /// <param name="options">Configuration options for the context.</param>
+        /// <summary>
+        /// Initializes a new instance of ApplicationDbContext configured with the provided options.
+        /// </summary>
+        /// <param name="options">The options used to configure the DbContext (e.g., provider and connection settings).</param>
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -98,6 +101,13 @@ namespace SecureCleanApiWaf.Infrastructure.Data
         /// - Easier to maintain and test
         /// - Better organization for large models
         /// - Reusable configurations
+        /// <summary>
+        /// Registers entity configurations from this assembly and configures global soft-delete query filters for ApiDataItem, User, and Token.
+        /// </summary>
+        /// <param name="modelBuilder">The <see cref="ModelBuilder"/> used to construct the EF Core model.</param>
+        /// <remarks>
+        /// Applies all IEntityTypeConfiguration implementations found in the context assembly and adds query filters that exclude entities with <c>IsDeleted == true</c>.
+        /// Use <c>IgnoreQueryFilters()</c> on a query to include soft-deleted entities.
         /// </remarks>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -138,7 +148,12 @@ namespace SecureCleanApiWaf.Infrastructure.Data
         /// - Inconsistent timestamp handling
         /// - Manual timestamp updates in repositories
         /// - Timezone issues (always uses UTC)
-        /// </remarks>
+        /// <summary>
+        /// Persists changes to the database while automatically setting audit timestamps on added and modified BaseEntity instances.
+        /// </summary>
+        /// <param name="cancellationToken">A token to observe while waiting for the save operation to complete.</param>
+        /// <returns>The number of state entries written to the underlying database.</returns>
+        /// <remarks>Sets `CreatedAt` to the current UTC time for newly added BaseEntity instances and `UpdatedAt` to the current UTC time for modified BaseEntity instances.</remarks>
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             // Get all tracked entities that inherit from BaseEntity
@@ -170,7 +185,13 @@ namespace SecureCleanApiWaf.Infrastructure.Data
         /// <remarks>
         /// Overridden to maintain consistency with async version.
         /// However, prefer using SaveChangesAsync for better scalability.
+        /// <summary>
+        /// Persists changes to the database while applying audit timestamps to tracked BaseEntity instances.
+        /// </summary>
+        /// <remarks>
+        /// Sets `CreatedAt` to the current UTC time for added entities and `UpdatedAt` to the current UTC time for modified entities before saving.
         /// </remarks>
+        /// <returns>The number of state entries written to the database.</returns>
         public override int SaveChanges()
         {
             // Get all tracked entities that inherit from BaseEntity

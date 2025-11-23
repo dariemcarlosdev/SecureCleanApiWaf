@@ -120,6 +120,11 @@ namespace SecureCleanApiWaf.Core.Domain.Entities
         /// Implementation Note:
         /// Infrastructure layer should configure global query filters
         /// to automatically exclude soft-deleted entities from queries.
+        /// <summary>
+        /// Marks the entity as soft-deleted.
+        /// </summary>
+        /// <remarks>
+        /// Sets <see cref="IsDeleted"/> to true and records <see cref="DeletedAt"/> and <see cref="UpdatedAt"/> with the current UTC time.
         /// </remarks>
         public void SoftDelete()
         {
@@ -145,6 +150,11 @@ namespace SecureCleanApiWaf.Core.Domain.Entities
         /// 
         /// Note: Only works for soft-deleted entities.
         /// Hard-deleted (physically removed) entities cannot be restored.
+        /// <summary>
+        /// Restores a soft-deleted entity by clearing its deletion state and updating its last-modified time.
+        /// </summary>
+        /// <remarks>
+        /// Sets <see cref="IsDeleted"/> to false, clears <see cref="DeletedAt"/>, and sets <see cref="UpdatedAt"/> to the current UTC time.
         /// </remarks>
         public void Restore()
         {
@@ -165,7 +175,10 @@ namespace SecureCleanApiWaf.Core.Domain.Entities
         /// 
         /// This follows Domain-Driven Design (DDD) principles where
         /// entities are defined by their identity, not their attributes.
-        /// </remarks>
+        /// <summary>
+        /// Determines whether the specified object represents the same domain entity by comparing concrete types and non-empty identifiers.
+        /// </summary>
+        /// <returns>`true` if <paramref name="obj"/> is a BaseEntity of the same concrete type and both entities have the same non-empty Id; `false` otherwise.</returns>
         public override bool Equals(object? obj)
         {
             if (obj is not BaseEntity other)
@@ -190,7 +203,10 @@ namespace SecureCleanApiWaf.Core.Domain.Entities
         /// <remarks>
         /// Hash code is based on the entity's ID.
         /// This ensures consistent hashing for entities with the same ID.
-        /// </remarks>
+        /// <summary>
+        /// Gets the hash code for the entity derived from its Id.
+        /// </summary>
+        /// <returns>The hash code computed from the entity's Id.</returns>
         public override int GetHashCode()
         {
             return Id.GetHashCode();

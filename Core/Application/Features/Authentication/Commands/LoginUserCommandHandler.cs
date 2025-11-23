@@ -64,7 +64,14 @@ namespace SecureCleanApiWaf.Core.Application.Features.Authentication.Commands
         /// <param name="userRepository">Repository for user data access</param>
         /// <param name="tokenRepository">Repository for token data access</param>
         /// <param name="tokenGenerator">JWT token generator service</param>
-        /// <param name="logger">Logger for audit and debugging</param>
+        /// <summary>
+        /// Initializes a new instance of <see cref="LoginUserCommandHandler"/> with the required repositories, token generator, and logger and validates that none are null.
+        /// </summary>
+        /// <param name="userRepository">Repository for user persistence and retrieval.</param>
+        /// <param name="tokenRepository">Repository for persisting issued tokens.</param>
+        /// <param name="tokenGenerator">Component that generates JWTs for authenticated users.</param>
+        /// <param name="logger">Logger for audit and diagnostic messages.</param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="userRepository"/>, <paramref name="tokenRepository"/>, <paramref name="tokenGenerator"/>, or <paramref name="logger"/> is null.</exception>
         public LoginUserCommandHandler(
             IUserRepository userRepository,
             ITokenRepository tokenRepository,
@@ -82,7 +89,11 @@ namespace SecureCleanApiWaf.Core.Application.Features.Authentication.Commands
         /// </summary>
         /// <param name="request">The login command</param>
         /// <param name="cancellationToken">Cancellation token</param>
-        /// <returns>Result containing login response or error information</returns>
+        /// <summary>
+        /// Handles a login request: authenticates the user, issues a JWT, records the token and login events, and returns login details and token metadata.
+        /// </summary>
+        /// <param name="request">LoginUserCommand containing username, password, optional requested role, client IP address, and user agent.</param>
+        /// <returns>A Result&lt;LoginResponseDto&gt; containing token, expiry and user information on success; a failed Result with an error message on failure.</returns>
         public async Task<Result<LoginResponseDto>> Handle(LoginUserCommand request, CancellationToken cancellationToken)
         {
             try
@@ -225,7 +236,14 @@ namespace SecureCleanApiWaf.Core.Application.Features.Authentication.Commands
         /// Extracts information from a generated JWT token.
         /// </summary>
         /// <param name="jwtToken">The JWT token to parse</param>
-        /// <returns>Token information including JTI, issued at, and expiration</returns>
+        /// <summary>
+        /// Parses a JWT string and returns its identifier and timing metadata.
+        /// </summary>
+        /// <param name="jwtToken">The compact JWT to parse.</param>
+        /// <returns>
+        /// A TokenInfo containing the token's JTI (if present), IssuedAt, and ExpiresAt. If parsing or claim conversion fails,
+        /// Jti will be a new GUID string and IssuedAt/ExpiresAt will use current UTC and current UTC + 30 minutes respectively.
+        /// </returns>
         private TokenInfo ExtractTokenInfo(string jwtToken)
         {
             try

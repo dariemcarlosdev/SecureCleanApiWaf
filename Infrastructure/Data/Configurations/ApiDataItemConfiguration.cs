@@ -36,7 +36,10 @@ namespace SecureCleanApiWaf.Infrastructure.Data.Configurations
         /// <summary>
         /// Configures the ApiDataItem entity.
         /// </summary>
-        /// <param name="builder">Entity type builder for ApiDataItem.</param>
+        /// <summary>
+        /// Configures the EF Core mapping for the ApiDataItem entity, defining its table name, column types and constraints, indexes, JSON metadata conversion, soft-delete and audit properties, and optimistic concurrency behavior.
+        /// </summary>
+        /// <param name="builder">EntityTypeBuilder for ApiDataItem used to configure table mapping, columns, indexes, conversions, and concurrency.</param>
         public void Configure(EntityTypeBuilder<ApiDataItem> builder)
         {
             // ===== TABLE CONFIGURATION =====

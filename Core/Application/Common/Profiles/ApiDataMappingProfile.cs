@@ -40,6 +40,15 @@ namespace SecureCleanApiWaf.Core.Application.Common.Profiles
     /// </remarks>
     public class ApiDataMappingProfile : Profile
     {
+        /// <summary>
+        /// Configures AutoMapper mappings used to translate between API DTOs and domain entities for API data items.
+        /// </summary>
+        /// <remarks>
+        /// Sets up:
+        /// - Mapping from <c>ApiItemDto</c> to <c>ApiDataItem</c>, including field mappings and enrichment of the domain entity's metadata from DTO properties.
+        /// - Mapping from <c>ApiDataItem</c> to <c>ApiDataItemDto</c>, including extraction of metadata into DTO fields and computation of freshness/age values.
+        /// - Collection mappings for lists of <c>ApiDataItem</c> and conversion from <c>ApiCollectionResponseDto&lt;ApiItemDto&gt;</c> to <c>List&lt;ApiDataItem&gt;</c>.
+        /// </remarks>
         public ApiDataMappingProfile()
         {
             // ===== API DTO to Domain Entity Mappings =====

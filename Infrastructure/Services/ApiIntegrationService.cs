@@ -28,6 +28,9 @@ namespace SecureCleanApiWaf.Infrastructure.Services
         private readonly ILogger<ApiIntegrationService> _logger;
         private readonly ApiDataMapper _mapper;
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="ApiIntegrationService"/> with its required dependencies.
+        /// </summary>
         public ApiIntegrationService(
             IHttpClientFactory httpClientFactory, 
             ILogger<ApiIntegrationService> logger,
@@ -43,7 +46,11 @@ namespace SecureCleanApiWaf.Infrastructure.Services
         /// Logs request, response, exceptions, and latency.
         /// </summary>
         /// <param name="apiUrl">The third-party API endpoint. Relative path</param>
-        /// <returns>Result containing API response or error details.</returns>
+        /// <summary>
+        /// Fetches JSON from the specified API endpoint and deserializes it to the requested type `T`.
+        /// </summary>
+        /// <param name="apiUrl">The API endpoint to request. Prefer a path relative to the named client's base address; if a full URL is provided the client's base address will be ignored.</param>
+        /// <returns>Result containing the deserialized response as `T` on success, or a failed Result with an error message on failure.</returns>
         public async Task<Result<T>> GetAllDataAsync<T>(string apiUrl)
         {
             var startTime = DateTime.UtcNow;
@@ -83,7 +90,12 @@ namespace SecureCleanApiWaf.Infrastructure.Services
         /// </summary>
         /// <param name="apiUrl">The third-party API endpoint. Relative path</param>
         /// <param name="id">The identifier for the data to retrieve</param>
-        /// <returns>Result containing API response or error details.</returns>
+        /// <summary>
+        /// Fetches a single resource from the specified API by its identifier and deserializes the JSON response to an instance of <typeparamref name="T"/>.
+        /// </summary>
+        /// <param name="apiUrl">The base URL of the API endpoint.</param>
+        /// <param name="id">The identifier of the resource to fetch; appended to <paramref name="apiUrl"/> to form the request URL.</param>
+        /// <returns>Result containing the deserialized `<typeparamref name="T"/>` on success, or a failed Result with an error message on failure.</returns>
         public async Task<Result<T>> GetDataByIdAsync<T>(string apiUrl, string id)
         {
             var startTime = DateTime.UtcNow;
@@ -113,7 +125,11 @@ namespace SecureCleanApiWaf.Infrastructure.Services
             }
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Fetches data from the specified API endpoint, maps the response to domain ApiDataItem objects, and returns the mapped list wrapped in a Result.
+        /// </summary>
+        /// <param name="apiUrl">The API endpoint URL to fetch data from.</param>
+        /// <returns>A Result containing the list of mapped <see cref="ApiDataItem"/> objects on success; on failure the Result contains an error message.</returns>
         public async Task<Result<List<ApiDataItem>>> GetApiDataItemsAsync(string apiUrl)
         {
             try
@@ -149,7 +165,12 @@ namespace SecureCleanApiWaf.Infrastructure.Services
             }
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Fetches a single API resource identified by <paramref name="id"/> from <paramref name="apiUrl"/> and maps it to an <see cref="ApiDataItem"/>.
+        /// </summary>
+        /// <param name="apiUrl">Base URL of the third-party API endpoint.</param>
+        /// <param name="id">Identifier of the resource to fetch.</param>
+        /// <returns>A <see cref="Result{ApiDataItem}"/> containing the mapped <see cref="ApiDataItem"/> on success, or a failed Result with an error message on failure.</returns>
         public async Task<Result<ApiDataItem>> GetApiDataItemByIdAsync(string apiUrl, string id)
         {
             try
@@ -184,7 +205,11 @@ namespace SecureCleanApiWaf.Infrastructure.Services
             }
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Performs a health check against the specified API endpoint.
+        /// </summary>
+        /// <param name="apiUrl">The full URL of the API endpoint to check.</param>
+        /// <returns>`true` if the API responded with a success status code, `false` otherwise. If an error occurs while performing the check, the returned Result will be a failure containing the error message.</returns>
         public async Task<Result<bool>> CheckApiHealthAsync(string apiUrl)
         {
             var startTime = DateTime.UtcNow;
@@ -221,7 +246,16 @@ namespace SecureCleanApiWaf.Infrastructure.Services
             }
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Fetches paginated data from the specified API endpoint and returns it as a PaginatedResponseDto&lt;T&gt;.
+        /// </summary>
+        /// <param name="apiUrl">The base URL of the paginated API endpoint.</param>
+        /// <param name="page">The page number to request.</param>
+        /// <param name="pageSize">The number of items per page.</param>
+        /// <returns>A Result containing the paginated response DTO with items and pagination metadata on success; on failure the Result contains an error message.</returns>
+        /// <remarks>
+        /// If the API response is a plain JSON array instead of a paginated structure, the array will be wrapped into a PaginatedResponseDto&lt;T&gt; using the provided <paramref name="page"/> and <paramref name="pageSize"/>, with TotalPages set to 1 and TotalItems equal to the array length.
+        /// </remarks>
         public async Task<Result<PaginatedResponseDto<T>>> GetPaginatedDataAsync<T>(string apiUrl, int page, int pageSize)
         {
             var startTime = DateTime.UtcNow;

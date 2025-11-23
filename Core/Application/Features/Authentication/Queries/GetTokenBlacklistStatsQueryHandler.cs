@@ -36,7 +36,12 @@ namespace SecureCleanApiWaf.Core.Application.Features.Authentication.Queries
         /// Initializes a new instance of GetTokenBlacklistStatsQueryHandler.
         /// </summary>
         /// <param name="tokenBlacklistService">Service for token blacklist operations</param>
-        /// <param name="logger">Logger for audit and debugging</param>
+        /// <summary>
+        /// Initializes a new instance of <see cref="GetTokenBlacklistStatsQueryHandler"/> with the required dependencies.
+        /// </summary>
+        /// <param name="tokenBlacklistService">Service that provides base token blacklist statistics.</param>
+        /// <param name="logger">Logger used for diagnostic and error logging.</param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="tokenBlacklistService"/> or <paramref name="logger"/> is null.</exception>
         public GetTokenBlacklistStatsQueryHandler(
             ITokenBlacklistService tokenBlacklistService,
             ILogger<GetTokenBlacklistStatsQueryHandler> logger)
@@ -50,7 +55,10 @@ namespace SecureCleanApiWaf.Core.Application.Features.Authentication.Queries
         /// </summary>
         /// <param name="request">The statistics query</param>
         /// <param name="cancellationToken">Cancellation token</param>
-        /// <returns>Result containing comprehensive statistics or error information</returns>
+        /// <summary>
+        /// Handles a GetTokenBlacklistStatsQuery by retrieving base blacklist statistics, enriching them with performance, security, and health metrics, and returning the assembled statistics DTO; on failure returns a safe fallback statistics DTO indicating an unhealthy/default state.
+        /// </summary>
+        /// <returns>A Result&lt;TokenBlacklistStatisticsDto&gt; containing the enriched statistics, or a fallback TokenBlacklistStatisticsDto representing an unhealthy/default state if an error occurred.</returns>
         public async Task<Result<TokenBlacklistStatisticsDto>> Handle(GetTokenBlacklistStatsQuery request, CancellationToken cancellationToken)
         {
             try
@@ -84,7 +92,12 @@ namespace SecureCleanApiWaf.Core.Application.Features.Authentication.Queries
         /// </summary>
         /// <param name="baseStats">Base statistics from the blacklist service</param>
         /// <param name="cancellationToken">Cancellation token</param>
-        /// <returns>Enhanced statistics with additional monitoring data</returns>
+        /// <summary>
+        /// Assembles an enriched TokenBlacklistStatisticsDto by combining the provided base blacklist metrics with calculated performance, security, and health indicators.
+        /// </summary>
+        /// <param name="baseStats">Basic token blacklist metrics retrieved from the blacklist service used as the source values.</param>
+        /// <param name="cancellationToken">Token to observe while performing asynchronous metric calculations.</param>
+        /// <returns>A TokenBlacklistStatisticsDto containing the base metrics plus populated Performance, Security, and Health sections.</returns>
         private async Task<TokenBlacklistStatisticsDto> CalculateEnhancedStatistics(
             TokenBlacklistStats baseStats, 
             CancellationToken cancellationToken)
@@ -114,7 +127,11 @@ namespace SecureCleanApiWaf.Core.Application.Features.Authentication.Queries
         /// Calculates performance-related metrics.
         /// </summary>
         /// <param name="cancellationToken">Cancellation token</param>
-        /// <returns>Performance metrics</returns>
+        /// <summary>
+        /// Builds performance metrics used to augment token blacklist statistics.
+        /// </summary>
+        /// <param name="cancellationToken">Cancellation token to abort metric collection.</param>
+        /// <returns>A PerformanceMetricsDto containing timings, operation counts, and cache hit rates.</returns>
         private async Task<PerformanceMetricsDto> CalculatePerformanceMetrics(CancellationToken cancellationToken)
         {
             // In a real implementation, you would collect these metrics from:
@@ -140,7 +157,10 @@ namespace SecureCleanApiWaf.Core.Application.Features.Authentication.Queries
         /// Calculates security-related metrics.
         /// </summary>
         /// <param name="cancellationToken">Cancellation token</param>
-        /// <returns>Security metrics</returns>
+        /// <summary>
+        /// Produces security-related metrics used to populate the security section of the token blacklist statistics (current implementation returns simulated values).
+        /// </summary>
+        /// <returns>A SecurityMetricsDto containing counts of blocked attempts and suspicious patterns, an array of recent security event messages, and a mapping of top blocked IP addresses to their block counts.</returns>
         private async Task<SecurityMetricsDto> CalculateSecurityMetrics(CancellationToken cancellationToken)
         {
             // In a real implementation, you would collect these metrics from:
@@ -174,7 +194,11 @@ namespace SecureCleanApiWaf.Core.Application.Features.Authentication.Queries
         /// Calculates health indicators based on current system state.
         /// </summary>
         /// <param name="stats">Current statistics</param>
-        /// <returns>Health indicators</returns>
+        /// <summary>
+        /// Derives health indicators, warnings, and remediation recommendations from the provided token blacklist statistics.
+        /// </summary>
+        /// <param name="stats">Current token blacklist statistics used to evaluate memory, cache, and security health.</param>
+        /// <returns>A <see cref="HealthIndicatorsDto"/> populated with status, warnings, and recommendations based on thresholds applied to the supplied statistics.</returns>
         private static HealthIndicatorsDto CalculateHealthIndicators(TokenBlacklistStatisticsDto stats)
         {
             var health = new HealthIndicatorsDto();
@@ -233,7 +257,13 @@ namespace SecureCleanApiWaf.Core.Application.Features.Authentication.Queries
         /// <summary>
         /// Creates fallback statistics when the main service is unavailable.
         /// </summary>
-        /// <returns>Fallback statistics</returns>
+        /// <summary>
+        /// Create a safe fallback TokenBlacklistStatisticsDto used when the real statistics cannot be retrieved.
+        /// </summary>
+        /// <remarks>
+        /// The returned DTO contains zeroed base metrics, empty performance and security sections, and an Unhealthy health indicator with a warning and a recommendation.
+        /// </remarks>
+        /// <returns>A TokenBlacklistStatisticsDto with neutral metrics, empty performance and security data, and an Unhealthy health indicator.</returns>
         private static TokenBlacklistStatisticsDto CreateFallbackStatistics()
         {
             return new TokenBlacklistStatisticsDto

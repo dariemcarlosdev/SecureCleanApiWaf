@@ -102,7 +102,10 @@ namespace SecureCleanApiWaf.Core.Domain.ValueObjects
         /// Private constructor ensures that emails can only be created
         /// through the Create factory method, which performs validation.
         /// This is a key pattern in Domain-Driven Design.
-        /// </remarks>
+        /// <summary>
+        /// Initializes a new <see cref="Email"/> instance with a validated, normalized email value.
+        /// </summary>
+        /// <param name="value">The validated, lowercase email address to store as the value object.</param>
         private Email(string value)
         {
             Value = value;
@@ -141,7 +144,12 @@ namespace SecureCleanApiWaf.Core.Domain.ValueObjects
         /// Uses System.Net.Mail.MailAddress for validation, which is
         /// comprehensive but not the fastest option. For high-throughput
         /// scenarios, consider regex-based validation.
-        /// </remarks>
+        /// <summary>
+        /// Creates an Email value object from the provided string after validating and normalizing it.
+        /// </summary>
+        /// <param name="email">The email address to validate and convert; leading and trailing whitespace are ignored.</param>
+        /// <returns>An Email instance containing the validated email stored in lowercase.</returns>
+        /// <exception cref="DomainException">Thrown if the input is null, empty, or whitespace; if the trimmed address exceeds 320 characters; or if the address has an invalid format.</exception>
         public static Email Create(string email)
         {
             // Validation 1: Check for null or empty
@@ -201,7 +209,11 @@ namespace SecureCleanApiWaf.Core.Domain.ValueObjects
         /// ```
         /// 
         /// Note: Regex is faster but less comprehensive than MailAddress.
-        /// </remarks>
+        /// <summary>
+        /// Determines whether the provided string is a syntactically valid email address and contains only the address portion (no display name).
+        /// </summary>
+        /// <param name="email">The candidate email string to validate.</param>
+        /// <returns>`true` if the string is a valid email address and matches the parsed address exactly, `false` otherwise.</returns>
         private static bool IsValidEmail(string email)
         {
             try
@@ -228,7 +240,10 @@ namespace SecureCleanApiWaf.Core.Domain.ValueObjects
         /// <returns>The local part of the email.</returns>
         /// <example>
         /// For "user.name@example.com", returns "user.name"
-        /// </example>
+        /// <summary>
+        /// Gets the local part (the substring before the '@') of the email value.
+        /// </summary>
+        /// <returns>The substring before the '@', or the entire email value if the address has no local part (missing or starting with '@').</returns>
         public string GetLocalPart()
         {
             var atIndex = Value.IndexOf('@');
@@ -241,7 +256,10 @@ namespace SecureCleanApiWaf.Core.Domain.ValueObjects
         /// <returns>The domain part of the email.</returns>
         /// <example>
         /// For "user@example.com", returns "example.com"
-        /// </example>
+        /// <summary>
+        /// Gets the domain portion of the email (the substring after the '@').
+        /// </summary>
+        /// <returns>The domain part of the email, or an empty string if the email has no '@' or no domain portion.</returns>
         public string GetDomain()
         {
             var atIndex = Value.IndexOf('@');
@@ -262,7 +280,11 @@ namespace SecureCleanApiWaf.Core.Domain.ValueObjects
         /// email.IsFromDomain("EXAMPLE.COM");     // True (case-insensitive)
         /// email.IsFromDomain("subdomain.example.com"); // False
         /// ```
-        /// </example>
+        /// <summary>
+        /// Determines whether the email's domain equals the specified domain (case-insensitive).
+        /// </summary>
+        /// <param name="domain">The domain to compare against (leading/trailing whitespace is ignored).</param>
+        /// <returns>`true` if the email's domain matches `domain` (case-insensitive), `false` otherwise.</returns>
         public bool IsFromDomain(string domain)
         {
             if (string.IsNullOrWhiteSpace(domain))
@@ -294,7 +316,15 @@ namespace SecureCleanApiWaf.Core.Domain.ValueObjects
         /// "ab@example.com"             ? "ab@example.com"
         /// "longusername@example.com"   ? "lo********me@example.com"
         /// ```
+        /// <summary>
+        /// Produces a privacy-preserving display form of the email by masking part of the local part.
+        /// </summary>
+        /// <remarks>
+        /// If the local part has 3 or fewer characters, the original email value is returned unchanged.
+        /// For longer local parts, the method keeps the first two and last two characters, replaces the middle with asterisks (at least two), and preserves the domain.
+        /// Examples: "ab@example.com" -> "ab@example.com", "username@example.com" -> "us****me@example.com".
         /// </remarks>
+        /// <returns>The masked email string suitable for display.</returns>
         public string ToMaskedString()
         {
             var localPart = GetLocalPart();
@@ -320,7 +350,10 @@ namespace SecureCleanApiWaf.Core.Domain.ValueObjects
         /// <summary>
         /// Returns the email address string.
         /// </summary>
-        /// <returns>The email address.</returns>
+        /// <summary>
+        /// Gets the underlying normalized email string.
+        /// </summary>
+        /// <returns>The normalized email address stored by this instance.</returns>
         public override string ToString()
         {
             return Value;
@@ -333,7 +366,10 @@ namespace SecureCleanApiWaf.Core.Domain.ValueObjects
         /// <remarks>
         /// Emails are compared by their normalized value (lowercase).
         /// "USER@EXAMPLE.COM" == "user@example.com" returns true.
-        /// </remarks>
+        /// <summary>
+        /// Provides the sequence of components that define this value object's equality.
+        /// </summary>
+        /// <returns>An <see cref="IEnumerable{object}"/> that yields the email's normalized value.</returns>
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return Value;
