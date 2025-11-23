@@ -124,7 +124,10 @@ namespace SecureCleanApiWaf.Core.Domain.Exceptions
         /// - Written in business language
         /// - Safe to display to users (no technical details)
         /// - Actionable (user knows what to fix)
-        /// </remarks>
+        /// <summary>
+        /// Initializes a new DomainException with a descriptive business-rule violation message.
+        /// </summary>
+        /// <param name="message">A user-facing message describing the domain rule violation.</param>
         public DomainException(string message) : base(message)
         {
         }
@@ -148,7 +151,11 @@ namespace SecureCleanApiWaf.Core.Domain.Exceptions
         ///     throw new DomainException("Invalid email format", ex);
         /// }
         /// ```
-        /// </remarks>
+        /// <summary>
+        /// Initializes a new DomainException with a descriptive message and an underlying cause.
+        /// </summary>
+        /// <param name="message">A descriptive, user-facing message that explains the domain rule violation.</param>
+        /// <param name="innerException">The underlying exception that caused this domain exception, if any.</param>
         public DomainException(string message, Exception innerException)
             : base(message, innerException)
         {
@@ -191,7 +198,11 @@ namespace SecureCleanApiWaf.Core.Domain.Exceptions
         /// Initializes a new instance of the <see cref="EntityNotFoundException"/> class.
         /// </summary>
         /// <param name="entityName">The name of the entity type (e.g., "User", "Order").</param>
-        /// <param name="entityId">The identifier of the entity that was not found.</param>
+        /// <summary>
+        /// Initializes a new <see cref="EntityNotFoundException"/> for a missing entity and composes a descriptive message.
+        /// </summary>
+        /// <param name="entityName">The type or name of the entity that could not be located.</param>
+        /// <param name="entityId">The identifier value of the missing entity.</param>
         public EntityNotFoundException(string entityName, object entityId)
             : base($"{entityName} with ID '{entityId}' was not found")
         {
@@ -202,7 +213,11 @@ namespace SecureCleanApiWaf.Core.Domain.Exceptions
         /// <summary>
         /// Initializes a new instance of the <see cref="EntityNotFoundException"/> class with a custom message.
         /// </summary>
-        /// <param name="message">Custom error message.</param>
+        /// <summary>
+        /// Initializes a new instance of <see cref="EntityNotFoundException"/> with a custom message.
+        /// </summary>
+        /// <param name="message">Custom error message describing the not-found condition.</param>
+        /// <remarks>When constructed through this overload, <see cref="EntityName"/> and <see cref="EntityId"/> are initialized to empty strings.</remarks>
         public EntityNotFoundException(string message)
             : base(message)
         {
@@ -241,7 +256,12 @@ namespace SecureCleanApiWaf.Core.Domain.Exceptions
         /// Initializes a new instance of the <see cref="InvalidDomainOperationException"/> class.
         /// </summary>
         /// <param name="operation">The operation that was attempted.</param>
+        /// <summary>
+        /// Initializes a new <see cref="InvalidDomainOperationException"/> for an attempted operation that is invalid for the specified reason.
+        /// </summary>
+        /// <param name="operation">The name or description of the operation that was attempted.</param>
         /// <param name="reason">The reason why the operation is invalid.</param>
+        /// <remarks>The exception message is composed as "&lt;operation&gt;: &lt;reason&gt;".</remarks>
         public InvalidDomainOperationException(string operation, string reason)
             : base($"{operation}: {reason}")
         {

@@ -31,6 +31,11 @@ namespace SecureCleanApiWaf.Presentation.Extensions.DependencyInjection
     /// </remarks>
     public static class InfrastructureServiceExtensions
     {
+        /// <summary>
+        /// Registers infrastructure dependencies: configures the EF Core DbContext with SQL Server, repository and security services, HTTP clients with resilience policies and handlers, and in-memory/distributed caching.
+        /// </summary>
+        /// <returns>The same <see cref="IServiceCollection"/> instance with infrastructure services registered.</returns>
+        /// <exception cref="InvalidOperationException">Thrown when database configuration from <c>DatabaseSettings</c> is invalid.</exception>
         public static IServiceCollection AddInfrastructureServices(
             this IServiceCollection services,
             IConfiguration configuration)
@@ -243,7 +248,12 @@ namespace SecureCleanApiWaf.Presentation.Extensions.DependencyInjection
         /// - Gives the API time to recover
         /// - Reduces server load during outages
         /// - Industry best practice for resilience
-        /// </remarks>
+        /// <summary>
+        /// Creates a retry policy for transient HTTP failures and rate limiting responses.
+        /// </summary>
+        /// <returns>
+        /// An async policy that retries up to 3 times with exponential backoff (2s, 4s, 8s) for transient HTTP errors (5xx and 408) and 429 (Too Many Requests), invoking a retry callback on each attempt.
+        /// </returns>
         private static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
         {
             return HttpPolicyExtensions
@@ -308,7 +318,15 @@ namespace SecureCleanApiWaf.Presentation.Extensions.DependencyInjection
         /// - Gives failing services time to recover
         /// - Reduces resource consumption during outages
         /// - Industry standard for microservices resilience
+        /// <summary>
+        /// Creates a circuit breaker policy that protects HTTP calls by opening the circuit after repeated transient failures.
+        /// </summary>
+        /// <remarks>
+        /// The policy treats transient HTTP errors (5xx and 408) and 429 (Too Many Requests) as failures. When the circuit opens, it remains open for 30 seconds before allowing attempts to resume. Callbacks are invoked on break and reset to surface state changes (e.g., logging or telemetry).
         /// </remarks>
+        /// <returns>
+        /// An asynchronous circuit breaker policy that opens after 5 consecutive transient HTTP failures and stays open for 30 seconds; invokes onBreak and onReset callbacks when the circuit state changes.
+        /// </returns>
         private static IAsyncPolicy<HttpResponseMessage> GetCircuitBreakerPolicy()
         {
             return HttpPolicyExtensions

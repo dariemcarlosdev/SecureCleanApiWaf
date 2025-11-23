@@ -54,7 +54,11 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         /// </summary>
         /// <param name="id">The user's unique identifier.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
-        /// <returns>The user if found, null otherwise.</returns>
+        /// <summary>
+/// Retrieve a user by their unique identifier.
+/// </summary>
+/// <param name="id">The user's unique identifier.</param>
+/// <returns>The user with the specified ID, or null if no matching user is found.</returns>
         Task<User?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -66,7 +70,14 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         /// <remarks>
         /// Used primarily for authentication/login operations.
         /// Should perform case-insensitive comparison.
-        /// </remarks>
+        /// <summary>
+/// Retrieves a user by username using a case-insensitive comparison.
+/// </summary>
+/// <param name="username">The username to look up (comparison should be case-insensitive).</param>
+/// <returns>The matching <see cref="User"/>, or <c>null</c> if no user exists with the given username.</returns>
+/// <remarks>
+/// Primarily used for authentication and login flows; implementations should consider only non-deleted users when performing the lookup.
+/// </remarks>
         Task<User?> GetByUsernameAsync(string username, CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -78,7 +89,15 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         /// <remarks>
         /// Used for password reset, email verification, etc.
         /// Should perform case-insensitive comparison.
-        /// </remarks>
+        /// <summary>
+/// Retrieve a user by email address using a case-insensitive comparison.
+/// </summary>
+/// <param name="email">The email address to find.</param>
+/// <param name="cancellationToken">A token to cancel the operation.</param>
+/// <returns>The matching <see cref="User"/> if found, or <c>null</c> otherwise.</returns>
+/// <remarks>
+/// Should consider only non-deleted users and be suitable for scenarios such as password reset and account verification.
+/// </remarks>
         Task<User?> GetByEmailAsync(Email email, CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -89,7 +108,11 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         /// <returns>List of users with the specified role.</returns>
         /// <remarks>
         /// Useful for administrative operations and reporting.
-        /// </remarks>
+        /// <summary>
+/// Retrieve all users assigned the specified role.
+/// </summary>
+/// <param name="role">The role used to filter users.</param>
+/// <returns>A read-only list of users that have the specified role.</returns>
         Task<IReadOnlyList<User>> GetUsersByRoleAsync(Role role, CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -101,7 +124,14 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         /// <remarks>
         /// Should validate that username and email are unique before adding.
         /// Raises domain events (UserRegisteredEvent) that should be published after persistence.
-        /// </remarks>
+        /// <summary>
+/// Adds a new User to the repository.
+/// </summary>
+/// <param name="user">The User aggregate to persist; username and email must be unique among non-deleted users.</param>
+/// <param name="cancellationToken">Token to cancel the operation.</param>
+/// <remarks>
+/// Implementations should validate uniqueness of username and email (considering non-deleted users) and may publish domain events (for example, a UserRegisteredEvent) after the user has been persisted.
+/// </remarks>
         Task AddAsync(User user, CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -113,7 +143,13 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         /// <remarks>
         /// Updates all modified properties including roles.
         /// Should handle domain events if any were raised during entity modifications.
-        /// </remarks>
+        /// <summary>
+/// Updates an existing user's state in the repository.
+/// </summary>
+/// <param name="user">The User aggregate with updated values to persist.</param>
+/// <remarks>
+/// Implementations should persist all modified properties (including roles) and handle any domain events raised by the aggregate.
+/// </remarks>
         Task UpdateAsync(User user, CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -125,7 +161,14 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         /// <remarks>
         /// Performs soft delete by setting IsDeleted flag.
         /// User data is preserved for audit purposes.
-        /// </remarks>
+        /// <summary>
+/// Marks the specified user as deleted in the repository using a soft-delete strategy.
+/// </summary>
+/// <param name="user">The user entity to delete; its state will be updated to indicate deletion.</param>
+/// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
+/// <remarks>
+/// Implementations should persist the soft-delete (for example by setting an `IsDeleted` flag), preserve the record for auditing, and handle any domain events raised during deletion.
+/// </remarks>
         Task DeleteAsync(User user, CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -137,7 +180,15 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         /// <remarks>
         /// Used during user registration to ensure uniqueness.
         /// Should check against non-deleted users only.
-        /// </remarks>
+        /// <summary>
+/// Checks whether a username is already registered in the repository.
+/// </summary>
+/// <param name="username">The username to check (comparison should be case-insensitive).</param>
+/// <returns>`true` if a non-deleted user with the specified username exists, `false` otherwise.</returns>
+/// <remarks>
+/// Comparison should ignore case and consider only users that are not soft-deleted.
+/// This is typically used during user registration to enforce username uniqueness.
+/// </remarks>
         Task<bool> UsernameExistsAsync(string username, CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -149,7 +200,11 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         /// <remarks>
         /// Used during user registration to ensure uniqueness.
         /// Should check against non-deleted users only.
-        /// </remarks>
+        /// <summary>
+/// Determines whether an active user with the specified email address already exists.
+/// </summary>
+/// <param name="email">The email address to check (value object representing an email).</param>
+/// <returns>`true` if a non-deleted user exists with the specified email (comparison is case-insensitive), `false` otherwise.</returns>
         Task<bool> EmailExistsAsync(Email email, CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -160,7 +215,14 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         /// <returns>List of users with excessive failed login attempts.</returns>
         /// <remarks>
         /// Used for security monitoring and account lockout management.
-        /// </remarks>
+        /// <summary>
+/// Retrieves users whose recorded failed login attempts are greater than or equal to the specified threshold.
+/// </summary>
+/// <param name="threshold">Minimum number of failed login attempts a user must have to be included.</param>
+/// <returns>A read-only list of users whose failed login attempts meet or exceed the threshold.</returns>
+/// <remarks>
+/// Intended for security monitoring and lockout management; implementations should consider only active (non-deleted) users.
+/// </remarks>
         Task<IReadOnlyList<User>> GetUsersWithFailedLoginAttemptsAsync(int threshold, CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -171,7 +233,10 @@ namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
         /// <remarks>
         /// Commits the unit of work transaction.
         /// Should be called after Add/Update/Delete operations.
-        /// </remarks>
+        /// <summary>
+/// Persists all pending changes in the repository as a unit-of-work commit.
+/// </summary>
+/// <returns>The number of affected entities persisted to the data store.</returns>
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

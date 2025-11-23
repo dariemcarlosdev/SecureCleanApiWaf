@@ -11,7 +11,16 @@ namespace SecureCleanApiWaf.Infrastructure.Caching
     public class SampleCache
     {
         private readonly IMemoryCache _cache;
-        public SampleCache(IMemoryCache cache) => _cache = cache;
+        /// <summary>
+/// Initializes a new instance of <see cref="SampleCache"/> that uses the provided memory cache.
+/// </summary>
+/// <param name="cache">The <see cref="IMemoryCache"/> instance used to store and retrieve cached values.</param>
+public SampleCache(IMemoryCache cache) => _cache = cache;
+        /// <summary>
+        /// Retrieves the cached string for the specified key; if the key is not present, stores and returns the string "Cached value".
+        /// </summary>
+        /// <param name="key">The cache entry key.</param>
+        /// <returns>The cached string associated with <paramref name="key"/>; if the key was not present, the newly stored value "Cached value".</returns>
         public string GetOrSet(string key)
         {
             if (!_cache.TryGetValue(key, out string value))

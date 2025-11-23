@@ -35,7 +35,9 @@ namespace SecureCleanApiWaf.Core.Application.Features.Authentication.Commands
         /// Initializes a new instance of BlacklistTokenCommandHandler.
         /// </summary>
         /// <param name="tokenBlacklistService">Service for token blacklisting operations</param>
-        /// <param name="logger">Logger for audit and debugging</param>
+        /// <summary>
+        /// Initializes a new instance of <see cref="BlacklistTokenCommandHandler"/> with its required dependencies.
+        /// </summary>
         public BlacklistTokenCommandHandler(
             ITokenBlacklistService tokenBlacklistService,
             ILogger<BlacklistTokenCommandHandler> logger)
@@ -49,7 +51,12 @@ namespace SecureCleanApiWaf.Core.Application.Features.Authentication.Commands
         /// </summary>
         /// <param name="request">The blacklist token command</param>
         /// <param name="cancellationToken">Cancellation token</param>
-        /// <returns>Result containing blacklist response or error information</returns>
+        /// <summary>
+        /// Processes a blacklist request for a JWT: validates the token, determines its state, and blacklists it if still valid.
+        /// </summary>
+        /// <param name="request">Command containing the JWT to blacklist and optional metadata (Reason, ClientIpAddress).</param>
+        /// <param name="cancellationToken">Token used to cancel the blacklist operation.</param>
+        /// <returns>`Result` containing a `BlacklistTokenResponse` with token metadata and status on success, or error information on failure.</returns>
         public async Task<Result<BlacklistTokenResponse>> Handle(BlacklistTokenCommand request, CancellationToken cancellationToken)
         {
             try
@@ -129,7 +136,11 @@ namespace SecureCleanApiWaf.Core.Application.Features.Authentication.Commands
         /// Extracts key information from JWT token for processing.
         /// </summary>
         /// <param name="jwtToken">JWT token to parse</param>
-        /// <returns>Token information including JTI, username, expiration, and validity</returns>
+        /// <summary>
+        /// Extracts the token identifier, username, and expiration time from the provided JWT string.
+        /// </summary>
+        /// <param name="jwtToken">The JWT compact serialization to parse.</param>
+        /// <returns>A TokenInformation containing `Jti`, `Username`, `ExpiresAt`, and `IsValid`; if parsing fails, returns a TokenInformation with `IsValid` set to `false`.</returns>
         private TokenInformation ExtractTokenInformation(string jwtToken)
         {
             try
@@ -169,7 +180,10 @@ namespace SecureCleanApiWaf.Core.Application.Features.Authentication.Commands
         /// <summary>
         /// Gets standard client-side security recommendations.
         /// </summary>
-        /// <returns>Array of security recommendations for clients</returns>
+        /// <summary>
+        /// Client-side remediation steps to perform after a token is blacklisted or invalidated.
+        /// </summary>
+        /// <returns>An array of user-facing security recommendations (remove stored token, clear cached data, redirect to login, and similar actions).</returns>
         private static string[] GetClientRecommendations()
         {
             return new[]

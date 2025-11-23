@@ -48,7 +48,14 @@ namespace SecureCleanApiWaf.Core.Application.Features.Authentication.Commands
         /// <param name="jwtToken">The JWT token to blacklist</param>
         /// <param name="reason">Optional reason for blacklisting</param>
         /// <param name="clientIpAddress">Client IP address for audit logging</param>
-        /// <param name="userAgent">Client user agent for audit logging</param>
+        /// <summary>
+        /// Creates a command that requests blacklisting of the specified JWT token for logout/audit purposes.
+        /// </summary>
+        /// <param name="jwtToken">The JWT to blacklist.</param>
+        /// <param name="reason">Optional audit reason for the blacklist operation.</param>
+        /// <param name="clientIpAddress">Optional client IP address for security logging.</param>
+        /// <param name="userAgent">Optional client user agent for security logging.</param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="jwtToken"/> is null.</exception>
         public BlacklistTokenCommand(
             string jwtToken, 
             string? reason = null, 

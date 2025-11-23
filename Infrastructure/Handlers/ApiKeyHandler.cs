@@ -22,12 +22,21 @@ namespace SecureCleanApiWaf.Infrastructure.Handlers
         private readonly IConfiguration _configuration;
         private readonly ILogger<ApiKeyHandler> _logger;
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="ApiKeyHandler"/> with the provided configuration and logger.
+        /// </summary>
         public ApiKeyHandler(IConfiguration configuration, ILogger<ApiKeyHandler> logger)
         {
             _configuration = configuration;
             _logger = logger;
         }
 
+        /// <summary>
+        /// Adds an API key and standard headers to the outgoing HTTP request, sends it through the handler pipeline, and logs timing and response details.
+        /// </summary>
+        /// <param name="request">The outgoing HTTP request to modify (headers may be added) and send.</param>
+        /// <param name="cancellationToken">Cancellation token to cancel the send operation.</param>
+        /// <returns>The HTTP response returned by the downstream handler.</returns>
         protected override async Task<HttpResponseMessage> SendAsync(
             HttpRequestMessage request, 
             CancellationToken cancellationToken)

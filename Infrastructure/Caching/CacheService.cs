@@ -22,6 +22,9 @@ namespace SecureCleanApiWaf.Infrastructure.Caching
         private readonly IDistributedCache _cache;
         private readonly ILogger<CacheService> _logger;
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="CacheService"/> with the specified distributed cache and logger.
+        /// </summary>
         public CacheService(IDistributedCache cache, ILogger<CacheService> logger)
         {
             _cache = cache;
@@ -30,7 +33,12 @@ namespace SecureCleanApiWaf.Infrastructure.Caching
 
         /// <summary>
         /// Retrieves a cached value by its key.
+        /// <summary>
+        /// Retrieve a cached value by key and deserialize it to the specified type.
         /// </summary>
+        /// <param name="key">The cache key to read.</param>
+        /// <param name="cancellationToken">Token to cancel the cache retrieval operation.</param>
+        /// <returns>The cached value deserialized to <typeparamref name="T"/>, or `default(T)` if the key is not present or an error occurs.</returns>
         public async Task<T?> GetAsync<T>(string key, CancellationToken cancellationToken = default)
         {
             try
@@ -55,7 +63,14 @@ namespace SecureCleanApiWaf.Infrastructure.Caching
 
         /// <summary>
         /// Stores a value in the cache with an optional expiration time.
+        /// <summary>
+        /// Stores a value in the distributed cache under the specified key using JSON serialization.
         /// </summary>
+        /// <param name="key">Cache key to store the value under.</param>
+        /// <param name="value">Value to serialize and store.</param>
+        /// <param name="expiration">Optional absolute expiration relative to now; if null defaults to 5 minutes.</param>
+        /// <param name="cancellationToken">Token to cancel the cache operation.</param>
+        /// <remarks>Exceptions during serialization or cache operations are caught and logged; the method does not propagate them.</remarks>
         public async Task SetAsync<T>(
             string key, 
             T value, 
@@ -83,7 +98,11 @@ namespace SecureCleanApiWaf.Infrastructure.Caching
 
         /// <summary>
         /// Removes a cached value by its key.
+        /// <summary>
+        /// Removes the cache entry identified by the specified key if it exists.
         /// </summary>
+        /// <param name="key">Cache key of the entry to remove.</param>
+        /// <param name="cancellationToken">Token to cancel the removal operation.</param>
         public async Task RemoveAsync(string key, CancellationToken cancellationToken = default)
         {
             try
@@ -99,7 +118,11 @@ namespace SecureCleanApiWaf.Infrastructure.Caching
 
         /// <summary>
         /// Checks if a key exists in the cache.
+        /// <summary>
+        /// Determines whether a cache entry exists for the specified key.
         /// </summary>
+        /// <param name="key">The cache key to check.</param>
+        /// <returns>`true` if a non-empty value is stored for the key, `false` otherwise.</returns>
         public async Task<bool> ExistsAsync(string key, CancellationToken cancellationToken = default)
         {
             try

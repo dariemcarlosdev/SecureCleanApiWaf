@@ -37,7 +37,9 @@ namespace SecureCleanApiWaf.Core.Application.Features.Authentication.Queries
         /// Initializes a new instance of IsTokenBlacklistedQueryHandler.
         /// </summary>
         /// <param name="tokenBlacklistService">Service for token blacklist operations</param>
-        /// <param name="logger">Logger for audit and debugging</param>
+        /// <summary>
+        /// Initializes a new instance of <see cref="IsTokenBlacklistedQueryHandler"/> with required dependencies.
+        /// </summary>
         public IsTokenBlacklistedQueryHandler(
             ITokenBlacklistService tokenBlacklistService,
             ILogger<IsTokenBlacklistedQueryHandler> logger)
@@ -51,7 +53,11 @@ namespace SecureCleanApiWaf.Core.Application.Features.Authentication.Queries
         /// </summary>
         /// <param name="request">The token blacklist query</param>
         /// <param name="cancellationToken">Cancellation token</param>
-        /// <returns>Result containing blacklist status or error information</returns>
+        /// <summary>
+        /// Determines whether the provided JWT is blacklisted and returns a structured blacklist status.
+        /// </summary>
+        /// <param name="request">The query containing the JWT to check; if <see cref="IsTokenBlacklistedQuery.JwtToken"/> is null or empty the result will be an Invalid status indicating the token is required.</param>
+        /// <returns>A Result containing a <see cref="TokenBlacklistStatusDto"/> that indicates `Blacklisted`, `Valid`, or `Invalid`. If an internal error occurs the handler returns a `Valid` status with Details set to "Unable to verify blacklist status, assuming valid".</returns>
         public async Task<Result<TokenBlacklistStatusDto>> Handle(IsTokenBlacklistedQuery request, CancellationToken cancellationToken)
         {
             try
@@ -128,7 +134,11 @@ namespace SecureCleanApiWaf.Core.Application.Features.Authentication.Queries
         /// Extracts key information from JWT token for processing.
         /// </summary>
         /// <param name="jwtToken">JWT token to parse</param>
-        /// <returns>Token information including JTI, expiration, and validity</returns>
+        /// <summary>
+        /// Parses a JWT string to extract the token identifier (JTI) and expiration and indicates whether the token could be parsed successfully.
+        /// </summary>
+        /// <param name="jwtToken">The JWT compact serialization to parse.</param>
+        /// <returns>A TokenInformation containing the token's JTI, the expiration as a UTC DateTime (defaults to one hour from now if the `exp` claim is missing or cannot be parsed), and IsValid set to `true` when a JTI is present; on parse failure returns IsValid = `false`.</returns>
         private TokenInformation ExtractTokenInformation(string jwtToken)
         {
             try

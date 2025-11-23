@@ -61,7 +61,12 @@ namespace SecureCleanApiWaf.Infrastructure.Services
         /// </summary>
         /// <param name="tokenRepository">Repository for token persistence</param>
         /// <param name="memoryCache">Memory cache for fast local lookups</param>
-        /// <param name="logger">Logger for security auditing and debugging</param>
+        /// <summary>
+        /// Initializes a new instance of <see cref="TokenBlacklistService"/> with the required dependencies.
+        /// </summary>
+        /// <param name="tokenRepository">Repository used to persist and query token entities.</param>
+        /// <param name="memoryCache">In-memory cache for storing blacklist entries for quick lookup.</param>
+        /// <param name="logger">Logger used for security auditing and debugging.</param>
         public TokenBlacklistService(
             ITokenRepository tokenRepository,
             IMemoryCache memoryCache,
@@ -72,7 +77,11 @@ namespace SecureCleanApiWaf.Infrastructure.Services
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Blacklists the JWT identified by its JTI: revokes the corresponding token in persistence, updates the in-memory blacklist cache, and records the outcome in logs.
+        /// </summary>
+        /// <param name="jwtToken">The JWT string whose JTI claim will be used to identify and revoke the corresponding token.</param>
+        /// <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
         public async Task BlacklistTokenAsync(string jwtToken, CancellationToken cancellationToken = default)
         {
             try
@@ -150,7 +159,15 @@ namespace SecureCleanApiWaf.Infrastructure.Services
             }
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Checks whether the provided JWT is currently blacklisted.
+        /// </summary>
+        /// <param name="jwtToken">The JWT to inspect; expected to contain a JTI (token identifier).</param>
+        /// <param name="cancellationToken">Cancellation token to cancel the operation.</param>
+        /// <returns>`true` if the token has been revoked and is not expired, `false` otherwise.</returns>
+        /// <remarks>
+        /// The method first consults an in-memory cache and then falls back to the repository. Tokens without a JTI or an empty/whitespace JWT are treated as not blacklisted. On error the method returns `false`.
+        /// </remarks>
         public async Task<bool> IsTokenBlacklistedAsync(string jwtToken, CancellationToken cancellationToken = default)
         {
             try
@@ -264,7 +281,10 @@ namespace SecureCleanApiWaf.Infrastructure.Services
             return cleanedCount;
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Retrieves aggregated statistics about the token blacklist including total revoked tokens, expired tokens pending cleanup, an estimated memory usage, and the timestamp when the statistics were calculated.
+        /// </summary>
+        /// <returns>A TokenBlacklistStats containing TotalBlacklistedTokens, ExpiredTokensPendingCleanup, EstimatedMemoryUsageBytes, CacheHitRatePercent (null if unavailable), and LastUpdated.</returns>
         public async Task<TokenBlacklistStats> GetBlacklistStatsAsync(CancellationToken cancellationToken = default)
         {
             try
@@ -302,7 +322,11 @@ namespace SecureCleanApiWaf.Infrastructure.Services
         /// Extracts the TokenId (JTI claim) from a JWT token.
         /// </summary>
         /// <param name="jwtToken">The JWT token to parse</param>
-        /// <returns>The token ID (JTI claim) or null if not found</returns>
+        /// <summary>
+        /// Retrieves the JWT ID (JTI) claim value from the provided JWT string.
+        /// </summary>
+        /// <param name="jwtToken">The compact JWT from which to extract the JTI claim.</param>
+        /// <returns>The token ID (JTI claim) if present; otherwise <c>null</c> (including when extraction fails).</returns>
         private string? ExtractTokenId(string jwtToken)
         {
             try
@@ -328,7 +352,11 @@ namespace SecureCleanApiWaf.Infrastructure.Services
         /// Generates a cache key for a blacklisted token.
         /// </summary>
         /// <param name="tokenId">The JWT ID (JTI)</param>
-        /// <returns>Cache key for the blacklist entry</returns>
+        /// <summary>
+/// Generates the memory-cache key for a token blacklist entry.
+/// </summary>
+/// <param name="tokenId">The token's JTI (unique token identifier).</param>
+/// <returns>The cache key for the blacklist entry.</returns>
         private static string GetBlacklistKey(string tokenId) => $"{BlacklistKeyPrefix}{tokenId}";
     }
 }

@@ -145,7 +145,12 @@ namespace SecureCleanApiWaf.Core.Domain.Entities
 
         /// <summary>
         /// Private constructor for EF Core.
-        /// </summary>
+        /// <summary>
+/// Parameterless constructor used by Entity Framework Core and other ORMs for object materialization.
+/// </summary>
+/// <remarks>
+/// Intended for framework use only; application code should not call this constructor directly.
+/// </remarks>
         private Token() { }
 
         /// <summary>
@@ -158,7 +163,18 @@ namespace SecureCleanApiWaf.Core.Domain.Entities
         /// <param name="clientIp">Optional client IP address.</param>
         /// <param name="userAgent">Optional user agent string.</param>
         /// <returns>A new Token entity.</returns>
-        /// <exception cref="DomainException">Thrown when validation fails.</exception>
+        /// <summary>
+        /// Creates a new Token aggregate with validated metadata and initial Active status.
+        /// </summary>
+        /// <param name="tokenId">The JWT ID (`jti`) that uniquely identifies the token; required and non-empty.</param>
+        /// <param name="userId">Identifier of the user who owns the token; required and not Guid.Empty.</param>
+        /// <param name="username">User name for audit/logging; required and non-empty.</param>
+        /// <param name="expiresAt">Token expiration time; must be in the future. Access tokens cannot exceed 2 hours and refresh tokens cannot exceed 90 days from now.</param>
+        /// <param name="type">The token type (e.g., AccessToken or RefreshToken) which influences lifetime rules.</param>
+        /// <param name="clientIp">Optional client IP address associated with the token issuance.</param>
+        /// <param name="userAgent">Optional client user agent associated with the token issuance.</param>
+        /// <returns>The newly created Token initialized with IssuedAt, ExpiresAt, Status = Active, CreatedAt, and a new Id.</returns>
+        /// <exception cref="DomainException">Thrown when any validation or business rule (empty values, expiration in the past, or lifetime limits) fails.</exception>
         public static Token Create(string tokenId, Guid userId,
             string username,
             DateTime expiresAt,
@@ -232,7 +248,12 @@ namespace SecureCleanApiWaf.Core.Domain.Entities
         /// - Creating security audit logs
         /// - Notifying users of unexpected revocations
         /// - Analytics and security monitoring
-        /// </remarks>
+        /// <summary>
+        /// Revokes the token, marking it as invalid and recording revocation metadata.
+        /// </summary>
+        /// <param name="reason">Non-empty justification for the revocation, recorded for audit.</param>
+        /// <exception cref="DomainException">Thrown when <paramref name="reason"/> is null, empty, or whitespace.</exception>
+        /// <exception cref="InvalidDomainOperationException">Thrown when the token is already revoked or already expired.</exception>
         public void Revoke(string reason)
         {
             if (string.IsNullOrWhiteSpace(reason))
@@ -271,7 +292,14 @@ namespace SecureCleanApiWaf.Core.Domain.Entities
         /// <remarks>
         /// Called by background jobs or when checking token validity.
         /// Tokens automatically expire based on ExpiresAt timestamp.
+        /// <summary>
+        /// Transition the token to the Expired status when its expiration time has been reached.
+        /// </summary>
+        /// <remarks>
+        /// If the token is already Expired or has been Revoked, the method does nothing.
+        /// Otherwise, it sets the token's Status to Expired and updates UpdatedAt to the current UTC time.
         /// </remarks>
+        /// <exception cref="InvalidDomainOperationException">Thrown when the token's ExpiresAt is in the future and therefore not yet eligible to be marked expired.</exception>
         public void MarkAsExpired()
         {
             if (Status == TokenStatus.Expired)
@@ -301,7 +329,10 @@ namespace SecureCleanApiWaf.Core.Domain.Entities
         /// - Not expired
         /// - Not revoked
         /// - Not soft-deleted
-        /// </remarks>
+        /// <summary>
+        /// Determines whether the token is currently valid for use in authentication checks.
+        /// </summary>
+        /// <returns>`true` if the token's status is Active, it is not expired, and it is not soft-deleted; `false` otherwise.</returns>
         public bool IsValid()
         {
             return Status == TokenStatus.Active
@@ -312,7 +343,10 @@ namespace SecureCleanApiWaf.Core.Domain.Entities
         /// <summary>
         /// Checks if the token has expired.
         /// </summary>
-        /// <returns>True if expired, false otherwise.</returns>
+        /// <summary>
+        /// Determines whether the token has passed its expiration time.
+        /// </summary>
+        /// <returns>`true` if `ExpiresAt` is less than or equal to the current UTC time, `false` otherwise.</returns>
         public bool IsExpired()
         {
             return ExpiresAt <= DateTime.UtcNow;
@@ -321,7 +355,10 @@ namespace SecureCleanApiWaf.Core.Domain.Entities
         /// <summary>
         /// Checks if the token is revoked.
         /// </summary>
-        /// <returns>True if revoked, false otherwise.</returns>
+        /// <summary>
+        /// Determines whether the token has been revoked.
+        /// </summary>
+        /// <returns>`true` if the token's status is Revoked, `false` otherwise.</returns>
         public bool IsRevoked()
         {
             return Status == TokenStatus.Revoked;
@@ -342,7 +379,10 @@ namespace SecureCleanApiWaf.Core.Domain.Entities
         ///     // Refresh token soon
         /// }
         /// ```
-        /// </remarks>
+        /// <summary>
+        /// Gets the remaining lifetime of the token measured against the current UTC time.
+        /// </summary>
+        /// <returns>The remaining time until the token's expiration; `TimeSpan.Zero` if the token is already expired.</returns>
         public TimeSpan GetRemainingLifetime()
         {
             if (IsExpired())
@@ -363,7 +403,10 @@ namespace SecureCleanApiWaf.Core.Domain.Entities
         /// - Not revoked
         /// 
         /// Access tokens cannot be refreshed directly.
-        /// </remarks>
+        /// <summary>
+        /// Determines whether the token is eligible to be used to obtain a new access token via refresh.
+        /// </summary>
+        /// <returns>true if the token's type is RefreshToken, its status is Active, it is not expired, and it is not revoked; false otherwise.</returns>
         public bool CanBeRefreshed()
         {
             return Type == TokenType.RefreshToken
@@ -387,7 +430,11 @@ namespace SecureCleanApiWaf.Core.Domain.Entities
         ///     var newToken = await RefreshTokenAsync(token);
         /// }
         /// ```
-        /// </remarks>
+        /// <summary>
+        /// Determines whether the token's remaining lifetime is within a short expiration window.
+        /// </summary>
+        /// <param name="threshold">Optional time window to consider "expiring soon"; defaults to 5 minutes.</param>
+        /// <returns>`true` if the token has remaining lifetime greater than zero and less than or equal to the threshold, `false` otherwise.</returns>
         public bool IsExpiringSoon(TimeSpan? threshold = null)
         {
             var checkThreshold = threshold ?? TimeSpan.FromMinutes(5);
@@ -399,7 +446,10 @@ namespace SecureCleanApiWaf.Core.Domain.Entities
         /// <summary>
         /// Gets the token age (time since issued).
         /// </summary>
-        /// <returns>TimeSpan representing token age.</returns>
+        /// <summary>
+        /// Gets the amount of time that has elapsed since the token was issued.
+        /// </summary>
+        /// <returns>The duration of time between the token's IssuedAt timestamp and now.</returns>
         public TimeSpan GetAge()
         {
             return DateTime.UtcNow - IssuedAt;
@@ -409,7 +459,11 @@ namespace SecureCleanApiWaf.Core.Domain.Entities
         /// Checks if the token belongs to a specific user.
         /// </summary>
         /// <param name="userId">The user ID to check.</param>
-        /// <returns>True if token belongs to user, false otherwise.</returns>
+        /// <summary>
+        /// Determines whether the token belongs to the specified user.
+        /// </summary>
+        /// <param name="userId">The user identifier to compare against the token's owner.</param>
+        /// <returns><c>true</c> if the token's <see cref="UserId"/> equals the provided <paramref name="userId"/>, <c>false</c> otherwise.</returns>
         public bool BelongsToUser(Guid userId)
         {
             return UserId == userId;
@@ -432,7 +486,11 @@ namespace SecureCleanApiWaf.Core.Domain.Entities
         ///     _logger.LogWarning("Token used from different IP");
         /// }
         /// ```
-        /// </remarks>
+        /// <summary>
+        /// Determines whether the provided IP address matches the token's recorded client IP or is allowed when no client IP is recorded.
+        /// </summary>
+        /// <param name="ipAddress">The IP address to check; may be null or empty.</param>
+        /// <returns>True if the token has no recorded client IP or the provided IP matches the recorded client IP (comparison is case-insensitive); false otherwise.</returns>
         public bool IsFromIpAddress(string? ipAddress)
         {
             if (string.IsNullOrWhiteSpace(ClientIpAddress))
@@ -448,7 +506,10 @@ namespace SecureCleanApiWaf.Core.Domain.Entities
         /// <remarks>
         /// Never includes the actual JWT token value.
         /// Safe for logging and debugging purposes.
-        /// </remarks>
+        /// <summary>
+        /// Produces a compact, human-readable summary of the token's key metadata.
+        /// </summary>
+        /// <returns>A single-line string containing TokenId, Username, Type, Status, IssuedAt, ExpiresAt, and whether the token is currently valid.</returns>
         public string GetSummary()
         {
             return $"TokenID: {TokenId}, " +
@@ -478,6 +539,11 @@ namespace SecureCleanApiWaf.Core.Domain.Entities
         /// 
         /// token.ClearDomainEvents();
         /// </code>
+        /// <summary>
+        /// Clears all domain events recorded by this aggregate.
+        /// </summary>
+        /// <remarks>
+        /// Call after domain events have been published externally to remove them from the internal collection; no-op if there are none.
         /// </remarks>
         public void ClearDomainEvents()
         {

@@ -25,7 +25,12 @@ namespace SecureCleanApiWaf.Core.Application.Features.SampleData.Queries
         /// empty.</param>
         /// <param name="id">The unique identifier of the resource to retrieve from the API. Cannot be null or empty.</param>
         /// <param name="bypassCache">Specifies whether to bypass any cached data and force a fresh retrieval from the API. Set to <see
-        /// langword="true"/> to ignore cached results; otherwise, <see langword="false"/>.</param>
+        /// <summary>
+        /// Initializes a query to request an item of type <typeparamref name="T"/> from an external API by its identifier.
+        /// </summary>
+        /// <param name="apiPath">The API endpoint path that identifies the resource collection or route.</param>
+        /// <param name="id">The external API identifier of the resource to retrieve.</param>
+        /// <param name="bypassCache">If <see langword="true"/>, instructs handlers to bypass cached results and fetch fresh data; otherwise use cached data when available.</param>
         public GetApiDataByIdQuery(string apiPath, string id, bool bypassCache = false)
         {
             ApiPath = apiPath;

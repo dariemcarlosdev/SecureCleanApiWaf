@@ -30,13 +30,21 @@ namespace SecureCleanApiWaf.Infrastructure.Repositories
         /// <summary>
         /// Initializes a new instance of the TokenRepository.
         /// </summary>
-        /// <param name="context">EF Core database context.</param>
+        /// <summary>
+        /// Initializes a new instance of <see cref="TokenRepository"/> backed by the supplied EF Core context.
+        /// </summary>
+        /// <param name="context">The EF Core <see cref="ApplicationDbContext"/> used for token data access.</param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="context"/> is null.</exception>
         public TokenRepository(ApplicationDbContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Retrieve the token with the specified identifier.
+        /// </summary>
+        /// <param name="id">The unique identifier of the token to retrieve.</param>
+        /// <returns>The token with the specified Id, or `null` if no matching token is found.</returns>
         public async Task<Token?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
             return await _context.Tokens
@@ -44,7 +52,11 @@ namespace SecureCleanApiWaf.Infrastructure.Repositories
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Retrieve the token that matches the specified token identifier.
+        /// </summary>
+        /// <param name="tokenId">The token identifier to search for. If null, empty, or whitespace, no lookup is performed.</param>
+        /// <returns>The matching <see cref="Token"/> if found; otherwise <c>null</c>.</returns>
         public async Task<Token?> GetByTokenIdAsync(string tokenId, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(tokenId))
@@ -90,7 +102,10 @@ namespace SecureCleanApiWaf.Infrastructure.Repositories
                 .ToListAsync(cancellationToken);
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Retrieves all tokens marked as revoked, ordered by most recent revocation first.
+        /// </summary>
+        /// <returns>A read-only list of revoked tokens ordered by `RevokedAt` descending.</returns>
         public async Task<IReadOnlyList<Token>> GetRevokedTokensAsync(CancellationToken cancellationToken = default)
         {
             return await _context.Tokens
@@ -145,7 +160,12 @@ namespace SecureCleanApiWaf.Infrastructure.Repositories
                     cancellationToken);
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Adds the specified Token entity to the EF Core context so it will be persisted on the next save.
+        /// </summary>
+        /// <param name="token">The Token entity to add.</param>
+        /// <param name="cancellationToken">Token to observe while waiting for the add operation to complete.</param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="token"/> is null.</exception>
         public async Task AddAsync(Token token, CancellationToken cancellationToken = default)
         {
             if (token == null)
@@ -164,7 +184,13 @@ namespace SecureCleanApiWaf.Infrastructure.Repositories
             await Task.CompletedTask;
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Marks the specified token for deletion from the database context.
+        /// </summary>
+        /// <param name="token">The token entity to remove; cannot be null.</param>
+        /// <remarks>
+        /// The token is removed from the DbContext. Changes are not persisted until <see cref="SaveChangesAsync(CancellationToken)"/> is called.
+        /// </remarks>
         public async Task DeleteAsync(Token token, CancellationToken cancellationToken = default)
         {
             if (token == null)
@@ -210,7 +236,10 @@ namespace SecureCleanApiWaf.Infrastructure.Repositories
             return await SaveChangesAsync(cancellationToken);
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Computes aggregate counts for tokens (active, revoked, expired) and by type, using the current UTC time.
+        /// </summary>
+        /// <returns>A <see cref="TokenStatistics"/> object containing counts for active, revoked, expired, access, and refresh tokens, and the UTC timestamp when the values were calculated.</returns>
         public async Task<TokenStatistics> GetTokenStatisticsAsync(CancellationToken cancellationToken = default)
         {
             var now = DateTime.UtcNow;

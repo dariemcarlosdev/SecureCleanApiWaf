@@ -490,7 +490,18 @@ public class UserRegisteredEvent : BaseDomainEvent
     /// <exception cref="ArgumentNullException">
     /// Thrown when <paramref name="username"/>, <paramref name="email"/>,
     /// <paramref name="initialRoles"/>, or <paramref name="registrationMethod"/> is null or empty.
-    /// </exception>
+    /// <summary>
+    /// Initializes a domain event representing a newly registered user and the details of their registration.
+    /// </summary>
+    /// <param name="userId">Unique identifier of the newly registered user.</param>
+    /// <param name="username">Chosen username for the user.</param>
+    /// <param name="email">Email address value object for the user.</param>
+    /// <param name="initialRoles">Read-only list of roles assigned at registration; must contain at least one role.</param>
+    /// <param name="ipAddress">Optional IP address from which the registration originated.</param>
+    /// <param name="userAgent">Optional User-Agent string from the registration request.</param>
+    /// <param name="registrationMethod">Method or source of registration (for example, "Email" or "Google").</param>
+    /// <exception cref="ArgumentException">Thrown when <paramref name="userId"/> is <see cref="Guid.Empty"/>.</exception>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="username"/>, <paramref name="email"/>, <paramref name="initialRoles"/>, or <paramref name="registrationMethod"/> is null or invalid (username/registrationMethod empty or whitespace, or <paramref name="initialRoles"/> empty).</exception>
     public UserRegisteredEvent(
         Guid userId,
         string username,

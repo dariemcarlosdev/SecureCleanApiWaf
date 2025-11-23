@@ -55,7 +55,10 @@ namespace SecureCleanApiWaf.Core.Application.Features.Authentication.Queries
         /// <summary>
         /// Initializes a new instance of GetTokenBlacklistStatsQuery.
         /// </summary>
-        /// <param name="bypassCache">Whether to bypass cache for real-time results</param>
+        /// <summary>
+        /// Creates a query to request global token blacklist statistics, optionally bypassing cached results.
+        /// </summary>
+        /// <param name="bypassCache">If true, the query will bypass caching to obtain real-time statistics; otherwise cached results may be used.</param>
         public GetTokenBlacklistStatsQuery(bool bypassCache = false)
         {
             BypassCache = bypassCache;

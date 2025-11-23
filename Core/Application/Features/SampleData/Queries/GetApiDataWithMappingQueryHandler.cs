@@ -45,6 +45,10 @@ namespace SecureCleanApiWaf.Core.Application.Features.SampleData.Queries
 
         private static readonly TimeSpan DefaultFreshnessThreshold = TimeSpan.FromHours(1);
 
+        /// <summary>
+        /// Initializes a new instance of the handler and validates that all injected dependencies are not null.
+        /// </summary>
+        /// <exception cref="ArgumentNullException">Thrown when any required dependency (repository, apiService, autoMapper, customMapper, or logger) is null.</exception>
         public GetApiDataWithMappingQueryHandler(
             IApiDataItemRepository repository,
             IApiIntegrationService apiService,
@@ -59,6 +63,11 @@ namespace SecureCleanApiWaf.Core.Application.Features.SampleData.Queries
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
+        /// <summary>
+        /// Retrieves API data for the specified URL using cache when fresh; otherwise fetches from the external API and maps results using either AutoMapper (for known structures) or a custom dynamic mapper, synchronizes the repository, and returns DTOs.
+        /// </summary>
+        /// <param name="request">Query containing the API URL and a flag indicating whether to use AutoMapper for mapping known API structures.</param>
+        /// <returns>`Result<List<ApiDataItemDto>>` containing the mapped list of API data items on success; on failure the result contains an error message. If the external API call fails but cached data exists, returns stale cached DTOs instead of an error.</returns>
         public async Task<Result<List<ApiDataItemDto>>> Handle(
             GetApiDataWithMappingQuery request, 
             CancellationToken cancellationToken)
@@ -151,6 +160,12 @@ namespace SecureCleanApiWaf.Core.Application.Features.SampleData.Queries
             }
         }
 
+        /// <summary>
+        /// Handle an API fetch failure by returning stale cached items when available, otherwise a failure result.
+        /// </summary>
+        /// <param name="error">Error message describing the API fetch failure.</param>
+        /// <param name="cachedItems">Cached entities retrieved from the repository for the requested API URL.</param>
+        /// <returns>`Ok` result containing DTOs for cached items whose status is not Deleted if any exist; otherwise a `Fail` result containing the provided error message.</returns>
         private Result<List<ApiDataItemDto>> HandleApiFailure(string error, IReadOnlyList<ApiDataItem> cachedItems)
         {
             _logger.LogWarning("API fetch failed: {Error}", error);
@@ -168,6 +183,16 @@ namespace SecureCleanApiWaf.Core.Application.Features.SampleData.Queries
             return Result<List<ApiDataItemDto>>.Fail(error);
         }
 
+        /// <summary>
+        /// Synchronizes freshly mapped ApiDataItem entities with the repository and persists the resulting changes.
+        /// </summary>
+        /// <param name="freshEntities">Entities produced from the external API to be inserted or used to update existing records.</param>
+        /// <param name="cachedItems">Cached items previously retrieved for the same API URL (provided for context; not modified by this method).</param>
+        /// <param name="cancellationToken">Token to observe while performing repository operations.</param>
+        /// <remarks>
+        /// For each item in <paramref name="freshEntities"/>, the method adds it when no repository record exists with the same external ID;
+        /// otherwise it updates the existing record's name and description, replaces its metadata with the fresh item's metadata, and saves all changes.
+        /// </remarks>
         private async Task SyncWithRepository(
             List<ApiDataItem> freshEntities, 
             IReadOnlyList<ApiDataItem> cachedItems,
