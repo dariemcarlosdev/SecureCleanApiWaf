@@ -1,4 +1,21 @@
-﻿# 💡 Inspiration for SecureCleaners
+﻿<div align="center">
+
+# 🛡️ SecureCleanApiWaf
+
+**Enterprise-Grade .NET 8 Blazor Server Application**  
+*Demonstrating CQRS, Clean Architecture, JWT Authentication & Azure Integration*
+
+---
+
+**Author:** [Dariem Carlos Macias](https://github.com/dariemcarlosdev)  
+**Repository:** [SecureCleanApiWaf](https://github.com/dariemcarlosdev/SecureCleanApiWaf)  
+**License:** MIT
+
+</div>
+
+---
+
+# 💡 Inspiration for SecureCleaners
 
 > **"In technology, stagnation is not an option—only evolution matters. Every line of code you write today shapes the future you build tomorrow. Stay curious, keep learning, and never stop pushing the boundaries of what's possible. The tech world rewards those who dare to innovate."**
 >
@@ -16,17 +33,277 @@
 [![Blazor](https://img.shields.io/badge/Blazor-Server-512BD4?logo=blazor&logoColor=white)](https://blazor.net/)
 [![Azure](https://img.shields.io/badge/Azure-Ready-0078D4?logo=microsoft-azure&logoColor=white)](https://azure.microsoft.com/)
 [![Docker](https://img.shields.io/badge/Docker-Containerization-2496ED?logo=docker&logoColor=white)](https://www.docker.com/)
-[![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-CI%2FCD-2088FF?logo=github-actions&logoColor=white)](
+[![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-CI%2FCD-2088FF?logo=github-actions&logoColor=white)](https://github.com/features/actions)
 [![JWT](https://img.shields.io/badge/JWT-JSON%20Web%20Tokens-000000?logo=json-web-tokens&logoColor=white)](https://jwt.io/)
-[![Polly](https://img.shields.io/badge/Polly-7.2-blue?logo=polly&logoColor=white)](
-[![Serilog](https://img.shields.io/badge/Serilog-2.12-blue?logo=serilog&logoColor=white)](
-[![AutoMapper](https://img.shields.io/badge/AutoMapper-12.0-blue?logo=automapper&logoColor=white)](
-[![MediatR](https://img.shields.io/badge/MediatR-9.0-blue?logo=mediatr&logoColor=white)](
+[![Polly](https://img.shields.io/badge/Polly-7.2-blue?logo=polly&logoColor=white)](https://github.com/App-vNext/Polly)
+[![Serilog](https://img.shields.io/badge/Serilog-2.12-blue?logo=serilog&logoColor=white)](https://serilog.net/)
+[![AutoMapper](https://img.shields.io/badge/AutoMapper-12.0-blue?logo=automapper&logoColor=white)](https://automapper.org/)
+[![MediatR](https://img.shields.io/badge/MediatR-9.0-blue?logo=mediatr&logoColor=white)](https://github.com/jbogard/MediatR)
 [![CQRS](https://img.shields.io/badge/Pattern-CQRS%20%2B%20MediatR-blue)](docs/CleanArchitecture/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Clean Architecture](https://img.shields.io/badge/Architecture-Clean-brightgreen)](docs/CleanArchitecture/CLEAN_ARCHITECTURE_GUIDE.md)
 [![Domain-Driven Design](https://img.shields.io/badge/DDD-Domain--Driven%20Design-brightgreen)](docs/CleanArchitecture/CLEAN-DDD_ARCH_README.md)
 [![Documentation](https://img.shields.io/badge/Docs-Comprehensive-orange)](docs/)
+
+---
+
+## 🚀 How to Contribute to This Project
+
+**Welcome, Contributors!** This project follows industry-standard development practices. Whether you're fixing a bug, adding a feature, or improving documentation—your contribution matters! 🎯
+
+### **📋 What Needs Your Help?**
+
+Based on my [Next Steps](#-next-steps), here's what's currently needed:
+
+#### **🔄 In Progress (High Priority)**
+- [x] **Domain Layer Completion** (100% ✅ COMPLETE)
+  - [x] Base classes (BaseEntity, ValueObject, DomainException)
+  - [x] Domain entities (User, Token, ApiDataItem) - All implemented with rich business logic
+  - [x] Value objects (Email, Role) - Complete with validation
+  - [x] Domain enums (UserStatus, TokenStatus, TokenType, DataStatus) - All 4 implemented
+  - [x] Domain events (IDomainEvent, BaseDomainEvent, TokenRevokedEvent, UserRegisteredEvent)
+  - [x] Aggregate roots (User, Token, ApiDataItem with IAggregateRoot marker)
+
+#### **🏗️ Infrastructure Implementation (High Priority)**
+- [x] **Repository Pattern** (100% ✅ COMPLETE)
+  - [x] IUserRepository + UserRepository - Complete with 12 methods
+  - [x] ITokenRepository + TokenRepository - Complete
+  - [x] IApiDataItemRepository + ApiDataItemRepository - Complete with 24 methods
+- [x] **Database Layer** (100% ✅ COMPLETE)
+  - [x] ApplicationDbContext with EF Core - Configured and working
+  - [x] Entity configurations (ApiDataItemConfiguration with optimized indexes)
+  - [x] Soft delete query filters
+  - [x] Automatic audit timestamp management
+- [x] **Caching Services** (100% ✅ COMPLETE)
+  - [x] ICacheService + CacheService (distributed cache with JSON serialization)
+  - [x] SampleCache (legacy in-memory cache)
+  - [x] TokenBlacklistService (dual-cache strategy: Memory + Distributed)
+
+#### **📋 Planned & Open for Contributions**
+- [ ] **EF Core Migrations** (0% ⏳ TODO)
+  - [ ] Initial migration for User, Token, ApiDataItem entities
+  - [ ] Migration for relationships and indexes
+  - [ ] Seed data for development/testing
+  
+- [ ] **Testing Suite** (0% ⏳ TODO)
+  - [ ] Unit tests (Domain entities, Value objects, Application handlers)
+  - [ ] Integration tests (Repositories, API endpoints, Database)
+  - [ ] Architecture tests (Clean Architecture rule verification with NetArchTest)
+  - [ ] Performance tests (Load testing with NBomber or k6)
+  - [ ] Security tests (Authentication flows, JWT validation, Token blacklisting)
+
+- [ ] **User Management Features** (0% ⏳ TODO)
+  - [ ] User registration endpoint (POST /api/v1/auth/register)
+  - [ ] Email verification workflow
+  - [ ] Password reset functionality
+  - [ ] User profile management (update email, change password)
+  - [ ] Account lockout after failed login attempts
+
+- [ ] **Advanced Caching** (25% 🔄 IN PROGRESS)
+  - [x] Basic caching infrastructure (ICacheService, dual-cache)
+  - [ ] Redis integration for production distributed cache
+  - [ ] Cache-aside pattern optimization
+  - [ ] Cache invalidation strategies
+  - [ ] Distributed cache synchronization
+
+- [ ] **Background Jobs** (0% ⏳ TODO)
+  - [ ] Hangfire integration
+  - [ ] Scheduled token cleanup job
+  - [ ] Stale data refresh job
+  - [ ] Failed login cleanup job
+
+- [ ] **Search Features** (0% ⏳ TODO)
+  - [ ] Elasticsearch integration
+  - [ ] Full-text search for ApiDataItem
+  - [ ] Search indexing strategy
+  - [ ] Search result ranking
+
+- [ ] **Advanced Security** (0% ⏳ TODO)
+  - [ ] OAuth2/OpenID Connect integration
+  - [ ] Multi-factor authentication (MFA/2FA)
+  - [ ] Refresh token implementation
+  - [ ] Token rotation strategy
+  - [ ] Advanced rate limiting (per-user, per-endpoint)
+
+#### **🎯 Production Hardening (Future)**
+- [ ] **OpenTelemetry** (0% ⏳ TODO)
+  - [ ] Distributed tracing
+  - [ ] Metrics collection
+  - [ ] Logging correlation
+
+- [ ] **Multi-Environment Configuration** (25% 🔄 IN PROGRESS)
+  - [x] Development configuration (appsettings.Development.json)
+  - [x] Azure Key Vault integration
+  - [ ] Staging environment setup
+  - [ ] Production environment hardening
+
+- [ ] **Auto-Scaling & Performance** (0% ⏳ TODO)
+  - [ ] Azure App Service auto-scaling rules
+  - [ ] Performance monitoring and alerts
+  - [ ] Database connection pooling optimization
+  - [ ] API response caching strategies
+
+---
+
+### **📊 Implementation Status Summary**
+
+| Component | Status | Progress | Priority |
+|-----------|--------|----------|----------|
+| **Domain Layer** | ✅ Complete | 100% | ✅ Done |
+| **Repository Pattern** | ✅ Complete | 100% | ✅ Done |
+| **Database Context** | ✅ Complete | 100% | ✅ Done |
+| **Caching Infrastructure** | ✅ Complete | 100% | ✅ Done |
+| **EF Core Migrations** | ⏳ TODO | 0% | 🔥 High |
+| **Testing Suite** | ⏳ TODO | 0% | 🔥 High |
+| **User Management** | ⏳ TODO | 0% | 🔥 High |
+| **Advanced Caching (Redis)** | 🔄 In Progress | 25% | ⚠️ Medium |
+| **Background Jobs** | ⏳ TODO | 0% | ⚠️ Medium |
+| **Search (Elasticsearch)** | ⏳ TODO | 0% | ⬇️ Low |
+| **OAuth2/OIDC** | ⏳ TODO | 0% | ⬇️ Low |
+
+---
+
+**Legend:**
+- ✅ Complete - Fully implemented and tested
+- 🔄 In Progress - Partially implemented
+- ⏳ TODO - Planned but not started
+- 🔥 High Priority - Critical for production readiness
+- ⚠️ Medium Priority - Important but not blocking
+- ⬇️ Low Priority - Nice to have, future enhancement
+
+### **🛠️ Development Workflow**
+
+#### **1. Set Up Your Environment**
+```bash
+# Fork the repository on GitHub, then clone your fork
+git clone https://github.com/YOUR_USERNAME/SecureCleanApiWaf.git
+cd SecureCleanApiWaf
+
+# Add upstream remote
+git remote add upstream https://github.com/dariemcarlosdev/SecureCleanApiWaf.git
+
+# Create a feature branch
+git checkout -b feature/your-feature-name
+```
+
+#### **2. Make Your Changes**
+- Follow existing **code style and patterns** (see [Clean Architecture Guide](docs/CleanArchitecture/CLEAN_ARCHITECTURE_GUIDE.md))
+- Write **clear, descriptive commit messages**
+- Add **XML documentation** to public methods
+- Update **relevant documentation** in `/docs`
+- Ensure your code **builds without errors**
+
+```bash
+# Build and test locally
+dotnet build
+dotnet run
+
+# Test your changes via Swagger (https://localhost:7178/swagger)
+```
+
+#### **3. Follow CQRS + Clean Architecture Patterns**
+
+All new features should follow the established pattern:
+
+```
+1. Define Command/Query → Core/Application/Features/{FeatureName}/
+2. Implement Service → Infrastructure/Services/
+3. Create Controller → Presentation/Controllers/v1/
+4. Add Tests → (Follow testing strategies)
+5. Update Documentation → docs/{RelevantSection}/
+```
+
+### **✨ Create a Stellar Pull Request**
+
+#### **Before Submitting**
+- [ ] Code builds successfully (`dotnet build`)
+- [ ] All existing tests pass (when test suite is implemented)
+- [ ] New features include tests
+- [ ] Documentation updated (README, `/docs`, XML comments)
+- [ ] Commit messages are clear and descriptive
+- [ ] Branch is up-to-date with `upstream/Dev`
+
+#### **PR Template**
+```markdown
+## Description
+<!-- Brief description of what this PR does -->
+
+## Type of Change
+- [ ] Bug fix (non-breaking change)
+- [ ] New feature (non-breaking change)
+- [ ] Breaking change (fix or feature that breaks existing functionality)
+- [ ] Documentation update
+
+## Related Issue
+<!-- Link to related issue: Fixes #123 -->
+
+## Changes Made
+- Change 1
+- Change 2
+- Change 3
+
+## Testing
+<!-- Describe how you tested your changes -->
+
+## Screenshots (if applicable)
+<!-- Add screenshots for UI changes -->
+
+## Checklist
+- [ ] My code follows the project's style guidelines
+- [ ] I have performed a self-review
+- [ ] I have commented my code where necessary
+- [ ] I have updated the documentation
+- [ ] My changes generate no new warnings
+- [ ] I have added tests that prove my fix/feature works
+```
+
+#### **Submit Your PR**
+```bash
+# Commit your changes
+git add .
+git commit -m "feat: add user registration with email verification"
+
+# Push to your fork
+git push origin feature/your-feature-name
+
+# Go to GitHub and create a Pull Request to 'Dev' branch
+```
+
+### **👀 Code Review Process**
+
+1. **Automated Checks** - GitHub Actions runs build and tests
+2. **Maintainer Review** - Code quality, architecture alignment, documentation
+3. **Feedback & Iteration** - Address review comments if needed
+4. **Approval** - Once approved, PR will be merged by maintainer
+
+**Review Criteria:**
+- ✅ Follows Clean Architecture principles
+- ✅ Uses CQRS + MediatR patterns correctly
+- ✅ Includes proper error handling (Result<T> pattern)
+- ✅ Has XML documentation
+- ✅ Updates relevant documentation
+- ✅ No breaking changes (or properly documented)
+
+### **🎉 Celebrate Your Contribution!**
+
+Once merged:
+- 🎊 **You're officially a contributor!** Your name will appear in the contributors list
+- ⭐ **Star the repo** if you haven't already
+- 📢 **Share your contribution** on LinkedIn/Twitter
+- 🤝 **Stay engaged** - more contributions are always welcome!
+
+---
+
+### **💡 Need Help?**
+
+- 📖 **Read the docs** - Check [Documentation Hubs](#-ready-to-dive-deeper) for guidance
+- ❓ **Ask questions** - Use [GitHub Discussions](https://github.com/dariemcarlosdev/SecureCleanApiWaf/discussions)
+- 🐛 **Report bugs** - Create an [Issue](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues)
+- 💬 **Contact maintainer** - Email: softevolutionsl@gmail.com
+
+---
+
+**Thank you for contributing to SecureCleanApiWaf! Together, we're building something great.** 🚀✨
 
 ---
 
@@ -54,7 +331,6 @@
    - [Cloud & DevOps](#cloud--devops)
    - [Code Quality & Maintainability](#code-quality--maintainability)
    - [Real-World Application](#real-world-application)
-   - [Support & Contact](#support--contact)
 8. [Clean Architecture](#-clean-architecture)
    - [Clean Architecture Documentation](#-clean-architecture-documentation)
 9. [Service Alignment & Architecture Integration](#-service-alignment--architecture-integration)
@@ -71,7 +347,12 @@
     - [Security Features Implemented](#-security-features-implemented)
       - [JWT Bearer Authentication with CQRS](#1-jwt-bearer-authentication-with-cqrs-) 🔄 UPDATED
       - [External API Security](#2-external-api-security-apikeyhandler-) 🔄 UPDATED
-11. [Support & Contact](#-support--contact)
+11. [🚀 Next Steps](#-next-steps) 🆕 NEW
+    - [Completed Features](#-completed-features)
+    - [In Progress](#-in-progress)
+    - [Planned Enhancements](#-planned)
+12. [🤝 Contributing](#-contributing) 🆕 NEW
+13. [📞 Support & Contact](#-support--contact)
 
 ---
 
@@ -643,7 +924,7 @@ Caching is handled by the **MediatR pipeline** (`CachingBehavior`), not by the s
 ```csharp
 public record GetApiDataQuery : IRequest<Result<List<SampleDataDto>>>, ICacheable
 {
-    public string CacheKey => "api-data-all";
+    public String CacheKey => "api-data-all";
     public TimeSpan? Expiration => TimeSpan.FromMinutes(5);
 }
 ```
@@ -1041,8 +1322,6 @@ Presentation/
 - ✅ **Validation** - via MediatR `ValidationBehavior`
 - ✅ **Error Handling** - via `Result<T>` pattern
 
----
-
 #### **Why This Matters:**
 
 | Benefit | Impact |
@@ -1071,21 +1350,64 @@ Authentication Feature:
 
 ---
 
-## 📞 Support & Contact
+## 🤝 Contributing
 
-**Project Maintainer:** Dariemcarlos  
-**Email:** softevolutionsl@gmail.com  
-**GitHub:** [@dariemcarlosdev](https://github.com/dariemcarlosdev)  
-**Repository:** [SecureCleanApiWaf](https://github.com/dariemcarlosdev/SecureCleanApiWaf)
+| Role | Actions |
+|------|---------|
+| **Developers** | ⭐ Star repo • 🐛 [Report bugs](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues) • 💡 [Suggest features](https://github.com/dariemcarlosdev/SecureCleanApiWaf/discussions) • 🔧 Submit PRs |
+| **Learners** | 📚 Study patterns • 🧪 Experiment • ❓ Ask questions • ✍️ Share learnings |
+| **Architects** | 🏛️ Review architecture • 📊 Provide feedback • 🤝 Collaborate • 📢 Share with teams |
 
-**Looking for collaboration or have questions?** Feel free to reach out via email or open an issue on GitHub!
-
----
-
-**Last Updated:** November 2025  
-**Status:** ✅ Active Development & Maintained  
-**License:** MIT
+**Stay Connected:** [Watch](https://github.com/dariemcarlosdev/SecureCleanApiWaf) • [Follow @dariemcarlosdev](https://github.com/dariemcarlosdev) • [LinkedIn](https://www.linkedin.com/in/dariemcarlosdev) • [Changelog](CHANGELOG.md)
 
 ---
 
-**Made with ❤️ by Dariemcarlos for the SecureClean Developer Community**
+
+<div align="center">
+
+### 💙 Built with Love & Passion for Clean Code
+
+*"Code is like humor. When you have to explain it, it's bad."* — **Cory House**
+
+This project was crafted with care to demonstrate **best practices**, **clean architecture**, and the **joy of building secure, scalable web applications**. Whether you're a student learning CQRS and MediatR, an engineer building production systems, or an architect evaluating patterns—I hope this project serves you well.
+
+**May your APIs always respond swiftly, your tokens stay secure, and your architecture remain clean and testable.** 🚀
+
+---
+
+**Happy Coding!** ⌨️✨
+
+*If this project helped you in your journey, consider giving it a ⭐ star and sharing it with others who might benefit.*
+
+---
+
+### 👨‍💻 About the Author
+
+**Dariem Carlos Macias**  
+Software Engineer | Backend Development Enthusiast | Clean Architecture Advocate
+
+📧 **Email:** softevolutionsl@gmail.com  
+🐙 **GitHub:** [@dariemcarlosdev](https://github.com/dariemcarlosdev)  
+💼 **LinkedIn:** [Connect with me](https://www.linkedin.com/in/dariemcarlosdev)
+
+This project represents my journey into enterprise-grade backend development, showcasing real-world implementations of CQRS, Clean Architecture, and secure authentication patterns. Every line of code, every architectural decision, and every piece of documentation was crafted with the goal of not just building software, but building understanding.
+
+*"The best way to learn is to teach, and the best way to teach is through code that speaks for itself."*
+
+---
+
+**🎯 What I Bring to the Table:**
+- ✅ Enterprise design patterns (CQRS, MediatR, Clean Architecture)
+- ✅ Production-ready security (JWT, Token Blacklisting, Rate Limiting)
+- ✅ Cloud-native architecture (Azure App Service, Key Vault, CI/CD)
+- ✅ Performance optimization (Dual-layer caching, Async patterns, Polly resilience)
+- ✅ Comprehensive documentation (20+ guides, 3,000+ lines)
+- ✅ Code quality & maintainability (SOLID principles, testable design)
+
+---
+
+**— Built with .NET 8, Blazor Server, MediatR, Azure, and a lot of ☕**
+
+</div>
+
+
