@@ -1,10 +1,10 @@
-# API Design Guide - SecureCleanApiWaf
+# API Design Guide - CleanArchitecture.ApiTemplate
 
 > "Thoughtful API design is the backbone of scalable, secure, and maintainable applications—embrace RESTful principles and .NET 8 best practices for long-term success."
 
 ## Overview
 
-This guide documents the API design principles, patterns, and best practices implemented in SecureCleanApiWaf. The API follows RESTful conventions, Clean Architecture principles, and modern .NET 8 standards for building secure, scalable, and maintainable web APIs.
+This guide documents the API design principles, patterns, and best practices implemented in CleanArchitecture.ApiTemplate. The API follows RESTful conventions, Clean Architecture principles, and modern .NET 8 standards for building secure, scalable, and maintainable web APIs.
 
 ---
 
@@ -689,7 +689,7 @@ GET    /api/v1/users_list           # Underscore instead of hyphen
 
 ### **Result Pattern**
 
-SecureCleanApiWaf uses the Result Pattern for consistent error handling without exceptions.
+CleanArchitecture.ApiTemplate uses the Result Pattern for consistent error handling without exceptions.
 
 **Implementation:**
 
@@ -999,7 +999,7 @@ services.AddDistributedMemoryCache();
 services.AddStackExchangeRedisCache(options =>
 {
     options.Configuration = configuration["Redis:ConnectionString"];
-    options.InstanceName = "SecureCleanApiWaf:";
+    options.InstanceName = "CleanArchitecture.ApiTemplate:";
 });
 ```
 
@@ -1558,7 +1558,7 @@ public class GetApiDataQueryHandler
 **Need Help?**
 
 - ?? **Documentation:** Start with the deployment guides above
-- ?? **Issues:** [GitHub Issues](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues)
+- ?? **Issues:** [GitHub Issues](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate/issues)
 - ?? **Email:** softevolutionsl@gmail.com
 - ?? **GitHub:** [@dariemcarlosdev](https://github.com/dariemcarlosdev)
 
@@ -1566,6 +1566,6 @@ public class GetApiDataQueryHandler
 
 **Last Updated:** November 2025  
 **Maintainer:** Dariemcarlos  
-**GitHub:** [SecureCleanApiWaf](https://github.com/dariemcarlosdev/SecureCleanApiWaf)
+**GitHub:** [CleanArchitecture.ApiTemplate](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate)
 
 

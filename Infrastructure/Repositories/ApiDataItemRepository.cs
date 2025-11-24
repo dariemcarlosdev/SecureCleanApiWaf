@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
-using SecureCleanApiWaf.Core.Application.Common.Interfaces;
-using SecureCleanApiWaf.Core.Application.Common.DTOs;
-using SecureCleanApiWaf.Core.Domain.Entities;
-using SecureCleanApiWaf.Core.Domain.Enums;
-using SecureCleanApiWaf.Infrastructure.Data;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Interfaces;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.DTOs;
+using CleanArchitecture.ApiTemplate.Core.Domain.Entities;
+using CleanArchitecture.ApiTemplate.Core.Domain.Enums;
+using CleanArchitecture.ApiTemplate.Infrastructure.Data;
 
-namespace SecureCleanApiWaf.Infrastructure.Repositories
+namespace CleanArchitecture.ApiTemplate.Infrastructure.Repositories
 {
     /// <summary>
     /// Entity Framework Core implementation of IApiDataItemRepository.

@@ -805,9 +805,9 @@ This architecture allows your team to leverage AutoMapper's power while maintain
 For questions, suggestions, or contributions related to this mapping strategy:
 
 ### **Project Information**
-- **Repository:** [SecureCleanApiWaf](https://github.com/dariemcarlosdev/SecureCleanApiWaf)
+- **Repository:** [CleanArchitecture.ApiTemplate](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate)
 - **Branch:** Dev
-- **Project Lead:** SecureCleanApiWaf Development Team
+- **Project Lead:** CleanArchitecture.ApiTemplate Development Team
 
 ### **Support Channels**
 
@@ -854,8 +854,8 @@ Your feedback helps improve this strategy. Please share:
 
 **Document Version:** 2.0  
 **Last Updated:** November 17, 2025  
-**Maintained By:** SecureCleanApiWaf Development Team
+**Maintained By:** CleanArchitecture.ApiTemplate Development Team
 
 ---
 
-*This document is part of the SecureCleanApiWaf technical documentation suite. All code examples follow .NET 8 and C# 12.0 standards.*
+*This document is part of the CleanArchitecture.ApiTemplate technical documentation suite. All code examples follow .NET 8 and C# 12.0 standards.*

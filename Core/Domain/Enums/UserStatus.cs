@@ -1,4 +1,4 @@
-namespace SecureCleanApiWaf.Core.Domain.Enums
+namespace CleanArchitecture.ApiTemplate.Core.Domain.Enums
 {
     /// <summary>
     /// Represents the lifecycle status of a user account in the system.

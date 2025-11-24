@@ -1,4 +1,4 @@
-namespace SecureCleanApiWaf.Core.Application.Common.Models
+namespace CleanArchitecture.ApiTemplate.Core.Application.Common.Models
 {
     /// <summary>
     /// Represents the result of an operation, encapsulating its success status, returned data, and error information.

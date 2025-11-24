@@ -1,4 +1,4 @@
-namespace SecureCleanApiWaf.Core.Domain.Exceptions
+namespace CleanArchitecture.ApiTemplate.Core.Domain.Exceptions
 {
     /// <summary>
     /// Exception thrown when a domain rule is violated or invalid business operation is attempted.

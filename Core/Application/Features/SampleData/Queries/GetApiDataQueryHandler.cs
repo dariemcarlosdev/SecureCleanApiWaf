@@ -1,11 +1,11 @@
 using MediatR;
-using SecureCleanApiWaf.Core.Application.Common.Models;
-using SecureCleanApiWaf.Core.Application.Common.Interfaces;
-using SecureCleanApiWaf.Core.Application.Common.Mapping;
-using SecureCleanApiWaf.Core.Domain.Entities;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Models;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Interfaces;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Mapping;
+using CleanArchitecture.ApiTemplate.Core.Domain.Entities;
 using Microsoft.Extensions.Logging;
 
-namespace SecureCleanApiWaf.Core.Application.Features.SampleData.Queries
+namespace CleanArchitecture.ApiTemplate.Core.Application.Features.SampleData.Queries
 {
     /// <summary>
     /// Query Handler for retrieving API data using ApiDataItem entity and repository pattern.

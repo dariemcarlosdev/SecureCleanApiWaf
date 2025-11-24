@@ -1,9 +1,9 @@
-﻿# 🚀 SecureCleanApiWaf Deployment Guide
+# ?? CleanArchitecture.ApiTemplate Deployment Guide
 
 > *"Deployment is not the end of development; it's the beginning of value delivery."*  
-> — DevOps Principles
+> � DevOps Principles
 
-## 📑 Table of Contents
+## ?? Table of Contents
 
 ### **Quick Navigation**
 1. [Overview](#-overview)
@@ -57,21 +57,21 @@
 
 ---
 
-## 📖 Overview
+## ?? Overview
 
-This comprehensive guide walks you through deploying SecureCleanApiWaf to Azure App Service using modern CI/CD practices with GitHub Actions. The application follows Clean Architecture principles and is built with .NET 8 and Blazor Server.
+This comprehensive guide walks you through deploying CleanArchitecture.ApiTemplate to Azure App Service using modern CI/CD practices with GitHub Actions. The application follows Clean Architecture principles and is built with .NET 8 and Blazor Server.
 
 ---
 
-## 🏗️ Architecture Overview
+## ??? Architecture Overview
 
-**SecureCleanApiWaf** is a production-ready application featuring:
-- ✅ **Clean Architecture** (Single-project with clear layer separation)
-- ✅ **CQRS Pattern** (MediatR for command/query separation)
-- ✅ **Interface Abstractions** (Dependency Inversion Principle)
-- ✅ **Distributed Caching** (In-memory with Redis support)
-- ✅ **Azure Integration** (Key Vault, App Service, Application Insights)
-- ✅ **CI/CD Pipeline** (Automated builds, tests, and deployments)
+**CleanArchitecture.ApiTemplate** is a production-ready application featuring:
+- ? **Clean Architecture** (Single-project with clear layer separation)
+- ? **CQRS Pattern** (MediatR for command/query separation)
+- ? **Interface Abstractions** (Dependency Inversion Principle)
+- ? **Distributed Caching** (In-memory with Redis support)
+- ? **Azure Integration** (Key Vault, App Service, Application Insights)
+- ? **CI/CD Pipeline** (Automated builds, tests, and deployments)
 
 **Technology Stack:**
 - .NET 8.0
@@ -84,7 +84,7 @@ This comprehensive guide walks you through deploying SecureCleanApiWaf to Azure 
 
 ---
 
-## ✅ Prerequisites
+## ? Prerequisites
 
 Before starting, ensure you have:
 
@@ -106,16 +106,16 @@ Before starting, ensure you have:
 
 ---
 
-## 📂 Step 1: Clone the Repository
+## ?? Step 1: Clone the Repository
 
 ### **Option 1: Fresh Clone**
 
 ```bash
 # Clone the repository
-git clone https://github.com/dariemcarlosdev/SecureCleanApiWaf.git
+git clone https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate.git
 
 # Navigate to project directory
-cd SecureCleanApiWaf
+cd CleanArchitecture.ApiTemplate
 
 # Verify you're on the correct branch
 git branch
@@ -138,7 +138,7 @@ git pull origin Master
 
 ---
 
-## 🔨 Step 2: Build and Test Locally
+## ?? Step 2: Build and Test Locally
 
 ### **2.1 Clean the Solution**
 
@@ -182,7 +182,7 @@ dotnet test --configuration Release --no-build --verbosity normal
 
 ```bash
 # Run the application
-dotnet run --project SecureCleanApiWaf.csproj
+dotnet run --project CleanArchitecture.ApiTemplate.csproj
 
 # Application should start on:
 # - HTTP: http://localhost:5006
@@ -197,7 +197,7 @@ dotnet run --project SecureCleanApiWaf.csproj
 
 ---
 
-## ☁️ Step 3: Configure Azure Resources
+## ?? Step 3: Configure Azure Resources
 
 ### **3.1 Create Azure App Service**
 
@@ -213,8 +213,8 @@ dotnet run --project SecureCleanApiWaf.csproj
 | Setting | Value | Notes |
 |---------|-------|-------|
 | **Subscription** | Your subscription | Select your active subscription |
-| **Resource Group** | `SecureCleanApiWaf-RG` | Click **Create new** if it doesn't exist |
-| **Name** | `SecureCleanApiWaf` (must be unique) | This becomes `SecureCleanApiWaf.azurewebsites.net` |
+| **Resource Group** | `CleanArchitecture.ApiTemplate-RG` | Click **Create new** if it doesn't exist |
+| **Name** | `CleanArchitecture.ApiTemplate` (must be unique) | This becomes `CleanArchitecture.ApiTemplate.azurewebsites.net` |
 | **Publish** | **Code** | Select "Code" (not "Docker Container") |
 | **Runtime stack** | **.NET 8 (LTS)** | Must match your project target framework |
 | **Operating System** | **Linux** | Recommended for .NET 8 (lower cost, better performance) |
@@ -234,7 +234,7 @@ dotnet run --project SecureCleanApiWaf.csproj
 8. Wait for deployment to complete (~2-3 minutes)
 9. Click **Go to resource** when deployment finishes
 
-**Your App Service is now created!** ✅
+**Your App Service is now created!** ?
 
 ---
 
@@ -246,7 +246,7 @@ The publish profile contains deployment credentials needed for GitHub Actions.
 
 1. In your App Service page, find the top menu bar
 2. Click **Get publish profile** button (looks like a download icon)
-3. A file named `SecureCleanApiWaf.PublishSettings` will download
+3. A file named `CleanArchitecture.ApiTemplate.PublishSettings` will download
 4. **Save this file securely** - it contains deployment credentials
 5. **Do NOT commit this file to Git**
 
@@ -268,7 +268,7 @@ Managed Identity allows your app to securely access other Azure resources (like 
 3. You'll see the **System assigned** tab
 4. Toggle **Status** to **On**
 5. Click **Save** at the top
-6. A confirmation dialog appears → Click **Yes**
+6. A confirmation dialog appears ? Click **Yes**
 7. Wait a moment for Azure to create the identity
 8. **Copy the Object (principal) ID** (you'll need this for Key Vault access)
 
@@ -295,7 +295,7 @@ Set initial configuration values in your App Service. These will be updated auto
 |-------|-------|
 | **Name** | `ASPNETCORE_ENVIRONMENT` |
 | **Value** | `Production` |
-| **Deployment slot setting** | ☐ Unchecked |
+| **Deployment slot setting** | ? Unchecked |
 
 Click **OK**
 
@@ -305,7 +305,7 @@ Click **OK**
 |-------|-------|
 | **Name** | `ThirdPartyApi__BaseUrl` |
 | **Value** | `https://api.example.com/` (replace with your actual API URL) |
-| **Deployment slot setting** | ☐ Unchecked |
+| **Deployment slot setting** | ? Unchecked |
 
 Click **OK**
 
@@ -318,7 +318,7 @@ Click **OK**
 
 ---
 
-## 🔐 Step 4: Configure Azure Key Vault (Optional but Recommended)
+## ?? Step 4: Configure Azure Key Vault (Optional but Recommended)
 
 Azure Key Vault provides secure secret management for passwords, API keys, and certificates.
 
@@ -335,8 +335,8 @@ Azure Key Vault provides secure secret management for passwords, API keys, and c
 | Setting | Value | Notes |
 |---------|-------|-------|
 | **Subscription** | Your subscription | Same as App Service |
-| **Resource Group** | `SecureCleanApiWaf-RG` | Use the same resource group |
-| **Key vault name** | `SecureCleanApiWaf-kv` (must be unique) | Lowercase, hyphens allowed |
+| **Resource Group** | `CleanArchitecture.ApiTemplate-RG` | Use the same resource group |
+| **Key vault name** | `CleanArchitecture.ApiTemplate-kv` (must be unique) | Lowercase, hyphens allowed |
 | **Region** | **East US** | Same region as App Service for best performance |
 | **Pricing tier** | **Standard** | Sufficient for most apps ($0.03 per 10,000 operations) |
 
@@ -345,8 +345,8 @@ Azure Key Vault provides secure secret management for passwords, API keys, and c
 | Setting | Value | Notes |
 |---------|-------|-------|
 | **Permission model** | **Vault access policy** | Recommended for App Services |
-| **Enable access to** | ☑️ Azure Virtual Machines for deployment | Check if using VMs |
-| | ☑️ Azure Resource Manager for template deployment | Recommended |
+| **Enable access to** | ?? Azure Virtual Machines for deployment | Check if using VMs |
+| | ?? Azure Resource Manager for template deployment | Recommended |
 
 **Networking Tab:**
 
@@ -360,15 +360,15 @@ Azure Key Vault provides secure secret management for passwords, API keys, and c
 
 | Setting | Value | Importance |
 |---------|-------|-----------|
-| **Soft-delete** | **90 days** | ✅ Keeps deleted secrets recoverable |
-| **Purge protection** | **Enabled** | ✅ Prevents permanent deletion (recommended for production) |
+| **Soft-delete** | **90 days** | ? Keeps deleted secrets recoverable |
+| **Purge protection** | **Enabled** | ? Prevents permanent deletion (recommended for production) |
 
 4. Click **Review + create**
 5. Click **Create**
 6. Wait for deployment (~1-2 minutes)
 7. Click **Go to resource**
 
-**Your Key Vault is now created!** ✅
+**Your Key Vault is now created!** ?
 
 ---
 
@@ -390,9 +390,9 @@ Now let's store sensitive values securely in Key Vault.
 | **Name** | `ThirdPartyApiKey` |
 | **Value** | `your-actual-api-key-here` (paste your real API key) |
 | **Content type** | `text/plain` (optional description) |
-| **Set activation date** | ☐ Unchecked (or set if needed) |
-| **Set expiration date** | ☐ Unchecked (or set if needed) |
-| **Enabled** | ☑️ Yes |
+| **Set activation date** | ? Unchecked (or set if needed) |
+| **Set expiration date** | ? Unchecked (or set if needed) |
+| **Enabled** | ?? Yes |
 
 Click **Create**
 
@@ -409,7 +409,7 @@ Repeat the steps above with:
 
 Click **Create**
 
-**Your secrets are now securely stored!** ✅
+**Your secrets are now securely stored!** ?
 
 ---
 
@@ -426,14 +426,14 @@ Allow your App Service to read secrets from Key Vault using Managed Identity.
 **Permissions Tab:**
 
 Under **Secret permissions**, check:
-- ☑️ **Get** (read secrets)
-- ☑️ **List** (enumerate secrets)
+- ?? **Get** (read secrets)
+- ?? **List** (enumerate secrets)
 
 Click **Next**
 
 **Principal Tab:**
 
-1. In the search box, type your App Service name: `SecureCleanApiWaf`
+1. In the search box, type your App Service name: `CleanArchitecture.ApiTemplate`
 2. Select your App Service from the results (look for the System Assigned Identity)
 3. Click **Next**
 
@@ -445,10 +445,10 @@ Click **Next**
 **Verify Access Policy:**
 
 You should now see your App Service listed in the Access policies table with:
-- **Principal:** SecureCleanApiWaf
+- **Principal:** CleanArchitecture.ApiTemplate
 - **Secret permissions:** Get, List
 
-**Your App Service can now securely access Key Vault secrets!** 🔐
+**Your App Service can now securely access Key Vault secrets!** ??
 
 ---
 
@@ -470,13 +470,13 @@ The application is already configured to use Key Vault in production. You just n
     }
   },
   "KeyVault": {
-    "Url": "https://SecureCleanApiWaf-kv.vault.azure.net/"
+    "Url": "https://CleanArchitecture.ApiTemplate-kv.vault.azure.net/"
   },
   "AllowedHosts": "*"
 }
 ```
 
-**Important:** Replace `SecureCleanApiWaf-kv` with your actual Key Vault name!
+**Important:** Replace `CleanArchitecture.ApiTemplate-kv` with your actual Key Vault name!
 
 **How It Works:**
 
@@ -513,15 +513,15 @@ var connectionString = configuration["ConnectionStrings:DefaultConnection"];
 
 ---
 
-## 🔑 Step 5: Configure GitHub Secrets
+## ?? Step 5: Configure GitHub Secrets
 
 GitHub Secrets securely store sensitive data for CI/CD workflows.
 
 ### **5.1 Navigate to Repository Secrets**
 
-1. Go to your GitHub repository: `https://github.com/dariemcarlosdev/SecureCleanApiWaf`
+1. Go to your GitHub repository: `https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate`
 2. Click **Settings** (top menu)
-3. Expand **Secrets and variables** (left menu) → **Actions**
+3. Expand **Secrets and variables** (left menu) ? **Actions**
 4. Click **New repository secret**
 
 ### **5.2 Add Required Secrets**
@@ -530,7 +530,7 @@ Add each secret individually:
 
 #### **Secret 1: AZURE_WEBAPP_NAME**
 - **Name:** `AZURE_WEBAPP_NAME`
-- **Value:** `SecureCleanApiWaf` (your App Service name, without `.azurewebsites.net`)
+- **Value:** `CleanArchitecture.ApiTemplate` (your App Service name, without `.azurewebsites.net`)
 - Click **Add secret**
 
 #### **Secret 2: AZURE_WEBAPP_PUBLISH_PROFILE**
@@ -560,7 +560,7 @@ A Service Principal is like a "service account" that allows GitHub Actions to au
 
 | Field | Value |
 |-------|-------|
-| **Name** | `GitHubActions-SecureCleanApiWaf` |
+| **Name** | `GitHubActions-CleanArchitecture.ApiTemplate` |
 | **Supported account types** | **Accounts in this organizational directory only** |
 | **Redirect URI** | Leave blank |
 
@@ -581,16 +581,16 @@ A Service Principal is like a "service account" that allows GitHub Actions to au
 
 **Assign Permissions to Resource Group:**
 
-11. Navigate to your Resource Group (`SecureCleanApiWaf-RG`)
+11. Navigate to your Resource Group (`CleanArchitecture.ApiTemplate-RG`)
 12. In the Resource Group, click **Access control (IAM)** (left menu)
-13. Click **+ Add** → **Add role assignment**
+13. Click **+ Add** ? **Add role assignment**
 14. **Role Tab:**
     - Search for and select **Contributor**
     - Click **Next**
 15. **Members Tab:**
     - Select **User, group, or service principal**
     - Click **+ Select members**
-    - Search for `GitHubActions-SecureCleanApiWaf`
+    - Search for `GitHubActions-CleanArchitecture.ApiTemplate`
     - Select it
     - Click **Select**
     - Click **Next**
@@ -611,11 +611,11 @@ A Service Principal is like a "service account" that allows GitHub Actions to au
 ```
 
 **To get your Subscription ID:**
-- Azure Portal → Search "Subscriptions" ? Copy your Subscription ID
+- Azure Portal ? Search "Subscriptions" ? Copy your Subscription ID
 
 **Add to GitHub:**
 
-18. Go to GitHub repository → **Settings** → **Secrets and variables** → **Actions**
+18. Go to GitHub repository ? **Settings** ? **Secrets and variables** ? **Actions**
 19. Click **New repository secret**
 20. Name: `AZURE_CREDENTIALS`
 21. Value: Paste the entire JSON (from step 17)
@@ -624,9 +624,9 @@ A Service Principal is like a "service account" that allows GitHub Actions to au
 **Verification:**
 
 Your Service Principal is now configured and GitHub Actions can:
-- ✅ Authenticate to Azure
-- ✅ Update App Service settings
-- ✅ Access resources in your Resource Group
+- ? Authenticate to Azure
+- ? Update App Service settings
+- ? Access resources in your Resource Group
 
 **Security Notes:**
 - The client secret expires (24 months by default)
@@ -640,14 +640,14 @@ After adding all secrets, you should see:
 
 | Secret Name | Status |
 |-------------|--------|
-| `AZURE_WEBAPP_NAME` | ✅ Set |
-| `AZURE_WEBAPP_PUBLISH_PROFILE` | ✅ Set |
-| `THIRDPARTY_API_BASEURL` | ✅ Set |
-| `AZURE_CREDENTIALS` | ☑️ Set (optional) |
+| `AZURE_WEBAPP_NAME` | ? Set |
+| `AZURE_WEBAPP_PUBLISH_PROFILE` | ? Set |
+| `THIRDPARTY_API_BASEURL` | ? Set |
+| `AZURE_CREDENTIALS` | ?? Set (optional) |
 
 ---
 
-## 🚀 Step 6: Deploy via GitHub Actions
+## ?? Step 6: Deploy via GitHub Actions
 
 The CI/CD pipeline is fully automated. Deployments trigger on push to Master branch.
 
@@ -659,9 +659,9 @@ The CI/CD pipeline is fully automated. Deployments trigger on push to Master bra
 
 | Event | Build | Test | Deploy | Environment |
 |-------|-------|------|--------|-------------|
-| **Push to Master** | ✅ | ✅ | ✅ | Production |
-| **Push to Dev** | ✅ | ✅ | ❌ | N/A |
-| **Pull Request** | ✅ | ✅ | ❌ | N/A |
+| **Push to Master** | ? | ? | ? | Production |
+| **Push to Dev** | ? | ? | ? | N/A |
+| **Pull Request** | ? | ? | ? | N/A |
 
 **Workflow Jobs:**
 1. **Build Job:** Compiles, tests, and publishes the application
@@ -710,7 +710,7 @@ git push origin feature/my-changes
 ### **6.3 Monitor Deployment**
 
 **GitHub Actions UI:**
-1. Go to repository → **Actions** tab
+1. Go to repository ? **Actions** tab
 2. Click on the running workflow
 3. Watch real-time logs for each job:
    - Build and Test
@@ -724,47 +724,47 @@ git push origin feature/my-changes
 
 **Expected Output:**
 ```
-✅ Build and Test
-   ✅ Checkout code
-   ✅ Setup .NET
-   ✅ Cache NuGet packages (cache hit - 50% faster!)
-   ✅ Restore dependencies
-   ✅ Build
-   ✅ Test (optional)
-   ✅ Publish
-   ✅ Upload artifact
+? Build and Test
+   ? Checkout code
+   ? Setup .NET
+   ? Cache NuGet packages (cache hit - 50% faster!)
+   ? Restore dependencies
+   ? Build
+   ? Test (optional)
+   ? Publish
+   ? Upload artifact
 
-✅ Deploy to Azure
-   ✅ Download artifact
-   ✅ Deploy to Azure Web App
-   ✅ Azure Login (optional)
-   ✅ Set Azure App Settings (optional)
-   ✅ Health Check
+? Deploy to Azure
+   ? Download artifact
+   ? Deploy to Azure Web App
+   ? Azure Login (optional)
+   ? Set Azure App Settings (optional)
+   ? Health Check
 ```
 
 ### **6.4 Verify Deployment in Azure**
 
 1. **Azure Portal Verification:**
    - Go to your App Service in Azure Portal
-   - Check **Overview** → **Status** should be "Running"
-   - Check **Deployment Center** → Recent deployments should show success
+   - Check **Overview** ? **Status** should be "Running"
+   - Check **Deployment Center** ? Recent deployments should show success
 
 2. **Application URL Verification:**
    ```
-   https://SecureCleanApiWaf.azurewebsites.net
+   https://CleanArchitecture.ApiTemplate.azurewebsites.net
    ```
    - Blazor UI should load
-   - Check Swagger: `https://SecureCleanApiWaf.azurewebsites.net/swagger`
+   - Check Swagger: `https://CleanArchitecture.ApiTemplate.azurewebsites.net/swagger`
 
 3. **Health Endpoint Verification:**
    ```bash
-   curl https://SecureCleanApiWaf.azurewebsites.net/health
+   curl https://CleanArchitecture.ApiTemplate.azurewebsites.net/health
    ```
    - Should return: `Healthy`
 
 ---
 
-## 🏥 Step 7: Health Check Endpoint (Optional Enhancement)
+## ?? Step 7: Health Check Endpoint (Optional Enhancement)
 
 The CI/CD workflow includes a health check step. Add a health endpoint to your application:
 
@@ -791,7 +791,7 @@ curl http://localhost:5006/health
 
 ---
 
-## 📊 Step 8: Monitor Your Application
+## ?? Step 8: Monitor Your Application
 
 ### **8.1 Application Insights (Optional)**
 
@@ -808,8 +808,8 @@ Enable Application Insights for advanced monitoring, performance tracking, and d
 | Setting | Value | Notes |
 |---------|-------|-------|
 | **Subscription** | Your subscription | Same as App Service |
-| **Resource Group** | `SecureCleanApiWaf-RG` | Use the same resource group |
-| **Name** | `SecureCleanApiWaf-insights` | Descriptive name |
+| **Resource Group** | `CleanArchitecture.ApiTemplate-RG` | Use the same resource group |
+| **Name** | `CleanArchitecture.ApiTemplate-insights` | Descriptive name |
 | **Region** | **East US** | Same region as App Service |
 | **Resource Mode** | **Workspace-based** | Recommended (uses Log Analytics) |
 
@@ -818,7 +818,7 @@ Enable Application Insights for advanced monitoring, performance tracking, and d
 | Setting | Value |
 |---------|-------|
 | **Log Analytics Workspace** | Create new or select existing |
-| **Workspace name** | `SecureCleanApiWaf-workspace` (if creating new) |
+| **Workspace name** | `CleanArchitecture.ApiTemplate-workspace` (if creating new) |
 
 4. Click **Review + create**
 5. Click **Create**
@@ -834,15 +834,15 @@ Enable Application Insights for advanced monitoring, performance tracking, and d
 
 **Configure App Service to Use Application Insights:**
 
-12. Go back to your **App Service** (`SecureCleanApiWaf`)
-13. Scroll down to **Settings** → **Configuration**
+12. Go back to your **App Service** (`CleanArchitecture.ApiTemplate`)
+13. Scroll down to **Settings** ? **Configuration**
 14. Click **+ New application setting**
 
 | Field | Value |
 |-------|-------|
 | **Name** | `ApplicationInsights__ConnectionString` |
 | **Value** | Paste the connection string you copied |
-| **Deployment slot setting** | ☐ Unchecked |
+| **Deployment slot setting** | ? Unchecked |
 
 15. Click **OK**
 16. Click **Save** at the top
@@ -852,11 +852,11 @@ Enable Application Insights for advanced monitoring, performance tracking, and d
 
 Azure App Service has a shortcut to enable Application Insights:
 
-1. In your App Service, scroll to **Settings** → **Application Insights**
+1. In your App Service, scroll to **Settings** ? **Application Insights**
 2. Click **Turn on Application Insights**
 3. Select **Create new resource** or **Select existing resource**
 4. If creating new:
-   - **Application Insights name:** `SecureCleanApiWaf-insights`
+   - **Application Insights name:** `CleanArchitecture.ApiTemplate-insights`
    - **Location:** Same as App Service
 5. Click **Apply**
 6. Click **Yes** to confirm
@@ -870,13 +870,13 @@ Azure App Service has a shortcut to enable Application Insights:
 
 **What You Get with Application Insights:**
 
-- ✅ **Request tracking** - See all HTTP requests, response times
-- ✅ **Dependency tracking** - Monitor calls to databases, APIs
-- ✅ **Exception tracking** - Automatic logging of all exceptions
-- ✅ **Performance monitoring** - CPU, memory, request duration
-- ✅ **Custom events** - Track your own business metrics
-- ✅ **Application Map** - Visualize dependencies
-- ✅ **Smart Detection** - AI-powered anomaly detection
+- ? **Request tracking** - See all HTTP requests, response times
+- ? **Dependency tracking** - Monitor calls to databases, APIs
+- ? **Exception tracking** - Automatic logging of all exceptions
+- ? **Performance monitoring** - CPU, memory, request duration
+- ? **Custom events** - Track your own business metrics
+- ? **Application Map** - Visualize dependencies
+- ? **Smart Detection** - AI-powered anomaly detection
 
 **Access Your Telemetry:**
 
@@ -891,7 +891,7 @@ In Application Insights, explore:
 
 ---
 
-## 🔧 Troubleshooting
+## ?? Troubleshooting
 
 ### **Issue 1: Deployment Fails - Publish Profile Error**
 
@@ -912,13 +912,13 @@ In Application Insights, explore:
 **Check App Service Logs:**
 
 1. Go to your App Service in Azure Portal
-2. Scroll down to **Monitoring** → **Log stream** (left menu)
+2. Scroll down to **Monitoring** ? **Log stream** (left menu)
 3. Click **Application Logs** tab
 4. Look for error messages in red
 
 **Enable Detailed Logging:**
 
-1. In App Service, go to **Monitoring** → **App Service logs**
+1. In App Service, go to **Monitoring** ? **App Service logs**
 2. Turn on:
    - **Application Logging (Filesystem):** Error level
    - **Detailed error messages:** On
@@ -929,7 +929,7 @@ In Application Insights, explore:
 **Common Causes & Fixes:**
 
 **Cause 1: Wrong Environment Variable**
-1. Go to **Configuration** → **Application settings**
+1. Go to **Configuration** ? **Application settings**
 2. Verify `ASPNETCORE_ENVIRONMENT` is set to `Production`
 3. Save and restart if changed
 
@@ -940,23 +940,23 @@ In Application Insights, explore:
 4. If missing, add access policy (see Step 4.3)
 
 **Cause 3: Missing NuGet Packages**
-1. Check **Deployment Center** → **Logs**
+1. Check **Deployment Center** ? **Logs**
 2. Look for "File not found" or assembly errors
 3. Verify all required packages are in `.csproj`
 4. Redeploy the application
 
 **Cause 4: Configuration Missing**
 1. Check if required configuration is present
-2. Go to **Configuration** → **Application settings**
+2. Go to **Configuration** ? **Application settings**
 3. Verify all expected settings are there
 4. Add any missing settings and restart
 
 ---
 
-## 📚 Additional Resources
+## ?? Additional Resources
 
 ### **Documentation**
-- [SecureCleanApiWaf README](README.md) - Project overview
+- [CleanArchitecture.ApiTemplate README](README.md) - Project overview
 - [Clean Architecture Docs](docs/CleanArchitecture/README.md) - Architecture details
 - [CI/CD Workflow Documentation](docs/CI-CD-WORKFLOW-UPDATE.md) - Pipeline details
 - [Interface Abstractions](docs/CleanArchitecture/INTERFACE_ABSTRACTIONS_SUMMARY.md) - DI setup
@@ -972,7 +972,7 @@ In Application Insights, explore:
 
 ---
 
-## ✅ Deployment Checklist
+## ? Deployment Checklist
 
 ### **Pre-Deployment**
 - [ ] .NET 8 SDK installed
@@ -1012,16 +1012,16 @@ In Application Insights, explore:
 
 ---
 
-## 📝 Summary
+## ?? Summary
 
-You now have a **production-ready deployment pipeline** for SecureCleanApiWaf:
+You now have a **production-ready deployment pipeline** for CleanArchitecture.ApiTemplate:
 
-✅ **Clean Architecture** - Organized, maintainable codebase  
-✅ **Automated CI/CD** - Push to Master → Automatic deployment  
-✅ **Secure Configuration** - GitHub Secrets + Azure Key Vault  
-✅ **Environment Separation** - Dev for testing, Master for production  
-✅ **Health Monitoring** - Automated health checks  
-✅ **Security Scanning** - Vulnerability detection on PRs  
+? **Clean Architecture** - Organized, maintainable codebase  
+? **Automated CI/CD** - Push to Master ? Automatic deployment  
+? **Secure Configuration** - GitHub Secrets + Azure Key Vault  
+? **Environment Separation** - Dev for testing, Master for production  
+? **Health Monitoring** - Automated health checks  
+? **Security Scanning** - Vulnerability detection on PRs  
 
 **Deployment Time:** ~3-5 minutes from push to live  
 **Reliability:** Automated tests and health checks  
@@ -1029,28 +1029,28 @@ You now have a **production-ready deployment pipeline** for SecureCleanApiWaf:
 
 ---
 
-## 🆘 Support & Contact
+## ?? Support & Contact
 
 **Issues or Questions?**
-- 📖 **Documentation:** Start with the deployment guides above
-- 🐛 **Issues:** [GitHub Issues](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues)
-- 📧 **Email:** softevolutionsl@gmail.com
-- 🐙 **GitHub:** [@dariemcarlosdev](https://github.com/dariemcarlosdev)sl@gmail.com
+- ?? **Documentation:** Start with the deployment guides above
+- ?? **Issues:** [GitHub Issues](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate/issues)
+- ?? **Email:** softevolutionsl@gmail.com
+- ?? **GitHub:** [@dariemcarlosdev](https://github.com/dariemcarlosdev)sl@gmail.com
 
 ---
 
-**Congratulations! Your SecureCleanApiWaf is now deployed to Azure with a professional CI/CD pipeline!** 🎉
+**Congratulations! Your CleanArchitecture.ApiTemplate is now deployed to Azure with a professional CI/CD pipeline!** ??
 
 ---
 
 ## Contact
 
-For questions, open an issue or contact the maintainer at softevolutionsl@gmail.com or via GitHub: https://github.com/dariemcarlosdev/SecureCleanApiWaf
+For questions, open an issue or contact the maintainer at softevolutionsl@gmail.com or via GitHub: https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate
 
 **Last Updated:** 2025  
 **Maintainer:** Dariemcarlos  
-**GitHub:** [SecureCleanApiWaf](https://github.com/dariemcarlosdev/SecureCleanApiWaf)
+**GitHub:** [CleanArchitecture.ApiTemplate](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate)
 
 *Documentation created: November 2025*  
-*For: SecureCleanApiWaf - Deployment Guide*
+*For: CleanArchitecture.ApiTemplate - Deployment Guide*
 

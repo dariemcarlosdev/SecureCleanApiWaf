@@ -1,9 +1,9 @@
 using MediatR;
-using SecureCleanApiWaf.Core.Application.Common.Models;
-using SecureCleanApiWaf.Core.Application.Common.Profiles;
-using SecureCleanApiWaf.Core.Application.Common.DTOs;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Models;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Profiles;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.DTOs;
 
-namespace SecureCleanApiWaf.Core.Application.Features.SampleData.Queries
+namespace CleanArchitecture.ApiTemplate.Core.Application.Features.SampleData.Queries
 {
     /// <summary>
     /// Query for fetching API data with choice of mapping strategy.

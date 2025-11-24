@@ -1,4 +1,4 @@
-namespace SecureCleanApiWaf.Core.Domain.Entities
+namespace CleanArchitecture.ApiTemplate.Core.Domain.Entities
 {
     /// <summary>
     /// Represents the root entity of an aggregate in a domain-driven design context.

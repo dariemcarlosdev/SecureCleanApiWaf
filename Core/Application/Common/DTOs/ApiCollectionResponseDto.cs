@@ -1,4 +1,4 @@
-namespace SecureCleanApiWaf.Core.Application.Common.DTOs
+namespace CleanArchitecture.ApiTemplate.Core.Application.Common.DTOs
 {
     /// <summary>
     /// DTO wrapper for API responses that contain collections.

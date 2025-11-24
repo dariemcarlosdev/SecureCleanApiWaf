@@ -1,4 +1,4 @@
-# SecureCleanApiWaf.Infrastructure.Azure Project
+# CleanArchitecture.ApiTemplate.Infrastructure.Azure Project
 
 > *"Cloud platforms abstract away infrastructure concerns, allowing developers to focus on what truly matters: delivering value to users."*  
 > � **Scott Guthrie**, Executive Vice President, Microsoft Cloud + AI
@@ -28,7 +28,7 @@ The **Azure Infrastructure Layer** is an optional specialized infrastructure pro
 ## 📁 Project Structure
 
 ```
-SecureCleanApiWaf.Infrastructure.Azure/
+CleanArchitecture.ApiTemplate.Infrastructure.Azure/
 📖? KeyVault/                         # Azure Key Vault integration
 ?   📖? KeyVaultSecretProvider.cs    # Secret management
 ?   📖? KeyVaultConfigurationExtensions.cs
@@ -513,7 +513,7 @@ public class CustomTelemetryInitializer : ITelemetryInitializer
             _configuration["Environment"] 📖 "Unknown";
         
         telemetry.Context.GlobalProperties["ApplicationName"] = 
-            _configuration["ApplicationName"] 📖 "SecureCleanApiWaf";
+            _configuration["ApplicationName"] 📖 "CleanArchitecture.ApiTemplate";
     }
 }
 ```
@@ -665,7 +665,7 @@ public static class DependencyInjection
 
 <!-- Project References -->
 <ItemGroup>
-  <ProjectReference Include="..\SecureCleanApiWaf.Application\SecureCleanApiWaf.Application.csproj" />
+  <ProjectReference Include="..\CleanArchitecture.ApiTemplate.Application\CleanArchitecture.ApiTemplate.Application.csproj" />
 </ItemGroup>
 ```
 

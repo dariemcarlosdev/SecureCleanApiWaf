@@ -1,6 +1,6 @@
-using SecureCleanApiWaf.Core.Domain.Exceptions;
+using CleanArchitecture.ApiTemplate.Core.Domain.Exceptions;
 
-namespace SecureCleanApiWaf.Core.Domain.ValueObjects
+namespace CleanArchitecture.ApiTemplate.Core.Domain.ValueObjects
 {
     /// <summary>
     /// Represents a user role in the system with predefined role types.

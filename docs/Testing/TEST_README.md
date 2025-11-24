@@ -1,17 +1,17 @@
-# Testing Documentation Index - SecureCleanApiWaf
+# Testing Documentation Index - CleanArchitecture.ApiTemplate
 
 > "Testing is not about finding bugs, it's about preventing them."
 
 ## ?? Overview
 
-This index provides a comprehensive navigation guide to all testing documentation for the SecureCleanApiWaf project, covering API endpoint testing, clean architecture testing strategies, and best practices.
+This index provides a comprehensive navigation guide to all testing documentation for the CleanArchitecture.ApiTemplate project, covering API endpoint testing, clean architecture testing strategies, and best practices.
 
 ---
 
 ## ?? Documentation Files
 
 ### **1. API_ENDPOINT_TESTING_GUIDE.md**
-Complete guide for testing all API endpoints in SecureCleanApiWaf.
+Complete guide for testing all API endpoints in CleanArchitecture.ApiTemplate.
 
 **Contents:**
 - ? Running the application (local & Docker)
@@ -218,7 +218,7 @@ Step-by-step guide for testing API security and authentication.
 
 **Need Help?**
 - ?? Review guides in this folder
-- ?? [GitHub Issues](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues)
+- ?? [GitHub Issues](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate/issues)
 - ?? Email: softevolutionsl@gmail.com
 - ?? GitHub: [@dariemcarlosdev](https://github.com/dariemcarlosdev)
 
@@ -226,7 +226,7 @@ Step-by-step guide for testing API security and authentication.
 
 **Last Updated:** January 2025  
 **Maintainer:** Dariemcarlos  
-**Project:** SecureCleanApiWaf
+**Project:** CleanArchitecture.ApiTemplate
 
 ---
 

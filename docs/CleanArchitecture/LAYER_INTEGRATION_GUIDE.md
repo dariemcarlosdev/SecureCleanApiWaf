@@ -1,4 +1,4 @@
-# ?? Layer Integration Guide - SecureCleanApiWaf
+# ?? Layer Integration Guide - CleanArchitecture.ApiTemplate
 
 **Clean Architecture + DDD Hybrid Approach**
 
@@ -26,7 +26,7 @@
 
 ## 📖 Overview
 
-SecureCleanApiWaf implements **Clean Architecture with Domain-Driven Design (DDD)** in a single-project structure. This guide explains:
+CleanArchitecture.ApiTemplate implements **Clean Architecture with Domain-Driven Design (DDD)** in a single-project structure. This guide explains:
 
 - **HOW** layers integrate with each other
 - **WHY** specific integration patterns are used
@@ -842,9 +842,9 @@ HttpClient with configured policies
 
 ```csharp
 // ? WRONG - Domain entity using Infrastructure
-namespace SecureCleanApiWaf.Core.Domain.Entities;
+namespace CleanArchitecture.ApiTemplate.Core.Domain.Entities;
 
-using SecureCleanApiWaf.Infrastructure.Services; // ? NEVER DO THIS
+using CleanArchitecture.ApiTemplate.Infrastructure.Services; // ? NEVER DO THIS
 
 public class User : BaseEntity
 {
@@ -861,9 +861,9 @@ Domain entities should have zero dependencies. All external calls go through App
 
 ```csharp
 // ? WRONG - Handler using concrete implementation
-namespace SecureCleanApiWaf.Core.Application.Features;
+namespace CleanArchitecture.ApiTemplate.Core.Application.Features;
 
-using SecureCleanApiWaf.Infrastructure.Services; // ? WRONG
+using CleanArchitecture.ApiTemplate.Infrastructure.Services; // ? WRONG
 
 public class GetApiDataQueryHandler
 {
@@ -987,7 +987,7 @@ public async Task InvokeAsync(
 **Questions about layer integration?**
 
 - 📖 **Documentation:** See layer-specific guides linked above
-- 🐛 **Issues:** [GitHub Issues](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues)
+- 🐛 **Issues:** [GitHub Issues](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate/issues)
 - 📧 **Email:** softevolutionsl@gmail.com
 - 🐙 **GitHub:** [@dariemcarlosdev](https://github.com/dariemcarlosdev)
 
@@ -995,7 +995,7 @@ public async Task InvokeAsync(
 
 **Last Updated:** November 2025  
 **Maintainer:** Dariemcarlos  
-**Repository:** [SecureCleanApiWaf](https://github.com/dariemcarlosdev)  
+**Repository:** [CleanArchitecture.ApiTemplate](https://github.com/dariemcarlosdev)  
 **Status:** ? Current & Maintained
 
 ---

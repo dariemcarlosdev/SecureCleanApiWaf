@@ -1,4 +1,4 @@
-namespace SecureCleanApiWaf.Core.Application.Common.DTOs
+namespace CleanArchitecture.ApiTemplate.Core.Application.Common.DTOs
 {
     /// <summary>
     /// Generic DTO for paginated API responses.

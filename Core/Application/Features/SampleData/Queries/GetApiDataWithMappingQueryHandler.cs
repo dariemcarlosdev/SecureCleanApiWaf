@@ -1,14 +1,14 @@
 using MediatR;
 using AutoMapper;
-using SecureCleanApiWaf.Core.Application.Common.Models;
-using SecureCleanApiWaf.Core.Application.Common.Interfaces;
-using SecureCleanApiWaf.Core.Application.Common.Profiles;
-using SecureCleanApiWaf.Core.Application.Common.Mapping;
-using SecureCleanApiWaf.Core.Application.Common.DTOs;
-using SecureCleanApiWaf.Core.Domain.Entities;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Models;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Interfaces;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Profiles;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Mapping;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.DTOs;
+using CleanArchitecture.ApiTemplate.Core.Domain.Entities;
 using Microsoft.Extensions.Logging;
 
-namespace SecureCleanApiWaf.Core.Application.Features.SampleData.Queries
+namespace CleanArchitecture.ApiTemplate.Core.Application.Features.SampleData.Queries
 {
     /// <summary>
     /// Query Handler for retrieving API data with AutoMapper for known DTO structures.

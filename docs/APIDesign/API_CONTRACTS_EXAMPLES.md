@@ -1,10 +1,10 @@
-# API Contracts Examples - SecureCleanApiWaf
+# API Contracts Examples - CleanArchitecture.ApiTemplate
 
 > "Well-defined API contracts are the foundation of successful collaboration between backend and frontend teams—clear examples drive efficient development and seamless integration."
 
 ## Overview
 
-This document provides practical examples of API contracts used in SecureCleanApiWaf, along with collaboration tips for backend and UI developers. These examples demonstrate how to define clear, consistent, and testable API contracts that facilitate smooth integration between different layers of the application.
+This document provides practical examples of API contracts used in CleanArchitecture.ApiTemplate, along with collaboration tips for backend and UI developers. These examples demonstrate how to define clear, consistent, and testable API contracts that facilitate smooth integration between different layers of the application.
 
 ---
 
@@ -768,13 +768,13 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "SecureCleanApiWaf API",
+        Title = "CleanArchitecture.ApiTemplate API",
         Version = "v1",
-        Description = "RESTful API for SecureCleanApiWaf",
+        Description = "RESTful API for CleanArchitecture.ApiTemplate",
         Contact = new OpenApiContact
         {
             Name = "Development Team",
-            Email = "dev@SecureCleanApiWaf.com"
+            Email = "dev@CleanArchitecture.ApiTemplate.com"
         }
     });
 
@@ -821,7 +821,7 @@ builder.Services.AddSwaggerGen(c =>
 **Need Help with API Contracts?**
 
 - ?? **Documentation:** Refer to the main API Design Guide
-- ?? **Issues:** [GitHub Issues](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues)
+- ?? **Issues:** [GitHub Issues](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate/issues)
 - ?? **Email:** softevolutionsl@gmail.com
 - ?? **GitHub:** [@dariemcarlosdev](https://github.com/dariemcarlosdev)
 
@@ -829,4 +829,4 @@ builder.Services.AddSwaggerGen(c =>
 
 **Last Updated:** November 2025  
 **Maintainer:** Dariemcarlos  
-**GitHub:** [SecureCleanApiWaf](https://github.com/dariemcarlosdev/SecureCleanApiWaf)
+**GitHub:** [CleanArchitecture.ApiTemplate](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate)

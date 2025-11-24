@@ -3,7 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 
-namespace SecureCleanApiWaf.Infrastructure.Security
+namespace CleanArchitecture.ApiTemplate.Infrastructure.Security
 {
     /// <summary>
     /// Provides functionality for generating JSON Web Tokens (JWT) for users with configurable claims and roles.
@@ -59,10 +59,10 @@ namespace SecureCleanApiWaf.Infrastructure.Security
             // SecretKey: Used to sign the token (must be kept secret and at least 32 characters)
             var secretKey = jwtSettings["SecretKey"] ?? throw new InvalidOperationException("JWT SecretKey not configured");
             
-            // Issuer: Identifies who created and signed the token (e.g., "BlueTreadApp")
+            // Issuer: Identifies who created and signed the token (e.g., "CleanArchitecture.ApiTemplate")
             var issuer = jwtSettings["Issuer"];
             
-            // Audience: Identifies who the token is intended for (e.g., "BlueTreadApp.Api")
+            // Audience: Identifies who the token is intended for (e.g., "CleanArchitecture.ApiTemplate.Api")
             var audience = jwtSettings["Audience"];
             
             // ExpirationMinutes: How long the token remains valid (default: 60 minutes)

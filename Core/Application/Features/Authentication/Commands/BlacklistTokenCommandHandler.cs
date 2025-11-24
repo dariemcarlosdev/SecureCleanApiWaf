@@ -1,10 +1,10 @@
 using MediatR;
-using SecureCleanApiWaf.Core.Application.Common.Interfaces;
-using SecureCleanApiWaf.Core.Application.Common.Models;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Interfaces;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Models;
 using Microsoft.Extensions.Logging;
 using System.IdentityModel.Tokens.Jwt;
 
-namespace SecureCleanApiWaf.Core.Application.Features.Authentication.Commands
+namespace CleanArchitecture.ApiTemplate.Core.Application.Features.Authentication.Commands
 {
     /// <summary>
     /// Handler for BlacklistTokenCommand that processes JWT token blacklisting operations.

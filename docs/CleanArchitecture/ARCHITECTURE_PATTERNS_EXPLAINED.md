@@ -15,7 +15,7 @@
 3. [Clean Architecture Explained](#-clean-architecture-explained)
 4. [Domain-Driven Design Explained](#-domain-driven-design-explained)
 5. [How They Work Together](#-how-they-work-together)
-6. [Evidence in SecureCleanApiWaf](#-evidence-in-SecureCleanApiWaf)
+6. [Evidence in CleanArchitecture.ApiTemplate](#-evidence-in-CleanArchitecture.ApiTemplate)
 7. [When to Reference Each Pattern](#-when-to-reference-each-pattern)
 8. [Industry Perspective](#-industry-perspective)
 9. [Common Misconceptions](#-common-misconceptions)
@@ -27,7 +27,7 @@
 
 ## 📖 Overview
 
-**SecureCleanApiWaf implements a hybrid architecture** that combines two complementary patterns:
+**CleanArchitecture.ApiTemplate implements a hybrid architecture** that combines two complementary patterns:
 
 - **Clean Architecture** (by Robert C. Martin) - Provides the **structural/organizational framework**
 - **Domain-Driven Design** (by Eric Evans) - Provides the **domain modeling approach**
@@ -200,11 +200,11 @@ Benefits:
 Application Layer defines **what** it needs (interfaces).  
 Infrastructure Layer provides **how** it works (implementations).
 
-**Example from SecureCleanApiWaf:**
+**Example from CleanArchitecture.ApiTemplate:**
 
 ```csharp
 // 📦 Application Layer defines the interface (what)
-namespace SecureCleanApiWaf.Core.Application.Common.Interfaces;
+namespace CleanArchitecture.ApiTemplate.Core.Application.Common.Interfaces;
 
 public interface IApiIntegrationService
 {
@@ -215,7 +215,7 @@ public interface IApiIntegrationService
 
 ```csharp
 // 🔧 Infrastructure Layer implements (how)
-namespace SecureCleanApiWaf.Infrastructure.Services;
+namespace CleanArchitecture.ApiTemplate.Infrastructure.Services;
 
 public class ApiIntegrationService : IApiIntegrationService
 {
@@ -233,7 +233,7 @@ public class ApiIntegrationService : IApiIntegrationService
 
 ```csharp
 // 📦 Application Layer uses the interface (doesn't know about HttpClient!)
-namespace SecureCleanApiWaf.Core.Application.Features.SampleData.Queries;
+namespace CleanArchitecture.ApiTemplate.Core.Application.Features.SampleData.Queries;
 
 public class GetApiDataQueryHandler : IRequestHandler<GetApiDataQuery, Result<List<SampleDataDto>>>
 {
@@ -262,7 +262,7 @@ The Domain and Application layers should work **without** ASP.NET Core, EF Core,
 
 ```csharp
 // 💎 Domain Layer: Pure C#, no framework dependencies
-namespace SecureCleanApiWaf.Core.Domain.Entities;
+namespace CleanArchitecture.ApiTemplate.Core.Domain.Entities;
 
 public class User : BaseEntity
 {
@@ -319,7 +319,7 @@ public class UserController : ControllerBase
 
 ### What Clean Architecture Provides
 
-| Benefit | Explanation | Evidence in SecureCleanApiWaf |
+| Benefit | Explanation | Evidence in CleanArchitecture.ApiTemplate |
 |---------|-------------|--------------------------|
 | **Testability** | Domain logic testable without database | `User.Create()` unit tests require no mocks |
 | **Maintainability** | Changes isolated to specific layers | Change EF Core to Dapper without touching Domain |
@@ -339,13 +339,13 @@ DDD provides **tactical patterns** for building the Domain Layer that Clean Arch
 
 ---
 
-### DDD Tactical Patterns in SecureCleanApiWaf
+### DDD Tactical Patterns in CleanArchitecture.ApiTemplate
 
 #### 1. **Entities**
 
 **Definition:** Objects with **identity** and **lifecycle** that encapsulate business rules.
 
-**Example from SecureCleanApiWaf:**
+**Example from CleanArchitecture.ApiTemplate:**
 
 ```csharp
 // ✅ Rich Entity with business rules
@@ -443,7 +443,7 @@ public class RegisterUserHandler
 
 **Definition:** Immutable objects compared by **value**, not identity. No lifecycle. Inmutability means once created, their state cannot change.
 
-**Example from SecureCleanApiWaf:**
+**Example from CleanArchitecture.ApiTemplate:**
 
 ```csharp
 // ✅ Email Value Object
@@ -508,7 +508,7 @@ public class User
 
 **Definition:** Events that represent something significant that happened in the domain. Implemented to **decouple side effects** from core domain logic. It captures and communicates changes within the domain.
 
-**Example from SecureCleanApiWaf:**
+**Example from CleanArchitecture.ApiTemplate:**
 
 ```csharp
 // ✅ Domain Event
@@ -739,7 +739,7 @@ In the context of User aggregate, invariants could be:
 
 **Why These Invariants Matter:**
 
-| Scenario | Without Invariants | With Invariants (SecureCleanApiWaf) |
+| Scenario | Without Invariants | With Invariants (CleanArchitecture.ApiTemplate) |
 |----------|-------------------|--------------------------------|
 | **Role Management** | ? User with zero roles | ? Always at least one role |
 | **Role Duplicates** | ? Same role added multiple times | ? No duplicate roles |
@@ -750,7 +750,7 @@ In the context of User aggregate, invariants could be:
 
 ---
 
-**Example from SecureCleanApiWaf:**
+**Example from CleanArchitecture.ApiTemplate:**
 
 ```csharp
 // ✅ User is an Aggregate Root
@@ -854,7 +854,7 @@ public class User : BaseEntity // Aggregate Root
 
 ```csharp
 // 🏛️ CLEAN ARCHITECTURE provides the structure
-namespace SecureCleanApiWaf.Core.Domain.Entities; // 🏛️ Clean Arch: Domain Layer
+namespace CleanArchitecture.ApiTemplate.Core.Domain.Entities; // 🏛️ Clean Arch: Domain Layer
 
 // 🎯 DDD provides the implementation approach
 public class User : BaseEntity // 🎯 DDD: Entity with identity
@@ -892,7 +892,7 @@ public class User : BaseEntity // 🎯 DDD: Entity with identity
 
 ---
 
-## 🔍 Evidence in SecureCleanApiWaf
+## 🔍 Evidence in CleanArchitecture.ApiTemplate
 
 ### Clean Architecture Evidence
 
@@ -926,7 +926,7 @@ public class User : BaseEntity // 🎯 DDD: Entity with identity
 
 ### Code Comparison Table
 
-| Concept | Without Clean Arch + DDD | With Clean Arch + DDD (SecureCleanApiWaf) |
+| Concept | Without Clean Arch + DDD | With Clean Arch + DDD (CleanArchitecture.ApiTemplate) |
 |---------|--------------------------|--------------------------------------|
 | **Email** | `string Email { get; set; }` | `Email Email { get; private set; }` (Value Object) |
 | **User Status** | `string Status { get; set; }` | `UserStatus Status { get; private set; }` (Enum) |
@@ -1053,7 +1053,7 @@ Clean Architecture defines the **structure** (layers), but says nothing about wh
 
 **✅ Reality:**
 - Clean Architecture + **Anemic Models** = Poor design (business logic leaks to Application)
-- Clean Architecture + **DDD Rich Models** = Excellent design (business logic protected in Domain) ? **SecureCleanApiWaf**
+- Clean Architecture + **DDD Rich Models** = Excellent design (business logic protected in Domain) ? **CleanArchitecture.ApiTemplate**
 
 ```csharp
 // ? Anemic Model (still follows Clean Architecture layers, but poor design)
@@ -1086,11 +1086,11 @@ public class User : BaseEntity
 DDD is about **domain modeling**, not deployment architecture.
 
 **✅ Reality:**
-- DDD works in **monoliths** (like SecureCleanApiWaf)
+- DDD works in **monoliths** (like CleanArchitecture.ApiTemplate)
 - DDD works in **microservices**
 - DDD works in **modular monoliths**
 
-SecureCleanApiWaf uses DDD in a **single ASP.NET Core project** (Blazor Server).
+CleanArchitecture.ApiTemplate uses DDD in a **single ASP.NET Core project** (Blazor Server).
 
 ---
 
@@ -1104,7 +1104,7 @@ Clean Architecture principles (separation of concerns, dependency inversion) are
 - Small projects: Use Clean Architecture principles (even in one project)
 - Large projects: Use strict layering (separate projects per layer)
 
-SecureCleanApiWaf demonstrates Clean Architecture in a **single project** with **folder-based separation**.
+CleanArchitecture.ApiTemplate demonstrates Clean Architecture in a **single project** with **folder-based separation**.
 
 ---
 
@@ -1119,7 +1119,7 @@ DDD is not all-or-nothing.
 - Simple CRUD? Maybe just Entities and Value Objects
 - Complex domain? Add Aggregates, Domain Events, Specifications
 
-SecureCleanApiWaf uses:
+CleanArchitecture.ApiTemplate uses:
 - ? Entities
 - ? Value Objects
 - ✅ Domain Events
@@ -1158,7 +1158,7 @@ SecureCleanApiWaf uses:
 ✅ Accepted
 
 ## Context
-SecureCleanApiWaf requires:
+CleanArchitecture.ApiTemplate requires:
 - Clear separation of concerns
 - Testable business logic
 - Framework independence
@@ -1225,11 +1225,11 @@ Implement Clean Architecture structure with DDD tactical patterns in Domain Laye
 ## 🆘 Contact & Support
 
 ### Project Information
-- **Project Name:** SecureCleanApiWaf - Clean Architecture + DDD Demo
+- **Project Name:** CleanArchitecture.ApiTemplate - Clean Architecture + DDD Demo
 - **Version:** 1.0.0 (Architecture Complete)
 - **Framework:** .NET 8
 - **Architecture:** Clean Architecture + Domain-Driven Design
-- **Repository:** [https://github.com/dariemcarlosdev/SecureCleanApiWaf](https://github.com/dariemcarlosdev/SecureCleanApiWaf)
+- **Repository:** [https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate)
 
 ### Author & Maintainer
 - **Name:** Dariem Carlos
@@ -1241,7 +1241,7 @@ Implement Clean Architecture structure with DDD tactical patterns in Domain Laye
 
 #### ?🐛 **Bug Reports**
 If you find issues with the architecture implementation:
-1. Check [existing issues](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues)
+1. Check [existing issues](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate/issues)
 2. Create a new issue with:
    - Clear description
    - Architecture pattern involved (Clean Arch or DDD)
@@ -1252,7 +1252,7 @@ If you find issues with the architecture implementation:
 For questions about architecture decisions:
 1. Review this document first
 2. Check layer-specific documentation
-3. Open a [discussion](https://github.com/dariemcarlosdev/SecureCleanApiWaf/discussions)
+3. Open a [discussion](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate/discussions)
 4. Tag with `architecture` or `ddd`
 
 #### ?📝 **Documentation Improvements**
@@ -1286,6 +1286,6 @@ This architecture implementation follows patterns and practices from:
 
 ---
 
-*This document is the definitive guide to understanding how Clean Architecture and Domain-Driven Design work together in SecureCleanApiWaf.*  
+*This document is the definitive guide to understanding how Clean Architecture and Domain-Driven Design work together in CleanArchitecture.ApiTemplate.*  
 *For implementation details, see layer-specific documentation.*  
-*For the latest updates, visit the [GitHub repository](https://github.com/dariemcarlosdev/SecureCleanApiWaf).*
+*For the latest updates, visit the [GitHub repository](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate).*

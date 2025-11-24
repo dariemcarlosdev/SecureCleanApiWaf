@@ -1,6 +1,6 @@
-using SecureCleanApiWaf.Core.Domain.ValueObjects;
+using CleanArchitecture.ApiTemplate.Core.Domain.ValueObjects;
 
-namespace SecureCleanApiWaf.Core.Domain.Events;
+namespace CleanArchitecture.ApiTemplate.Core.Domain.Events;
 
 /// <summary>
 /// Domain event raised when a new user successfully registers in the system.

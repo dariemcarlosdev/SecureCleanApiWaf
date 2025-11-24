@@ -1,10 +1,10 @@
 using MediatR;
-using SecureCleanApiWaf.Core.Application.Common.Interfaces;
-using SecureCleanApiWaf.Core.Application.Common.Models;
-using SecureCleanApiWaf.Core.Application.Common.DTOs;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Interfaces;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Models;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.DTOs;
 using Microsoft.Extensions.Logging;
 
-namespace SecureCleanApiWaf.Core.Application.Features.Authentication.Queries
+namespace CleanArchitecture.ApiTemplate.Core.Application.Features.Authentication.Queries
 {
     /// <summary>
     /// Handler for GetTokenBlacklistStatsQuery that retrieves comprehensive blacklist statistics.

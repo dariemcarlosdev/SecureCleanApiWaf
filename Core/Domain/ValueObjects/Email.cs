@@ -1,7 +1,7 @@
-using SecureCleanApiWaf.Core.Domain.Exceptions;
+using CleanArchitecture.ApiTemplate.Core.Domain.Exceptions;
 using System.Net.Mail;
 
-namespace SecureCleanApiWaf.Core.Domain.ValueObjects
+namespace CleanArchitecture.ApiTemplate.Core.Domain.ValueObjects
 {
     /// <summary>
     /// Represents an email address value object with built-in validation.

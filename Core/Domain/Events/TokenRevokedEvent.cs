@@ -1,6 +1,6 @@
-using SecureCleanApiWaf.Core.Domain.Enums;
+using CleanArchitecture.ApiTemplate.Core.Domain.Enums;
 
-namespace SecureCleanApiWaf.Core.Domain.Events;
+namespace CleanArchitecture.ApiTemplate.Core.Domain.Events;
 
 /// <summary>
 /// Domain event raised when a JWT token is revoked.

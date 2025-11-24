@@ -1,9 +1,9 @@
-# 🔧 Docker Troubleshooting Guide - SecureCleanApiWaf
+# 🔧 Docker Troubleshooting Guide - CleanArchitecture.ApiTemplate
 
 > *"Every error is a lesson in disguise; troubleshooting is the path to mastery."*  
 > — Engineering Wisdom
 
-This guide helps you build and run the SecureCleanApiWaf Blazor application in Docker.
+This guide helps you build and run the CleanArchitecture.ApiTemplate Blazor application in Docker.
 
 ---
 
@@ -28,7 +28,7 @@ dotnet publish -c Release -o ./publish
 
 **Expected Result:**
 - A `publish` folder is created in your project root
-- Contains compiled files: `SecureCleanApiWaf.dll`, `appsettings.json`, static files, etc.
+- Contains compiled files: `CleanArchitecture.ApiTemplate.dll`, `appsettings.json`, static files, etc.
 
 **Verify:**
 ```powershell
@@ -54,7 +54,7 @@ docker-compose up -d
 docker ps
 ```
 
-You should see `SecureCleanApiWaf` in the list with status `Up`.
+You should see `CleanArchitecture.ApiTemplate` in the list with status `Up`.
 
 ### **Step 4: Access the Application**
 
@@ -88,7 +88,7 @@ docker-compose logs -f
 docker-compose down
 
 # Remove the image
-docker rmi SecureCleanApiWaf:latest
+docker rmi CleanArchitecture.ApiTemplate:latest
 
 # Clean up unused Docker resources
 docker system prune -a -f
@@ -224,7 +224,7 @@ This Dockerfile uses a **runtime-only** image that expects pre-published applica
 ---
 
 **Last Updated:** 2025-01-14
-**For:** SecureCleanApiWaf (Blazor .NET 8)
+**For:** CleanArchitecture.ApiTemplate (Blazor .NET 8)
 **Approach:** Local build + Docker containerization
 **Status:** ✅ Fully Working and Tested
 
@@ -233,7 +233,7 @@ This Dockerfile uses a **runtime-only** image that expects pre-published applica
 **Need Help?**
 
 - 📖 **Documentation:** Start with the deployment guides above
-- 🐛 **Issues:** [GitHub Issues](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues)
+- 🐛 **Issues:** [GitHub Issues](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate/issues)
 - 📧 **Email:** softevolutionsl@gmail.com
 - 🐙 **GitHub:** [@dariemcarlosdev](https://github.com/dariemcarlosdev)
 
@@ -245,10 +245,10 @@ This Dockerfile uses a **runtime-only** image that expects pre-published applica
 
 ---
 
-**Ready to troubleshoot and deploy your SecureCleanApiWaf in Docker? Follow this guide step-by-step to ensure a smooth experience!**
+**Ready to troubleshoot and deploy your CleanArchitecture.ApiTemplate in Docker? Follow this guide step-by-step to ensure a smooth experience!**
 
 ---
 
 **Last Updated:** November 2025  
 **Maintainer:** Dariemcarlos  
-**GitHub:** [SecureCleanApiWaf](https://github.com/dariemcarlosdev/SecureCleanApiWaf)
+**GitHub:** [CleanArchitecture.ApiTemplate](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate)

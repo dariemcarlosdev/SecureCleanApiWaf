@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
-using SecureCleanApiWaf.Core.Application.Features.Authentication.Queries;
-using SecureCleanApiWaf.Core.Application.Common.DTOs;
+using CleanArchitecture.ApiTemplate.Core.Application.Features.Authentication.Queries;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.DTOs;
 
-namespace SecureCleanApiWaf.Presentation.Controllers.v1
+namespace CleanArchitecture.ApiTemplate.Presentation.Controllers.v1
 {
     /// <summary>
     /// Administrative controller for token blacklist management and monitoring.

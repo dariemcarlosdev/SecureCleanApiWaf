@@ -1,4 +1,4 @@
-# SecureCleanApiWaf.Application Project
+# CleanArchitecture.ApiTemplate.Application Project
 
 > *"The application layer is thin. It does not contain business rules or knowledge, but only coordinates tasks and delegates work to collaborations of domain objects in the next layer down."*  
 > � **Eric Evans**, Domain-Driven Design
@@ -28,7 +28,7 @@ The **Application Layer** contains all application business logic and orchestrat
 ## 📁 Project Structure
 
 ```
-SecureCleanApiWaf.Application/
+CleanArchitecture.ApiTemplate.Application/
 📖? Common/
 ?   📖? Behaviors/                    # MediatR Pipeline Behaviors
 ?   ?   📖? CachingBehavior.cs       # Response caching
@@ -535,7 +535,7 @@ public record Result<T>
 
 <!-- Project References -->
 <ItemGroup>
-  <ProjectReference Include="..\SecureCleanApiWaf.Domain\SecureCleanApiWaf.Domain.csproj" />
+  <ProjectReference Include="..\CleanArchitecture.ApiTemplate.Domain\CleanArchitecture.ApiTemplate.Domain.csproj" />
 </ItemGroup>
 ```
 

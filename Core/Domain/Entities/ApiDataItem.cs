@@ -1,8 +1,8 @@
-using SecureCleanApiWaf.Core.Domain.Entities;
-using SecureCleanApiWaf.Core.Domain.Enums;
-using SecureCleanApiWaf.Core.Domain.Exceptions;
+using CleanArchitecture.ApiTemplate.Core.Domain.Entities;
+using CleanArchitecture.ApiTemplate.Core.Domain.Enums;
+using CleanArchitecture.ApiTemplate.Core.Domain.Exceptions;
 
-namespace SecureCleanApiWaf.Core.Domain.Entities
+namespace CleanArchitecture.ApiTemplate.Core.Domain.Entities
 {
     /// <summary>
     /// ApiDataItem aggregate root.

@@ -1,8 +1,8 @@
 using MediatR;
-using SecureCleanApiWaf.Core.Application.Common.Models;
-using SecureCleanApiWaf.Core.Application.Common.DTOs;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Models;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.DTOs;
 
-namespace SecureCleanApiWaf.Core.Application.Features.Authentication.Commands
+namespace CleanArchitecture.ApiTemplate.Core.Application.Features.Authentication.Commands
 {
     /// <summary>
     /// Command to authenticate a user and generate a JWT token using CQRS pattern.

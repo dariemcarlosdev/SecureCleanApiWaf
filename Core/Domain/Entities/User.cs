@@ -1,9 +1,9 @@
-using SecureCleanApiWaf.Core.Domain.Enums;
-using SecureCleanApiWaf.Core.Domain.Events;
-using SecureCleanApiWaf.Core.Domain.Exceptions;
-using SecureCleanApiWaf.Core.Domain.ValueObjects;
+using CleanArchitecture.ApiTemplate.Core.Domain.Enums;
+using CleanArchitecture.ApiTemplate.Core.Domain.Events;
+using CleanArchitecture.ApiTemplate.Core.Domain.Exceptions;
+using CleanArchitecture.ApiTemplate.Core.Domain.ValueObjects;
 
-namespace SecureCleanApiWaf.Core.Domain.Entities
+namespace CleanArchitecture.ApiTemplate.Core.Domain.Entities
 {
     /// <summary>
     /// User aggregate root.

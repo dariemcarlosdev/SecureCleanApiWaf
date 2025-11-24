@@ -1,4 +1,4 @@
-namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
+namespace CleanArchitecture.ApiTemplate.Core.Application.Common.Interfaces
 {
     /// <summary>
     /// Service for managing JWT token blacklisting to handle secure logout functionality.

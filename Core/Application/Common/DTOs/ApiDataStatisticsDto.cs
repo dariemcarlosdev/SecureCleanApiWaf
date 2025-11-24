@@ -1,4 +1,4 @@
-namespace SecureCleanApiWaf.Core.Application.Common.DTOs
+namespace CleanArchitecture.ApiTemplate.Core.Application.Common.DTOs
 {
     /// <summary>
     /// DTO for API data items statistics and monitoring information.

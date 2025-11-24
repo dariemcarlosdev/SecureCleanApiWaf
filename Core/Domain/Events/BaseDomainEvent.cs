@@ -1,4 +1,4 @@
-namespace SecureCleanApiWaf.Core.Domain.Events;
+namespace CleanArchitecture.ApiTemplate.Core.Domain.Events;
 
 /// <summary>
 /// Base class for all domain events providing common event properties.

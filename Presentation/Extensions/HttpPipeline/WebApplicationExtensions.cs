@@ -1,9 +1,8 @@
-using SecureCleanApiWaf.Components;
-using Microsoft.AspNetCore.Builder;
 using AspNetCoreRateLimit;
-using SecureCleanApiWaf.Infrastructure.Middleware;
+using CleanArchitecture.ApiTemplate.Components;
+using CleanArchitecture.ApiTemplate.Infrastructure.Middleware;
 
-namespace SecureCleanApiWaf.Presentation.Extensions.HttpPipeline
+namespace CleanArchitecture.ApiTemplate.Presentation.Extensions.HttpPipeline
 {
     /// <summary>
     /// HTTP pipeline configuration extensions for the Web application with security middleware
@@ -281,7 +280,7 @@ namespace SecureCleanApiWaf.Presentation.Extensions.HttpPipeline
                 // 
                 // Without this: Browser might execute JSON as JavaScript
                 // With this: Browser strictly follows Content-Type
-                context.Response.Headers["X-Content-Type-Options"] = "nosniff";
+                context.Response.Headers.XContentTypeOptions = "nosniff";
                 
                 // ===== X-Frame-Options: DENY =====
                 // Prevents clickjacking attacks
@@ -293,7 +292,7 @@ namespace SecureCleanApiWaf.Presentation.Extensions.HttpPipeline
                 // - ALLOW-FROM uri: Allow framing from specific URI
                 // 
                 // Modern alternative: Content-Security-Policy frame-ancestors directive
-                context.Response.Headers["X-Frame-Options"] = "DENY";
+                context.Response.Headers.XFrameOptions = "DENY";
                 
                 // ===== X-XSS-Protection: 1; mode=block =====
                 // Enables browser's XSS (Cross-Site Scripting) filter
@@ -305,7 +304,7 @@ namespace SecureCleanApiWaf.Presentation.Extensions.HttpPipeline
                 // 
                 // Note: Modern browsers rely more on Content-Security-Policy
                 // This header is legacy support for older browsers
-                context.Response.Headers["X-XSS-Protection"] = "1; mode=block";
+                context.Response.Headers.XXSSProtection = "1; mode=block";
                 
                 // ===== Referrer-Policy: strict-origin-when-cross-origin =====
                 // Controls how much referrer information is sent with requests
@@ -353,7 +352,7 @@ namespace SecureCleanApiWaf.Presentation.Extensions.HttpPipeline
                     // ?? 'unsafe-inline' and 'unsafe-eval' reduce CSP security
                     // TODO: Use nonces or hashes for better security
                     // TODO: Add report-uri to monitor CSP violations
-                    context.Response.Headers["Content-Security-Policy"] = 
+                    context.Response.Headers.ContentSecurityPolicy = 
                         "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline';";
                 }
 

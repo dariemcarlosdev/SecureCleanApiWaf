@@ -2,9 +2,9 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 using System.Text.Json;
 using System.Text;
-using SecureCleanApiWaf.Core.Application.Common.Interfaces;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Interfaces;
 
-namespace SecureCleanApiWaf.Infrastructure.Caching
+namespace CleanArchitecture.ApiTemplate.Infrastructure.Caching
 {
     /// <summary>
     /// Implementation of ICacheService using IDistributedCache for distributed caching.

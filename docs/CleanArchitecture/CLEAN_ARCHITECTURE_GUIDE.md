@@ -1,9 +1,9 @@
-# ??🏛️ Clean Architecture Guide for SecureCleanApiWaf
+# ??🏛️ Clean Architecture Guide for CleanArchitecture.ApiTemplate
 
 ? Clean architecture is about boundaries, not files!!!
 
 **Status:** ?? Implementation Guide  
-**Repository:** https://github.com/dariemcarlosdev/SecureCleanApiWaf (Branch: Dev)  
+**Repository:** https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate (Branch: Dev)  
 **Current State:** Single-Project Monolithic with Clean Architecture Foundations  
 **.NET Version:** 8.0  
 **Last Updated:** January 2025
@@ -31,7 +31,7 @@
 
 ## 📖 Overview
 
-This guide explains how SecureCleanApiWaf implements Clean Architecture principles within a **single-project monolithic structure**. This approach provides the benefits of clear architectural organization while maintaining the speed and simplicity of single-project development.
+This guide explains how CleanArchitecture.ApiTemplate implements Clean Architecture principles within a **single-project monolithic structure**. This approach provides the benefits of clear architectural organization while maintaining the speed and simplicity of single-project development.
 
 **What is Clean Architecture?**
 
@@ -65,7 +65,7 @@ Clean Architecture is a design philosophy that organizes code into layers with c
 - Team members understand structure immediately
 - Easy to swap technologies (EF Core ? Dapper, Azure ? AWS)
 
-### **For SecureCleanApiWaf Specifically**
+### **For CleanArchitecture.ApiTemplate Specifically**
 
 Your project already has strong foundations:
 - ? CQRS with MediatR (command/query separation)
@@ -83,7 +83,7 @@ Your project already has strong foundations:
 
 ### **Current State: Single-Project with Domain Layer**
 
-SecureCleanApiWaf has a **solid foundation** with excellent architectural patterns in place:
+CleanArchitecture.ApiTemplate has a **solid foundation** with excellent architectural patterns in place:
 
 ? **CQRS with MediatR** - Separation of commands and queries  
 ✅ **Dependency Injection** - Proper DI setup throughout  
@@ -94,7 +94,7 @@ SecureCleanApiWaf has a **solid foundation** with excellent architectural patter
 
 **Current Architecture:**
 ```
-SecureCleanApiWaf/ (Single Project)
+CleanArchitecture.ApiTemplate/ (Single Project)
 +-- Core/
 �   +-- Domain/                ? 85% Complete
 �   �   +-- Entities/          ? BaseEntity, User, Token, ApiDataItem
@@ -303,7 +303,7 @@ Each component has a **single, well-defined responsibility**.
 ```
 +-----------------------------------------------------------------+
 �                     PRESENTATION LAYER                          �
-�              (SecureCleanApiWaf.Web)                                 �
+�              (CleanArchitecture.ApiTemplate.Web)                                 �
 �                                                                 �
 �  � Blazor Server Components (UI)                               �
 �  � REST API Controllers (Endpoints)                            �
@@ -378,27 +378,27 @@ Each component has a **single, well-defined responsibility**.
 
 ```csharp
 // Domain referencing Application ?
-namespace SecureCleanApiWaf.Core.Domain.Entities;
-using SecureCleanApiWaf.Core.Application.Interfaces; // WRONG!
+namespace CleanArchitecture.ApiTemplate.Core.Domain.Entities;
+using CleanArchitecture.ApiTemplate.Core.Application.Interfaces; // WRONG!
 
 // Application referencing Infrastructure ?
-namespace SecureCleanApiWaf.Core.Application.Features;
-using SecureCleanApiWaf.Infrastructure.Services; // WRONG!
+namespace CleanArchitecture.ApiTemplate.Core.Application.Features;
+using CleanArchitecture.ApiTemplate.Infrastructure.Services; // WRONG!
 ```
 
 **✅ CORRECT APPROACH:**
 
 ```csharp
 // Application defines interface ?
-namespace SecureCleanApiWaf.Core.Application.Common.Interfaces;
+namespace CleanArchitecture.ApiTemplate.Core.Application.Common.Interfaces;
 public interface IApiIntegrationService
 {
     Task<Result<T>> GetAllDataAsync<T>(string apiUrl);
 }
 
 // Infrastructure implements interface ?
-namespace SecureCleanApiWaf.Infrastructure.Services;
-using SecureCleanApiWaf.Core.Application.Common.Interfaces;
+namespace CleanArchitecture.ApiTemplate.Infrastructure.Services;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Interfaces;
 
 public class ApiIntegrationService : IApiIntegrationService
 {
@@ -483,7 +483,7 @@ public class ApiIntegrationService : IApiIntegrationService
 ### **Current Structure**
 
 ```
-SecureCleanApiWaf/ (Single Project)
+CleanArchitecture.ApiTemplate/ (Single Project)
 �
 +-- Core/                               # ?? CORE - Business Logic
 �   +-- Domain/                         # ? 85% Complete
@@ -552,15 +552,15 @@ SecureCleanApiWaf/ (Single Project)
 For **larger teams** or **enterprise applications**, consider this structure:
 
 ```
-SecureCleanApiWaf.sln
+CleanArchitecture.ApiTemplate.sln
 +-- Core/
-�   +-- SecureCleanApiWaf.Domain/           # Pure business logic
-�   +-- SecureCleanApiWaf.Application/      # Use cases & interfaces
+�   +-- CleanArchitecture.ApiTemplate.Domain/           # Pure business logic
+�   +-- CleanArchitecture.ApiTemplate.Application/      # Use cases & interfaces
 +-- Infrastructure/
-�   +-- SecureCleanApiWaf.Infrastructure/   # Generic infrastructure
-�   +-- SecureCleanApiWaf.Infrastructure.Azure/  # Azure-specific
+�   +-- CleanArchitecture.ApiTemplate.Infrastructure/   # Generic infrastructure
+�   +-- CleanArchitecture.ApiTemplate.Infrastructure.Azure/  # Azure-specific
 +-- Presentation/
-    +-- SecureCleanApiWaf.Web/              # Blazor + API
+    +-- CleanArchitecture.ApiTemplate.Web/              # Blazor + API
 ```
 
 **When to Consider Multi-Project:**
@@ -575,7 +575,7 @@ SecureCleanApiWaf.sln
 
 ### **Data Transformation Patterns** ??
 
-SecureCleanApiWaf implements a **hybrid mapping strategy** for transforming data between layers:
+CleanArchitecture.ApiTemplate implements a **hybrid mapping strategy** for transforming data between layers:
 
 **AutoMapper for Known Structures:**
 ```csharp
@@ -601,7 +601,7 @@ var domainEntities = _customMapper.MapToApiDataItems(dynamicResponse, url);
 
 ### **Authentication with CQRS** ? Featured Pattern
 
-SecureCleanApiWaf uses **CQRS with MediatR** for authentication:
+CleanArchitecture.ApiTemplate uses **CQRS with MediatR** for authentication:
 
 ```
 Authentication Flow:
@@ -725,7 +725,7 @@ var dataItem = ApiDataItem.CreateFromExternalSource(
 
 ## 📝 Summary
 
-### **What SecureCleanApiWaf Achieves**
+### **What CleanArchitecture.ApiTemplate Achieves**
 
 ✅ **Clear Architecture** - Layers separated by responsibility  
 ✅ **Domain Layer** - 85% complete with rich entities and value objects  
@@ -767,7 +767,7 @@ var dataItem = ApiDataItem.CreateFromExternalSource(
 **Questions about Clean Architecture?**
 
 - 📖 **Documentation:** See individual layer guides in `/docs/CleanArchitecture/Projects/`
-- 🐛 **Issues:** [GitHub Issues](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues)
+- 🐛 **Issues:** [GitHub Issues](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate/issues)
 - 📧 **Email:** softevolutionsl@gmail.com
 - 🐙 **GitHub:** [@dariemcarlosdev](https://github.com/dariemcarlosdev)
 
@@ -785,7 +785,7 @@ var dataItem = ApiDataItem.CreateFromExternalSource(
 
 **Last Updated:** January 2025  
 **Maintainer:** Dariemcarlos  
-**Repository:** [SecureCleanApiWaf](https://github.com/dariemcarlosdev/SecureCleanApiWaf)  
+**Repository:** [CleanArchitecture.ApiTemplate](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate)  
 **Status:** ? Current & Maintained  
 **Branch:** Dev  
 **Domain Layer:** 85% Complete

@@ -1,8 +1,8 @@
 using MediatR;
-using SecureCleanApiWaf.Core.Application.Common.Behaviors;
-using SecureCleanApiWaf.Core.Application.Common.Models;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Behaviors;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Models;
 
-namespace SecureCleanApiWaf.Core.Application.Features.SampleData.Queries
+namespace CleanArchitecture.ApiTemplate.Core.Application.Features.SampleData.Queries
 {
     /// <summary>
     /// Query to get data by Id from an external API.

@@ -1,9 +1,9 @@
 using MediatR;
-using SecureCleanApiWaf.Core.Application.Common.Behaviors;
-using SecureCleanApiWaf.Core.Application.Common.Models;
-using SecureCleanApiWaf.Core.Application.Common.DTOs;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Behaviors;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Models;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.DTOs;
 
-namespace SecureCleanApiWaf.Core.Application.Features.Authentication.Queries
+namespace CleanArchitecture.ApiTemplate.Core.Application.Features.Authentication.Queries
 {
     /// <summary>
     /// Query to get comprehensive statistics about the token blacklist system.

@@ -1,15 +1,15 @@
-using SecureCleanApiWaf.Core.Application.Common.Interfaces;
-using SecureCleanApiWaf.Infrastructure.Services;
-using SecureCleanApiWaf.Infrastructure.Caching;
-using SecureCleanApiWaf.Infrastructure.Handlers;
-using SecureCleanApiWaf.Infrastructure.Security;
-using SecureCleanApiWaf.Infrastructure.Data;
-using SecureCleanApiWaf.Infrastructure.Repositories;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Interfaces;
+using CleanArchitecture.ApiTemplate.Infrastructure.Services;
+using CleanArchitecture.ApiTemplate.Infrastructure.Caching;
+using CleanArchitecture.ApiTemplate.Infrastructure.Handlers;
+using CleanArchitecture.ApiTemplate.Infrastructure.Security;
+using CleanArchitecture.ApiTemplate.Infrastructure.Data;
+using CleanArchitecture.ApiTemplate.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Polly;
 using Polly.Extensions.Http;
 
-namespace SecureCleanApiWaf.Presentation.Extensions.DependencyInjection
+namespace CleanArchitecture.ApiTemplate.Presentation.Extensions.DependencyInjection
 {
     /// <summary>
     /// Dependency injection setup for Infrastructure layer services
@@ -178,7 +178,7 @@ namespace SecureCleanApiWaf.Presentation.Extensions.DependencyInjection
                 
                 // User-Agent: Identifies our application to the API
                 // Good practice: Helps API providers track usage and debug issues
-                client.DefaultRequestHeaders.Add("User-Agent", "BlueTreadApp/1.0");
+                client.DefaultRequestHeaders.Add("User-Agent", "CleanArchitecture.ApiTemplate/1.0");
             })
             // ===== HTTP MESSAGE HANDLERS (Execution Order: Top to Bottom) =====
             

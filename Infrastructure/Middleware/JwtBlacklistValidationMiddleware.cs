@@ -1,10 +1,10 @@
 using System.IdentityModel.Tokens.Jwt;
-using SecureCleanApiWaf.Core.Application.Features.Authentication.Queries;
-using SecureCleanApiWaf.Core.Application.Common.DTOs;
+using CleanArchitecture.ApiTemplate.Core.Application.Features.Authentication.Queries;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.DTOs;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace SecureCleanApiWaf.Infrastructure.Middleware
+namespace CleanArchitecture.ApiTemplate.Infrastructure.Middleware
 {
     /// <summary>
     /// Middleware that validates JWT tokens against the blacklist using CQRS pattern. This Middleware is executed after authentication /// but before authorization.

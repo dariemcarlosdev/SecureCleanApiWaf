@@ -1,7 +1,7 @@
-using SecureCleanApiWaf.Core.Domain.Entities;
-using SecureCleanApiWaf.Core.Domain.Enums;
+using CleanArchitecture.ApiTemplate.Core.Domain.Entities;
+using CleanArchitecture.ApiTemplate.Core.Domain.Enums;
 
-namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
+namespace CleanArchitecture.ApiTemplate.Core.Application.Common.Interfaces
 {
     /// <summary>
     /// Repository interface for Token aggregate root.

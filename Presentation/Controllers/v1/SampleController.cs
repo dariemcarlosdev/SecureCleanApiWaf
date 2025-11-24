@@ -1,10 +1,10 @@
-using SecureCleanApiWaf.Models;
+using CleanArchitecture.ApiTemplate.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using SecureCleanApiWaf.Core.Application.Features.SampleData.Queries;
+using CleanArchitecture.ApiTemplate.Core.Application.Features.SampleData.Queries;
 
-namespace SecureCleanApiWaf.Presentation.Controllers.v1
+namespace CleanArchitecture.ApiTemplate.Presentation.Controllers.v1
 {
     /// <summary>
     /// Sample API controller for demonstration with JWT authentication.

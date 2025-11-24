@@ -1,8 +1,8 @@
 using MediatR;
-using SecureCleanApiWaf.Core.Application.Common.Behaviors;
-using SecureCleanApiWaf.Core.Application.Common.Models;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Behaviors;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Models;
 
-namespace SecureCleanApiWaf.Core.Application.Features.SampleData.Queries
+namespace CleanArchitecture.ApiTemplate.Core.Application.Features.SampleData.Queries
 {
     /// <summary>
     /// Represents a query Class for each API data retrieval operation from a specified API endpoint, with optional caching and expiration settings.

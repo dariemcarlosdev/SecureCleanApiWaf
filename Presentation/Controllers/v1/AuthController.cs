@@ -1,12 +1,12 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SecureCleanApiWaf.Infrastructure.Security;
-using SecureCleanApiWaf.Core.Application.Common.Interfaces;
-using SecureCleanApiWaf.Core.Application.Features.Authentication.Commands;
+using CleanArchitecture.ApiTemplate.Infrastructure.Security;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Interfaces;
+using CleanArchitecture.ApiTemplate.Core.Application.Features.Authentication.Commands;
 using MediatR;
 using System.IdentityModel.Tokens.Jwt;
 
-namespace SecureCleanApiWaf.Presentation.Controllers.v1
+namespace CleanArchitecture.ApiTemplate.Presentation.Controllers.v1
 {
     /// <summary>
     /// Authentication controller for token generation.

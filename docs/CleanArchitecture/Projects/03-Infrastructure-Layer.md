@@ -1,4 +1,4 @@
-# SecureCleanApiWaf.Infrastructure Project
+# CleanArchitecture.ApiTemplate.Infrastructure Project
 
 > *"The infrastructure layer provides generic technical capabilities that support the higher layers: message sending for the application, persistence for the domain, drawing widgets for the UI, and so on."*  
 > � **Eric Evans**, Domain-Driven Design
@@ -56,7 +56,7 @@ The **Infrastructure Layer** implements all external concerns and dependencies. 
 ## 📁 Project Structure
 
 ```
-SecureCleanApiWaf.Infrastructure/
+CleanArchitecture.ApiTemplate.Infrastructure/
 +-- Data/                             # Database and Entity Framework Core
 �   +-- ApplicationDbContext.cs      # EF Core DbContext
 �   +-- DatabaseSettings.cs          # Configuration class
@@ -528,7 +528,7 @@ public class DatabaseSettings
 ```json
 {
   "DatabaseSettings": {
-    "ConnectionString": "Server=(localdb)\\mssqllocaldb;Database=SecureCleanApiWaf;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=True",
+    "ConnectionString": "Server=(localdb)\\mssqllocaldb;Database=CleanArchitecture.ApiTemplate;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=True",
     "EnableSensitiveDataLogging": false,
     "EnableDetailedErrors": false,
     "CommandTimeout": 30,

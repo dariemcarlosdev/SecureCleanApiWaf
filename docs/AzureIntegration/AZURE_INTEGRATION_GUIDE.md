@@ -1,10 +1,10 @@
-# Azure Integration Guide - SecureCleanApiWaf
+# Azure Integration Guide - CleanArchitecture.ApiTemplate
 
-> "Seamless Azure integration empowers SecureCleanApiWaf to deliver secure, scalable, and resilient experiences�where cloud best practices meet modern .NET innovation."
+> "Seamless Azure integration empowers CleanArchitecture.ApiTemplate to deliver secure, scalable, and resilient experiences�where cloud best practices meet modern .NET innovation."
 
 ## 📖 Overview
 
-This guide provides step-by-step instructions for integrating SecureCleanApiWaf with Azure services for production deployment. It covers Azure App Service, Azure Key Vault, managed identity configuration, and best practices for secure cloud deployment.
+This guide provides step-by-step instructions for integrating CleanArchitecture.ApiTemplate with Azure services for production deployment. It covers Azure App Service, Azure Key Vault, managed identity configuration, and best practices for secure cloud deployment.
 
 ---
 
@@ -23,7 +23,7 @@ This guide provides step-by-step instructions for integrating SecureCleanApiWaf 
 
 ## ☁️ Azure Services Overview
 
-SecureCleanApiWaf integrates with the following Azure services:
+CleanArchitecture.ApiTemplate integrates with the following Azure services:
 
 | Service | Purpose | Usage |
 |---------|---------|-------|
@@ -65,7 +65,7 @@ Azure Monitor (Telemetry)
    ```
    Subscription: [Your Subscription]
    Resource Group: [Create new or select existing]
-   Name: SecureCleanApiWaf-prod
+   Name: CleanArchitecture.ApiTemplate-prod
    Publish: Code
    Runtime Stack: .NET 8 (LTS)
    Operating System: Linux (recommended) or Windows
@@ -87,20 +87,20 @@ Azure Monitor (Telemetry)
 az login
 
 # Create resource group
-az group create --name SecureCleanApiWaf-rg --location eastus
+az group create --name CleanArchitecture.ApiTemplate-rg --location eastus
 
 # Create App Service Plan
 az appservice plan create \
-  --name SecureCleanApiWaf-plan \
-  --resource-group SecureCleanApiWaf-rg \
+  --name CleanArchitecture.ApiTemplate-plan \
+  --resource-group CleanArchitecture.ApiTemplate-rg \
   --sku B1 \
   --is-linux
 
 # Create Web App
 az webapp create \
-  --name SecureCleanApiWaf-prod \
-  --resource-group SecureCleanApiWaf-rg \
-  --plan SecureCleanApiWaf-plan \
+  --name CleanArchitecture.ApiTemplate-prod \
+  --resource-group CleanArchitecture.ApiTemplate-rg \
+  --plan CleanArchitecture.ApiTemplate-plan \
   --runtime "DOTNET|8.0"
 ```
 
@@ -119,8 +119,8 @@ az webapp create \
 
 ```bash
 az webapp deployment list-publishing-profiles \
-  --name SecureCleanApiWaf-prod \
-  --resource-group SecureCleanApiWaf-rg \
+  --name CleanArchitecture.ApiTemplate-prod \
+  --resource-group CleanArchitecture.ApiTemplate-rg \
   --xml
 ```
 
@@ -148,11 +148,11 @@ az webapp deployment list-publishing-profiles \
 
 ```bash
 az webapp config appsettings set \
-  --name SecureCleanApiWaf-prod \
-  --resource-group SecureCleanApiWaf-rg \
+  --name CleanArchitecture.ApiTemplate-prod \
+  --resource-group CleanArchitecture.ApiTemplate-rg \
   --settings \
     ASPNETCORE_ENVIRONMENT=Production \
-    KeyVault__Url=https://SecureCleanApiWaf-kv.vault.azure.net/
+    KeyVault__Url=https://CleanArchitecture.ApiTemplate-kv.vault.azure.net/
 ```
 
 ---
@@ -187,8 +187,8 @@ az webapp config appsettings set \
 3. **Configure Basics**:
    ```
    Subscription: [Your Subscription]
-   Resource Group: SecureCleanApiWaf-rg (same as App Service)
-   Key Vault Name: SecureCleanApiWaf-kv
+   Resource Group: CleanArchitecture.ApiTemplate-rg (same as App Service)
+   Key Vault Name: CleanArchitecture.ApiTemplate-kv
    Region: [Same as App Service]
    Pricing Tier: Standard
    ```
@@ -204,8 +204,8 @@ az webapp config appsettings set \
 
 ```bash
 az keyvault create \
-  --name SecureCleanApiWaf-kv \
-  --resource-group SecureCleanApiWaf-rg \
+  --name CleanArchitecture.ApiTemplate-kv \
+  --resource-group CleanArchitecture.ApiTemplate-rg \
   --location eastus
 ```
 
@@ -225,8 +225,8 @@ az keyvault create \
 |-------------|---------------|-------------|
 | `ThirdPartyApi--ApiKey` | `your-api-key-here` | External API key |
 | `JwtSettings--SecretKey` | `your-jwt-secret-key` | JWT signing key (min 32 chars) |
-| `JwtSettings--Issuer` | `https://SecureCleanApiWaf.azurewebsites.net` | JWT issuer |
-| `JwtSettings--Audience` | `https://SecureCleanApiWaf.azurewebsites.net` | JWT audience |
+| `JwtSettings--Issuer` | `https://CleanArchitecture.ApiTemplate.azurewebsites.net` | JWT issuer |
+| `JwtSettings--Audience` | `https://CleanArchitecture.ApiTemplate.azurewebsites.net` | JWT audience |
 
 4. Click "Create" for each secret
 
@@ -239,13 +239,13 @@ az keyvault create \
 ```bash
 # Add Third-Party API Key
 az keyvault secret set \
-  --vault-name SecureCleanApiWaf-kv \
+  --vault-name CleanArchitecture.ApiTemplate-kv \
   --name "ThirdPartyApi--ApiKey" \
   --value "your-api-key-here"
 
 # Add JWT Secret Key
 az keyvault secret set \
-  --vault-name SecureCleanApiWaf-kv \
+  --vault-name CleanArchitecture.ApiTemplate-kv \
   --name "JwtSettings--SecretKey" \
   --value "your-jwt-secret-key-min-32-chars"
 ```
@@ -262,7 +262,7 @@ az keyvault secret set \
 4. **Configure**:
    ```
    Secret permissions: Get, List
-   Select principal: SecureCleanApiWaf-prod (your App Service)
+   Select principal: CleanArchitecture.ApiTemplate-prod (your App Service)
    ```
 5. Click "Add" ? "Save"
 
@@ -271,14 +271,14 @@ az keyvault secret set \
 ```bash
 # Get App Service Principal ID
 APP_ID=$(az webapp identity show \
-  --name SecureCleanApiWaf-prod \
-  --resource-group SecureCleanApiWaf-rg \
+  --name CleanArchitecture.ApiTemplate-prod \
+  --resource-group CleanArchitecture.ApiTemplate-rg \
   --query principalId \
   --output tsv)
 
 # Grant Key Vault access
 az keyvault set-policy \
-  --name SecureCleanApiWaf-kv \
+  --name CleanArchitecture.ApiTemplate-kv \
   --object-id $APP_ID \
   --secret-permissions get list
 ```
@@ -316,15 +316,15 @@ Managed Identity allows Azure services to authenticate to other Azure services w
 
 ```bash
 az webapp identity assign \
-  --name SecureCleanApiWaf-prod \
-  --resource-group SecureCleanApiWaf-rg
+  --name CleanArchitecture.ApiTemplate-prod \
+  --resource-group CleanArchitecture.ApiTemplate-rg
 ```
 
 ---
 
 ### **💻 Application Code Integration**
 
-SecureCleanApiWaf is already configured to use Managed Identity. See `Program.cs`:
+CleanArchitecture.ApiTemplate is already configured to use Managed Identity. See `Program.cs`:
 
 ```csharp
 if (builder.Environment.IsProduction())
@@ -415,8 +415,8 @@ cd ..
 
 # Deploy to App Service
 az webapp deploy \
-  --resource-group SecureCleanApiWaf-rg \
-  --name SecureCleanApiWaf-prod \
+  --resource-group CleanArchitecture.ApiTemplate-rg \
+  --name CleanArchitecture.ApiTemplate-prod \
   --src-path app.zip \
   --type zip
 ```
@@ -430,7 +430,7 @@ az webapp deploy \
 **Quick Setup:**
 
 1. **Add GitHub Secrets**:
-   - `AZURE_WEBAPP_NAME`: `SecureCleanApiWaf-prod`
+   - `AZURE_WEBAPP_NAME`: `CleanArchitecture.ApiTemplate-prod`
    - `AZURE_WEBAPP_PUBLISH_PROFILE`: (contents of publish profile)
 
 2. **GitHub Actions Workflow** (`.github/workflows/azure-deploy.yml`):
@@ -474,9 +474,9 @@ jobs:
 
 ```bash
 az monitor app-insights component create \
-  --app SecureCleanApiWaf-insights \
+  --app CleanArchitecture.ApiTemplate-insights \
   --location eastus \
-  --resource-group SecureCleanApiWaf-rg \
+  --resource-group CleanArchitecture.ApiTemplate-rg \
   --application-type web
 ```
 
@@ -496,8 +496,8 @@ az monitor app-insights component create \
 
 ```bash
 az webapp log config \
-  --name SecureCleanApiWaf-prod \
-  --resource-group SecureCleanApiWaf-rg \
+  --name CleanArchitecture.ApiTemplate-prod \
+  --resource-group CleanArchitecture.ApiTemplate-rg \
   --application-logging filesystem \
   --level information
 ```
@@ -507,19 +507,19 @@ az webapp log config \
 ```bash
 # Stream logs in real-time
 az webapp log tail \
-  --name SecureCleanApiWaf-prod \
-  --resource-group SecureCleanApiWaf-rg
+  --name CleanArchitecture.ApiTemplate-prod \
+  --resource-group CleanArchitecture.ApiTemplate-rg
 ```
 
 ---
 
 ### **💚 Health Check Endpoint**
 
-SecureCleanApiWaf includes a health check endpoint: `/health`
+CleanArchitecture.ApiTemplate includes a health check endpoint: `/health`
 
 **Test:**
 ```bash
-curl https://SecureCleanApiWaf-prod.azurewebsites.net/health
+curl https://CleanArchitecture.ApiTemplate-prod.azurewebsites.net/health
 ```
 
 **Expected Response:**
@@ -588,24 +588,24 @@ curl https://SecureCleanApiWaf-prod.azurewebsites.net/health
 ```bash
 # Check App Service status
 az webapp show \
-  --name SecureCleanApiWaf-prod \
-  --resource-group SecureCleanApiWaf-rg \
+  --name CleanArchitecture.ApiTemplate-prod \
+  --resource-group CleanArchitecture.ApiTemplate-rg \
   --query "state"
 
 # View App Service configuration
 az webapp config appsettings list \
-  --name SecureCleanApiWaf-prod \
-  --resource-group SecureCleanApiWaf-rg
+  --name CleanArchitecture.ApiTemplate-prod \
+  --resource-group CleanArchitecture.ApiTemplate-rg
 
 # Test Key Vault connectivity
 az keyvault secret show \
-  --vault-name SecureCleanApiWaf-kv \
+  --vault-name CleanArchitecture.ApiTemplate-kv \
   --name "ThirdPartyApi--ApiKey"
 
 # Check Managed Identity
 az webapp identity show \
-  --name SecureCleanApiWaf-prod \
-  --resource-group SecureCleanApiWaf-rg
+  --name CleanArchitecture.ApiTemplate-prod \
+  --resource-group CleanArchitecture.ApiTemplate-rg
 ```
 
 ---
@@ -651,12 +651,12 @@ az webapp identity show \
 ## 🆘 Contact & Support
 
 ### **Project Information**
-- **Project Name:** SecureCleanApiWaf - Clean Architecture Demo with Azure Integration
+- **Project Name:** CleanArchitecture.ApiTemplate - Clean Architecture Demo with Azure Integration
 - **Version:** 1.0.0 (Azure Integration Complete)
 - **Framework:** .NET 8
 - **Cloud Platform:** Microsoft Azure
 - **Key Services:** App Service, Key Vault, Application Insights, Managed Identity
-- **Repository:** [https://github.com/dariemcarlosdev/SecureCleanApiWaf](https://github.com/dariemcarlosdev/SecureCleanApiWaf)
+- **Repository:** [https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate)
 
 ### **Author & Maintainer**
 - **Name:** Dariem Carlos
@@ -672,7 +672,7 @@ If you encounter issues with Azure setup:
 1. Review the [Troubleshooting](#troubleshooting) section above for common issues
 2. Check [Azure Service Health](https://status.azure.com/) for any service outages
 3. Verify all prerequisites are met (Azure subscription, resource group, permissions)
-4. Check [existing issues](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues?q=label%3Aazure)
+4. Check [existing issues](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate/issues?q=label%3Aazure)
 5. Create a new issue with:
    - Azure service affected (App Service, Key Vault, etc.)
    - Error message from Azure Portal or CLI
@@ -699,7 +699,7 @@ For App Service deployment problems:
 
 #### 📖 **Documentation Questions**
 To improve this Azure Integration documentation:
-1. Open a [discussion](https://github.com/dariemcarlosdev/SecureCleanApiWaf/discussions) with tag `azure`
+1. Open a [discussion](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate/discussions) with tag `azure`
 2. Submit a pull request with corrections or enhancements
 3. Include screenshots for complex Azure Portal steps
 4. Update related deployment documentation
@@ -708,7 +708,7 @@ To improve this Azure Integration documentation:
 For Azure security-related issues:
 1. **DO NOT** post secrets, connection strings, or credentials in public issues
 2. Use GitHub's private vulnerability reporting
-3. Email directly: softevolutionsl@gmail.com with subject "Security - SecureCleanApiWaf Azure"
+3. Email directly: softevolutionsl@gmail.com with subject "Security - CleanArchitecture.ApiTemplate Azure"
 4. Review [Azure Security Best Practices](https://learn.microsoft.com/en-us/azure/security/fundamentals/best-practices-and-patterns)
 5. Check Key Vault audit logs for suspicious activity
 
@@ -717,13 +717,13 @@ For Azure security-related issues:
 #### 📧 **Direct Contact**
 For private inquiries or urgent Azure issues:
 - **Email:** softevolutionsl@gmail.com
-- **Subject Format:** `[SecureCleanApiWaf Azure] Your Issue`
+- **Subject Format:** `[CleanArchitecture.ApiTemplate Azure] Your Issue`
 - **Response Time:** 24-48 hours (typically)
 - **Include:** Azure service name, error messages, subscription region
 
 #### 💬 **Community Discussions**
 For general Azure questions and best practices:
-- Use [GitHub Discussions](https://github.com/dariemcarlosdev/SecureCleanApiWaf/discussions)
+- Use [GitHub Discussions](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate/discussions)
 - Tag with: `azure`, `app-service`, `key-vault`, `managed-identity`
 - Search existing discussions before posting
 - Share your Azure configuration experiences
@@ -849,16 +849,16 @@ az account set --subscription "Your Subscription Name"
 az webapp list --output table
 
 # View App Service logs
-az webapp log tail --name SecureCleanApiWaf-prod --resource-group SecureCleanApiWaf-rg
+az webapp log tail --name CleanArchitecture.ApiTemplate-prod --resource-group CleanArchitecture.ApiTemplate-rg
 
 # List Key Vault secrets
-az keyvault secret list --vault-name SecureCleanApiWaf-kv --output table
+az keyvault secret list --vault-name CleanArchitecture.ApiTemplate-kv --output table
 
 # Check Managed Identity status
-az webapp identity show --name SecureCleanApiWaf-prod --resource-group SecureCleanApiWaf-rg
+az webapp identity show --name CleanArchitecture.ApiTemplate-prod --resource-group CleanArchitecture.ApiTemplate-rg
 
 # View App Service configuration
-az webapp config appsettings list --name SecureCleanApiWaf-prod --resource-group SecureCleanApiWaf-rg
+az webapp config appsettings list --name CleanArchitecture.ApiTemplate-prod --resource-group CleanArchitecture.ApiTemplate-rg
 ```
 
 ### **Version History**
@@ -880,6 +880,6 @@ az webapp config appsettings list --name SecureCleanApiWaf-prod --resource-group
 
 ---
 
-*This Azure Integration guide is maintained as part of the SecureCleanApiWaf project.*  
-*For the latest updates, visit the [GitHub repository](https://github.com/dariemcarlosdev/SecureCleanApiWaf).*  
+*This Azure Integration guide is maintained as part of the CleanArchitecture.ApiTemplate project.*  
+*For the latest updates, visit the [GitHub repository](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate).*  
 *For Azure-specific issues, consult [Microsoft Azure Support](https://azure.microsoft.com/en-us/support/).*

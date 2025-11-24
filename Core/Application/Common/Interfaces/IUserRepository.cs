@@ -1,7 +1,7 @@
-using SecureCleanApiWaf.Core.Domain.Entities;
-using SecureCleanApiWaf.Core.Domain.ValueObjects;
+using CleanArchitecture.ApiTemplate.Core.Domain.Entities;
+using CleanArchitecture.ApiTemplate.Core.Domain.ValueObjects;
 
-namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
+namespace CleanArchitecture.ApiTemplate.Core.Application.Common.Interfaces
 {
     /// <summary>
     /// Repository interface for User aggregate root.

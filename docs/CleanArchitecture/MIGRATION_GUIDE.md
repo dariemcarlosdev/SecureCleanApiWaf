@@ -1,6 +1,6 @@
 # Migration Guide: Current Structure 🏛️ Clean Architecture
 
-Migration transformate your SecureCleanApiWaf codebase to Clean Architecture incrementally! **Good luck with your migration!** ??
+Migration transformate your CleanArchitecture.ApiTemplate codebase to Clean Architecture incrementally! **Good luck with your migration!** ??
 
 ## 📑 Table of Contents
 
@@ -54,7 +54,7 @@ Migration transformate your SecureCleanApiWaf codebase to Clean Architecture inc
 
 ## 📖 Overview
 
-This guide provides step-by-step instructions for migrating your existing SecureCleanApiWaf codebase to Clean Architecture. The migration is designed to be **incremental**, allowing you to maintain a working application throughout the process.
+This guide provides step-by-step instructions for migrating your existing CleanArchitecture.ApiTemplate codebase to Clean Architecture. The migration is designed to be **incremental**, allowing you to maintain a working application throughout the process.
 
 ---
 
@@ -75,7 +75,7 @@ Each phase can be completed independently, and you can stop at any phase based o
 
 ### **Current Structure**
 ```
-SecureCleanApiWaf/
+CleanArchitecture.ApiTemplate/
 ??? Controllers/
 ??? Services/
 ??? Caching/
@@ -90,16 +90,16 @@ SecureCleanApiWaf/
 
 ### **Target Structure (Multi-Project)**
 ```
-SecureCleanApiWaf.sln
+CleanArchitecture.ApiTemplate.sln
 ??? src/
 ?   ??? Core/
-?   ?   ??? SecureCleanApiWaf.Domain/
-?   ?   ??? SecureCleanApiWaf.Application/
+?   ?   ??? CleanArchitecture.ApiTemplate.Domain/
+?   ?   ??? CleanArchitecture.ApiTemplate.Application/
 ?   ??? Infrastructure/
-?   ?   ??? SecureCleanApiWaf.Infrastructure/
-?   ?   ??? SecureCleanApiWaf.Infrastructure.Azure/
+?   ?   ??? CleanArchitecture.ApiTemplate.Infrastructure/
+?   ?   ??? CleanArchitecture.ApiTemplate.Infrastructure.Azure/
 ?   ??? Presentation/
-?       ??? SecureCleanApiWaf.Web/
+?       ??? CleanArchitecture.ApiTemplate.Web/
 ??? tests/
     ??? Domain.UnitTests/
     ??? Application.UnitTests/
@@ -119,7 +119,7 @@ SecureCleanApiWaf.sln
 
 2. Create `IApiIntegrationService.cs`:
 ```csharp
-namespace SecureCleanApiWaf.Application.Common.Interfaces;
+namespace CleanArchitecture.ApiTemplate.Application.Common.Interfaces;
 
 /// <summary>
 /// Interface for third-party API integration service
@@ -133,7 +133,7 @@ public interface IApiIntegrationService
 
 3. Update `ApiIntegrationService.cs` to implement the interface:
 ```csharp
-namespace SecureCleanApiWaf.Services;
+namespace CleanArchitecture.ApiTemplate.Services;
 
 public class ApiIntegrationService : IApiIntegrationService
 {
@@ -170,7 +170,7 @@ public class GetApiDataQueryHandler : IRequestHandler<GetApiDataQuery, Result<Sa
 
 1. Create `ICacheService.cs` in `Application/Common/Interfaces/`:
 ```csharp
-namespace SecureCleanApiWaf.Application.Common.Interfaces;
+namespace CleanArchitecture.ApiTemplate.Application.Common.Interfaces;
 
 public interface ICacheService
 {
@@ -186,7 +186,7 @@ public interface ICacheService
 
 1. Create `IDateTime.cs`:
 ```csharp
-namespace SecureCleanApiWaf.Application.Common.Interfaces;
+namespace CleanArchitecture.ApiTemplate.Application.Common.Interfaces;
 
 public interface IDateTime
 {
@@ -197,7 +197,7 @@ public interface IDateTime
 
 2. Create implementation `DateTimeService.cs`:
 ```csharp
-namespace SecureCleanApiWaf.Infrastructure.Services;
+namespace CleanArchitecture.ApiTemplate.Infrastructure.Services;
 
 public class DateTimeService : IDateTime
 {
@@ -301,15 +301,15 @@ Update all moved files to use new namespaces:
 
 ```csharp
 // Before
-namespace SecureCleanApiWaf.Services;
+namespace CleanArchitecture.ApiTemplate.Services;
 
 // After
-namespace SecureCleanApiWaf.Infrastructure.Services;
+namespace CleanArchitecture.ApiTemplate.Infrastructure.Services;
 ```
 
 Use Find & Replace in Visual Studio:
-- Find: `namespace SecureCleanApiWaf.Services`
-- Replace: `namespace SecureCleanApiWaf.Infrastructure.Services`
+- Find: `namespace CleanArchitecture.ApiTemplate.Services`
+- Replace: `namespace CleanArchitecture.ApiTemplate.Infrastructure.Services`
 
 ### **Step 2.4: Update Using Statements**
 
@@ -317,8 +317,8 @@ Update all files that reference moved types:
 
 ```csharp
 // Add new using statements
-using SecureCleanApiWaf.Core.Application.Common.Models;
-using SecureCleanApiWaf.Infrastructure.Services;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Models;
+using CleanArchitecture.ApiTemplate.Infrastructure.Services;
 ```
 
 ### **Step 2.5: Verify Build**
@@ -348,23 +348,23 @@ Fix any compilation errors related to namespaces.
 
 ```bash
 # Create a new solution file
-dotnet new sln -n SecureCleanApiWaf
+dotnet new sln -n CleanArchitecture.ApiTemplate
 
 # Backup current project
-Copy-Item -Recurse SecureCleanApiWaf SecureCleanApiWaf.Backup
+Copy-Item -Recurse CleanArchitecture.ApiTemplate CleanArchitecture.ApiTemplate.Backup
 ```
 
 ### **Step 3.2: Create Domain Project**
 
 ```bash
 # Create project
-dotnet new classlib -n SecureCleanApiWaf.Domain -o src/Core/SecureCleanApiWaf.Domain
+dotnet new classlib -n CleanArchitecture.ApiTemplate.Domain -o src/Core/CleanArchitecture.ApiTemplate.Domain
 
 # Add to solution
-dotnet sln add src/Core/SecureCleanApiWaf.Domain/SecureCleanApiWaf.Domain.csproj
+dotnet sln add src/Core/CleanArchitecture.ApiTemplate.Domain/CleanArchitecture.ApiTemplate.Domain.csproj
 
 # Configure project
-# Edit SecureCleanApiWaf.Domain.csproj:
+# Edit CleanArchitecture.ApiTemplate.Domain.csproj:
 ```
 
 ```xml
@@ -383,13 +383,13 @@ dotnet sln add src/Core/SecureCleanApiWaf.Domain/SecureCleanApiWaf.Domain.csproj
 
 ```bash
 # Create project
-dotnet new classlib -n SecureCleanApiWaf.Application -o src/Core/SecureCleanApiWaf.Application
+dotnet new classlib -n CleanArchitecture.ApiTemplate.Application -o src/Core/CleanArchitecture.ApiTemplate.Application
 
 # Add to solution
-dotnet sln add src/Core/SecureCleanApiWaf.Application/SecureCleanApiWaf.Application.csproj
+dotnet sln add src/Core/CleanArchitecture.ApiTemplate.Application/CleanArchitecture.ApiTemplate.Application.csproj
 
 # Add reference to Domain
-dotnet add src/Core/SecureCleanApiWaf.Application reference src/Core/SecureCleanApiWaf.Domain
+dotnet add src/Core/CleanArchitecture.ApiTemplate.Application reference src/Core/CleanArchitecture.ApiTemplate.Domain
 ```
 
 Configure Application project:
@@ -418,7 +418,7 @@ Configure Application project:
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\SecureCleanApiWaf.Domain\SecureCleanApiWaf.Domain.csproj" />
+    <ProjectReference Include="..\CleanArchitecture.ApiTemplate.Domain\CleanArchitecture.ApiTemplate.Domain.csproj" />
   </ItemGroup>
 </Project>
 ```
@@ -427,13 +427,13 @@ Configure Application project:
 
 ```bash
 # Create project
-dotnet new classlib -n SecureCleanApiWaf.Infrastructure -o src/Infrastructure/SecureCleanApiWaf.Infrastructure
+dotnet new classlib -n CleanArchitecture.ApiTemplate.Infrastructure -o src/Infrastructure/CleanArchitecture.ApiTemplate.Infrastructure
 
 # Add to solution
-dotnet sln add src/Infrastructure/SecureCleanApiWaf.Infrastructure/SecureCleanApiWaf.Infrastructure.csproj
+dotnet sln add src/Infrastructure/CleanArchitecture.ApiTemplate.Infrastructure/CleanArchitecture.ApiTemplate.Infrastructure.csproj
 
 # Add reference to Application
-dotnet add src/Infrastructure/SecureCleanApiWaf.Infrastructure reference src/Core/SecureCleanApiWaf.Application
+dotnet add src/Infrastructure/CleanArchitecture.ApiTemplate.Infrastructure reference src/Core/CleanArchitecture.ApiTemplate.Application
 ```
 
 Configure Infrastructure project:
@@ -461,7 +461,7 @@ Configure Infrastructure project:
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\SecureCleanApiWaf.Application\SecureCleanApiWaf.Application.csproj" />
+    <ProjectReference Include="..\..\Core\CleanArchitecture.ApiTemplate.Application\CleanArchitecture.ApiTemplate.Application.csproj" />
   </ItemGroup>
 </Project>
 ```
@@ -470,13 +470,13 @@ Configure Infrastructure project:
 
 ```bash
 # Create project
-dotnet new classlib -n SecureCleanApiWaf.Infrastructure.Azure -o src/Infrastructure/SecureCleanApiWaf.Infrastructure.Azure
+dotnet new classlib -n CleanArchitecture.ApiTemplate.Infrastructure.Azure -o src/Infrastructure/CleanArchitecture.ApiTemplate.Infrastructure.Azure
 
 # Add to solution
-dotnet sln add src/Infrastructure/SecureCleanApiWaf.Infrastructure.Azure/SecureCleanApiWaf.Infrastructure.Azure.csproj
+dotnet sln add src/Infrastructure/CleanArchitecture.ApiTemplate.Infrastructure.Azure/CleanArchitecture.ApiTemplate.Infrastructure.Azure.csproj
 
 # Add reference to Application
-dotnet add src/Infrastructure/SecureCleanApiWaf.Infrastructure.Azure reference src/Core/SecureCleanApiWaf.Application
+dotnet add src/Infrastructure/CleanArchitecture.ApiTemplate.Infrastructure.Azure reference src/Core/CleanArchitecture.ApiTemplate.Application
 ```
 
 Configure Azure Infrastructure project:
@@ -506,7 +506,7 @@ Configure Azure Infrastructure project:
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\SecureCleanApiWaf.Application\SecureCleanApiWaf.Application.csproj" />
+    <ProjectReference Include="..\..\Core\CleanArchitecture.ApiTemplate.Application\CleanArchitecture.ApiTemplate.Application.csproj" />
   </ItemGroup>
 </Project>
 ```
@@ -515,16 +515,16 @@ Configure Azure Infrastructure project:
 
 ```bash
 # Rename existing project folder
-Rename-Item SecureCleanApiWaf src/Presentation/SecureCleanApiWaf.Web
+Rename-Item CleanArchitecture.ApiTemplate src/Presentation/CleanArchitecture.ApiTemplate.Web
 
 # Update solution file to point to new location
-dotnet sln remove SecureCleanApiWaf.csproj
-dotnet sln add src/Presentation/SecureCleanApiWaf.Web/SecureCleanApiWaf.Web.csproj
+dotnet sln remove CleanArchitecture.ApiTemplate.csproj
+dotnet sln add src/Presentation/CleanArchitecture.ApiTemplate.Web/CleanArchitecture.ApiTemplate.Web.csproj
 
 # Add project references
-dotnet add src/Presentation/SecureCleanApiWaf.Web reference src/Core/SecureCleanApiWaf.Application
-dotnet add src/Presentation/SecureCleanApiWaf.Web reference src/Infrastructure/SecureCleanApiWaf.Infrastructure
-dotnet add src/Presentation/SecureCleanApiWaf.Web reference src/Infrastructure/SecureCleanApiWaf.Infrastructure.Azure
+dotnet add src/Presentation/CleanArchitecture.ApiTemplate.Web reference src/Core/CleanArchitecture.ApiTemplate.Application
+dotnet add src/Presentation/CleanArchitecture.ApiTemplate.Web reference src/Infrastructure/CleanArchitecture.ApiTemplate.Infrastructure
+dotnet add src/Presentation/CleanArchitecture.ApiTemplate.Web reference src/Infrastructure/CleanArchitecture.ApiTemplate.Infrastructure.Azure
 ```
 
 ### **Step 3.7: Move Code to Appropriate Projects**
@@ -537,8 +537,8 @@ dotnet add src/Presentation/SecureCleanApiWaf.Web reference src/Infrastructure/S
 
 Example Domain Entity:
 ```csharp
-// src/Core/SecureCleanApiWaf.Domain/Entities/SampleEntity.cs
-namespace SecureCleanApiWaf.Domain.Entities;
+// src/Core/CleanArchitecture.ApiTemplate.Domain/Entities/SampleEntity.cs
+namespace CleanArchitecture.ApiTemplate.Domain.Entities;
 
 public class SampleEntity : BaseEntity
 {
@@ -579,18 +579,18 @@ public abstract class BaseEntity
 #### **Move to Application Project**
 ```bash
 # Copy from old project Core/Application folders
-Copy-Item -Recurse Core/Application/* src/Core/SecureCleanApiWaf.Application/
+Copy-Item -Recurse Core/Application/* src/Core/CleanArchitecture.ApiTemplate.Application/
 
-# Update namespaces to SecureCleanApiWaf.Application.*
+# Update namespaces to CleanArchitecture.ApiTemplate.Application.*
 ```
 
 #### **Move to Infrastructure Project**
 ```bash
 # Copy services and caching
-Copy-Item -Recurse Infrastructure/Services/* src/Infrastructure/SecureCleanApiWaf.Infrastructure/Services/
-Copy-Item -Recurse Infrastructure/Caching/* src/Infrastructure/SecureCleanApiWaf.Infrastructure/Caching/
+Copy-Item -Recurse Infrastructure/Services/* src/Infrastructure/CleanArchitecture.ApiTemplate.Infrastructure/Services/
+Copy-Item -Recurse Infrastructure/Caching/* src/Infrastructure/CleanArchitecture.ApiTemplate.Infrastructure/Caching/
 
-# Update namespaces to SecureCleanApiWaf.Infrastructure.*
+# Update namespaces to CleanArchitecture.ApiTemplate.Infrastructure.*
 ```
 
 #### **Move Azure-specific code**
@@ -603,7 +603,7 @@ Copy-Item -Recurse Infrastructure/Caching/* src/Infrastructure/SecureCleanApiWaf
 
 #### **Application/DependencyInjection.cs**
 ```csharp
-namespace SecureCleanApiWaf.Application;
+namespace CleanArchitecture.ApiTemplate.Application;
 
 public static class DependencyInjection
 {
@@ -627,7 +627,7 @@ public static class DependencyInjection
 
 #### **Infrastructure/DependencyInjection.cs**
 ```csharp
-namespace SecureCleanApiWaf.Infrastructure;
+namespace CleanArchitecture.ApiTemplate.Infrastructure;
 
 public static class DependencyInjection
 {
@@ -657,7 +657,7 @@ public static class DependencyInjection
 
 #### **Infrastructure.Azure/DependencyInjection.cs**
 ```csharp
-namespace SecureCleanApiWaf.Infrastructure.Azure;
+namespace CleanArchitecture.ApiTemplate.Infrastructure.Azure;
 
 public static class DependencyInjection
 {
@@ -679,10 +679,10 @@ public static class DependencyInjection
 ### **Step 3.9: Update Program.cs**
 
 ```csharp
-using SecureCleanApiWaf.Application;
-using SecureCleanApiWaf.Infrastructure;
-using SecureCleanApiWaf.Infrastructure.Azure;
-using SecureCleanApiWaf.Web.Components;
+using CleanArchitecture.ApiTemplate.Application;
+using CleanArchitecture.ApiTemplate.Infrastructure;
+using CleanArchitecture.ApiTemplate.Infrastructure.Azure;
+using CleanArchitecture.ApiTemplate.Web.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -734,7 +734,7 @@ dotnet restore
 dotnet build
 
 # Run application
-cd src/Presentation/SecureCleanApiWaf.Web
+cd src/Presentation/CleanArchitecture.ApiTemplate.Web
 dotnet run
 ```
 
@@ -765,24 +765,24 @@ Fix any compilation errors related to:
 
 ```bash
 # Domain Unit Tests
-dotnet new xunit -n SecureCleanApiWaf.Domain.UnitTests -o tests/SecureCleanApiWaf.Domain.UnitTests
-dotnet add tests/SecureCleanApiWaf.Domain.UnitTests reference src/Core/SecureCleanApiWaf.Domain
-dotnet sln add tests/SecureCleanApiWaf.Domain.UnitTests
+dotnet new xunit -n CleanArchitecture.ApiTemplate.Domain.UnitTests -o tests/CleanArchitecture.ApiTemplate.Domain.UnitTests
+dotnet add tests/CleanArchitecture.ApiTemplate.Domain.UnitTests reference src/Core/CleanArchitecture.ApiTemplate.Domain
+dotnet sln add tests/CleanArchitecture.ApiTemplate.Domain.UnitTests
 
 # Application Unit Tests
-dotnet new xunit -n SecureCleanApiWaf.Application.UnitTests -o tests/SecureCleanApiWaf.Application.UnitTests
-dotnet add tests/SecureCleanApiWaf.Application.UnitTests reference src/Core/SecureCleanApiWaf.Application
-dotnet sln add tests/SecureCleanApiWaf.Application.UnitTests
+dotnet new xunit -n CleanArchitecture.ApiTemplate.Application.UnitTests -o tests/CleanArchitecture.ApiTemplate.Application.UnitTests
+dotnet add tests/CleanArchitecture.ApiTemplate.Application.UnitTests reference src/Core/CleanArchitecture.ApiTemplate.Application
+dotnet sln add tests/CleanArchitecture.ApiTemplate.Application.UnitTests
 
 # Infrastructure Integration Tests
-dotnet new xunit -n SecureCleanApiWaf.Infrastructure.IntegrationTests -o tests/SecureCleanApiWaf.Infrastructure.IntegrationTests
-dotnet add tests/SecureCleanApiWaf.Infrastructure.IntegrationTests reference src/Infrastructure/SecureCleanApiWaf.Infrastructure
-dotnet sln add tests/SecureCleanApiWaf.Infrastructure.IntegrationTests
+dotnet new xunit -n CleanArchitecture.ApiTemplate.Infrastructure.IntegrationTests -o tests/CleanArchitecture.ApiTemplate.Infrastructure.IntegrationTests
+dotnet add tests/CleanArchitecture.ApiTemplate.Infrastructure.IntegrationTests reference src/Infrastructure/CleanArchitecture.ApiTemplate.Infrastructure
+dotnet sln add tests/CleanArchitecture.ApiTemplate.Infrastructure.IntegrationTests
 
 # Web Functional Tests
-dotnet new xunit -n SecureCleanApiWaf.Web.FunctionalTests -o tests/SecureCleanApiWaf.Web.FunctionalTests
-dotnet add tests/SecureCleanApiWaf.Web.FunctionalTests reference src/Presentation/SecureCleanApiWaf.Web
-dotnet sln add tests/SecureCleanApiWaf.Web.FunctionalTests
+dotnet new xunit -n CleanArchitecture.ApiTemplate.Web.FunctionalTests -o tests/CleanArchitecture.ApiTemplate.Web.FunctionalTests
+dotnet add tests/CleanArchitecture.ApiTemplate.Web.FunctionalTests reference src/Presentation/CleanArchitecture.ApiTemplate.Web
+dotnet sln add tests/CleanArchitecture.ApiTemplate.Web.FunctionalTests
 ```
 
 ### **Step 4.2: Add Testing Packages**
@@ -841,9 +841,9 @@ See [Testing Strategy](docs/CleanArchitecture/Projects/06-Testing-Strategy.md) f
 **Problem**: `The type 'X' exists in both 'ProjectA' and 'ProjectB'`.
 
 **Solution**: Ensure unique namespaces per project:
-- Domain: `SecureCleanApiWaf.Domain.*`
-- Application: `SecureCleanApiWaf.Application.*`
-- Infrastructure: `SecureCleanApiWaf.Infrastructure.*`
+- Domain: `CleanArchitecture.ApiTemplate.Domain.*`
+- Application: `CleanArchitecture.ApiTemplate.Application.*`
+- Infrastructure: `CleanArchitecture.ApiTemplate.Infrastructure.*`
 
 ### **Issue 3: Missing Using Statements**
 
@@ -851,8 +851,8 @@ See [Testing Strategy](docs/CleanArchitecture/Projects/06-Testing-Strategy.md) f
 
 **Solution**: Add appropriate using statements:
 ```csharp
-using SecureCleanApiWaf.Application.Common.Interfaces;
-using SecureCleanApiWaf.Application.Common.Models;
+using CleanArchitecture.ApiTemplate.Application.Common.Interfaces;
+using CleanArchitecture.ApiTemplate.Application.Common.Models;
 ```
 
 ### **Issue 4: DI Registration Missing**
@@ -923,7 +923,7 @@ After completing migration:
 **Need Help?**
 
 - 📖 **Documentation:** Start with the deployment guides above
-- 🐛 **Issues:** [GitHub Issues](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues)
+- 🐛 **Issues:** [GitHub Issues](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate/issues)
 - 📧 **Email:** softevolutionsl@gmail.com
 - 🐙 **GitHub:** [@dariemcarlosdev](https://github.com/dariemcarlosdev)
 
@@ -931,6 +931,6 @@ After completing migration:
 
 **Last Updated:** November 2025  
 **Maintainer:** Dariemcarlos  
-**GitHub:** [SecureCleanApiWaf](https://github.com/dariemcarlosdev/SecureCleanApiWaf)
+**GitHub:** [CleanArchitecture.ApiTemplate](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate)
 
 

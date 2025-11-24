@@ -1,11 +1,11 @@
-# 📝 Docker Deployment Setup Summary - SecureCleanApiWaf
+# 📝 Docker Deployment Setup Summary - CleanArchitecture.ApiTemplate
 
 > *"A well-documented setup is the foundation of a successful deployment."*  
 > — DevOps Philosophy
 
 **Status:** ✅ **CURRENT CONFIGURATION** - Updated to reflect actual Docker setup  
 **Last Updated:** November 2025  
-**Repository:** https://github.com/dariemcarlosdev/SecureCleanApiWaf (Branch: Dev)  
+**Repository:** https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate (Branch: Dev)  
 **Application Type:** Blazor Web Application  
 **.NET Version:** 8.0  
 
@@ -53,7 +53,7 @@ Base Image:           mcr.microsoft.com/dotnet/aspnet:8.0
 User:                 appuser (UID 1000, non-root)
 Working Directory:    /app
 Port:                 8080
-Startup Command:      dotnet SecureCleanApiWaf.dll
+Startup Command:      dotnet CleanArchitecture.ApiTemplate.dll
 Environment:          ASPNETCORE_URLS=http://+:8080
 Build Approach:       Pre-built (publish locally first)
 ```
@@ -79,9 +79,9 @@ dotnet publish -c Release -o ./publish
 
 **Current Setup:**
 ```yaml
-Service Name:       SecureCleanApiWaf
-Container Name:     SecureCleanApiWaf
-Image Tag:          SecureCleanApiWaf:latest
+Service Name:       CleanArchitecture.ApiTemplate
+Container Name:     CleanArchitecture.ApiTemplate
+Image Tag:          CleanArchitecture.ApiTemplate:latest
 Port Mapping:       8080:8080
 Environment:        ASPNETCORE_ENVIRONMENT=Development
                     ThirdPartyApi__BaseUrl=https://jsonplaceholder.typicode.com/
@@ -148,7 +148,7 @@ dotnet --version
 
 ```bash
 # Navigate to project directory
-cd "C:\DATA\MYSTUFFS\PROFESSIONAL STUFF\TECH CHALLENGE\SecureCleanApiWaf"
+cd "C:\DATA\MYSTUFFS\PROFESSIONAL STUFF\TECH CHALLENGE\CleanArchitecture.ApiTemplate"
 
 # Restore NuGet packages
 dotnet restore
@@ -161,18 +161,18 @@ dotnet publish -c Release -o ./publish
 
 # Verify publish folder exists
 ls ./publish
-# Should show: appsettings.json, SecureCleanApiWaf.dll, web.config, wwwroot/, etc.
+# Should show: appsettings.json, CleanArchitecture.ApiTemplate.dll, web.config, wwwroot/, etc.
 ```
 
 ### **Step 2: Build Docker Image (2 minutes)**
 
 ```bash
 # Build the image
-docker build -t SecureCleanApiWaf:latest .
+docker build -t CleanArchitecture.ApiTemplate:latest .
 
 # Verify the image was created
-docker images | grep SecureCleanApiWaf
-# Expected: SecureCleanApiWaf  latest  <IMAGE_ID>  <CREATED>  ~215MB
+docker images | grep CleanArchitecture.ApiTemplate
+# Expected: CleanArchitecture.ApiTemplate  latest  <IMAGE_ID>  <CREATED>  ~215MB
 ```
 
 ### **Step 3: Run with Docker Compose (1 minute)**
@@ -193,7 +193,7 @@ docker-compose ps
 curl http://localhost:8080
 
 # View logs
-docker-compose logs -f SecureCleanApiWaf
+docker-compose logs -f CleanArchitecture.ApiTemplate
 
 # Access in browser
 # Open: http://localhost:8080
@@ -209,7 +209,7 @@ docker-compose stop
 docker-compose down
 
 # Remove images (optional)
-docker rmi SecureCleanApiWaf:latest
+docker rmi CleanArchitecture.ApiTemplate:latest
 ```
 
 ---
@@ -222,8 +222,8 @@ docker rmi SecureCleanApiWaf:latest
 
 ```bash
 # Clone if needed
-git clone https://github.com/dariemcarlosdev/SecureCleanApiWaf.git
-cd SecureCleanApiWaf
+git clone https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate.git
+cd CleanArchitecture.ApiTemplate
 
 # Prepare application
 dotnet restore
@@ -235,13 +235,13 @@ dotnet publish -c Release -o ./publish
 
 ```bash
 # Build locally
-docker build -t SecureCleanApiWaf:latest .
+docker build -t CleanArchitecture.ApiTemplate:latest .
 
 # View build layers
-docker history SecureCleanApiWaf:latest
+docker history CleanArchitecture.ApiTemplate:latest
 
 # Verify image details
-docker inspect SecureCleanApiWaf:latest | grep -A 5 '"Env"'
+docker inspect CleanArchitecture.ApiTemplate:latest | grep -A 5 '"Env"'
 ```
 
 #### **3. Run with Docker Compose**
@@ -251,7 +251,7 @@ docker inspect SecureCleanApiWaf:latest | grep -A 5 '"Env"'
 docker-compose up -d
 
 # Monitor startup
-docker-compose logs -f SecureCleanApiWaf
+docker-compose logs -f CleanArchitecture.ApiTemplate
 
 # Once running, press Ctrl+C to exit logs (container keeps running)
 ```
@@ -263,10 +263,10 @@ docker-compose logs -f SecureCleanApiWaf
 docker-compose ps
 
 # Check specific container
-docker-compose exec SecureCleanApiWaf curl http://localhost:8080
+docker-compose exec CleanArchitecture.ApiTemplate curl http://localhost:8080
 
 # View container stats
-docker stats SecureCleanApiWaf
+docker stats CleanArchitecture.ApiTemplate
 ```
 
 #### **5. Development Workflow**
@@ -277,7 +277,7 @@ docker stats SecureCleanApiWaf
 
 # Rebuild and restart
 dotnet publish -c Release -o ./publish
-docker build -t SecureCleanApiWaf:latest .
+docker build -t CleanArchitecture.ApiTemplate:latest .
 docker-compose up -d --force-recreate
 
 # Or simply
@@ -319,7 +319,7 @@ Then access at: `http://localhost:8081`
 #### **Add Resource Limits**
 
 ```yaml
-# In docker-compose.yml under SecureCleanApiWaf:
+# In docker-compose.yml under CleanArchitecture.ApiTemplate:
 deploy:
   resources:
     limits:
@@ -340,7 +340,7 @@ For future expansion with database, cache, etc.:
 version: '3.8'
 
 services:
-  SecureCleanApiWaf:
+  CleanArchitecture.ApiTemplate:
     # ... existing config ...
     depends_on:
       - postgres
@@ -411,7 +411,7 @@ docker login
 
 ---
 
-### **Issue 3: "SecureCleanApiWaf.dll Not Found"**
+### **Issue 3: "CleanArchitecture.ApiTemplate.dll Not Found"**
 
 **Error:** `exec: "dotnet": executable file not found`
 
@@ -422,11 +422,11 @@ docker login
 # Check actual DLL name in publish folder
 ls ./publish/*.dll
 
-# Verify in SecureCleanApiWaf.csproj
-grep -A 2 "<AssemblyName>" SecureCleanApiWaf.csproj
+# Verify in CleanArchitecture.ApiTemplate.csproj
+grep -A 2 "<AssemblyName>" CleanArchitecture.ApiTemplate.csproj
 
 # Update Dockerfile if needed
-# Change: ENTRYPOINT ["dotnet", "SecureCleanApiWaf.dll"]
+# Change: ENTRYPOINT ["dotnet", "CleanArchitecture.ApiTemplate.dll"]
 # To: ENTRYPOINT ["dotnet", "ActualName.dll"]
 ```
 
@@ -439,10 +439,10 @@ grep -A 2 "<AssemblyName>" SecureCleanApiWaf.csproj
 **Verification:**
 ```bash
 # Check variables inside container
-docker-compose exec SecureCleanApiWaf printenv
+docker-compose exec CleanArchitecture.ApiTemplate printenv
 
 # Check specific variable
-docker-compose exec SecureCleanApiWaf printenv ThirdPartyApi__BaseUrl
+docker-compose exec CleanArchitecture.ApiTemplate printenv ThirdPartyApi__BaseUrl
 ```
 
 **Fix:**
@@ -461,7 +461,7 @@ environment:
 **Need Help?**
 
 - 📖 **Documentation:** Start with the deployment guides above
-- 🐛 **Issues:** [GitHub Issues](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues)
+- 🐛 **Issues:** [GitHub Issues](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate/issues)
 - 📧 **Email:** softevolutionsl@gmail.com
 - 🐙 **GitHub:** [@dariemcarlosdev](https://github.com/dariemcarlosdev)
 
@@ -473,10 +473,10 @@ environment:
 
 ---
 
-**Ready to continue?** Follow the detailed instructions above to get your SecureCleanApiWaf running in Docker!
+**Ready to continue?** Follow the detailed instructions above to get your CleanArchitecture.ApiTemplate running in Docker!
 
 ---
 
 **Last Updated:** November 2025  
 **Maintainer:** Dariemcarlos  
-**GitHub:** [SecureCleanApiWaf](https://github.com/dariemcarlosdev/SecureCleanApiWaf)
+**GitHub:** [CleanArchitecture.ApiTemplate](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate)

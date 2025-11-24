@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace SecureCleanApiWaf.Models
+namespace CleanArchitecture.ApiTemplate.Models
 {
     /// <summary>
     /// Represents a sample Data Transfer Object (DTO) used in the Blazor Server application's API layer for model binding and validation.

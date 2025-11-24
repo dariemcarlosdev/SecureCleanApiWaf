@@ -1,8 +1,8 @@
-using SecureCleanApiWaf.Core.Application.Common.Models;
-using SecureCleanApiWaf.Core.Domain.Entities;
-using SecureCleanApiWaf.Core.Application.Common.DTOs;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Models;
+using CleanArchitecture.ApiTemplate.Core.Domain.Entities;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.DTOs;
 
-namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
+namespace CleanArchitecture.ApiTemplate.Core.Application.Common.Interfaces
 {
     /// <summary>
     /// Interface for third-party API integration service.

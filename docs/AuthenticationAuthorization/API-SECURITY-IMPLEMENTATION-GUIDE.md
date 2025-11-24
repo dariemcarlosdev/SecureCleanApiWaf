@@ -43,8 +43,8 @@ Protects all API endpoints with industry-standard JSON Web Token authentication 
 ```json
 "JwtSettings": {
   "SecretKey": "YourSuperSecretKeyForJWT_MustBeAtLeast32CharactersLong!",
-  "Issuer": "SecureCleanApiWaf",
-  "Audience": "SecureCleanApiWaf.Api",
+  "Issuer": "CleanArchitecture.ApiTemplate",
+  "Audience": "CleanArchitecture.ApiTemplate.Api",
   "ExpirationMinutes": 60
 }
 ```
@@ -135,8 +135,8 @@ This flow describes how an incoming API request is authenticated and authorized 
    ↓
    ➜ Extract JWT from Authorization header
    ➜ Validate signature (HMAC-SHA256)
-   ➜ Validate issuer (SecureCleanApiWaf)
-   ➜ Validate audience (SecureCleanApiWaf.Api)
+   ➜ Validate issuer (CleanArchitecture.ApiTemplate)
+   ➜ Validate audience (CleanArchitecture.ApiTemplate.Api)
    ➜ Check expiration (ClockSkew = 0)
    ➜ Extract claims (sub, unique_name, roles, jti)
    ➜ Set User.Identity (ClaimsPrincipal)
@@ -419,10 +419,10 @@ Controller formats administrative response
 ## 🆘 Contact & Support
 
 ### **Project Information**
-- **Project:** SecureCleanApiWaf - API Security Implementation
+- **Project:** CleanArchitecture.ApiTemplate - API Security Implementation
 - **Version:** 1.3.0 (Complete CQRS Authentication)
 - **Framework:** .NET 8 with JWT Bearer Authentication
-- **Repository:** [https://github.com/dariemcarlosdev/SecureCleanApiWaf](https://github.com/dariemcarlosdev/SecureCleanApiWaf)
+- **Repository:** [https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate)
 
 ### **Author**
 - **Name:** Dariem Carlos
@@ -435,12 +435,12 @@ For security implementation questions:
 1. Review [TEST_AUTHENTICATION_GUIDE.md](TEST_AUTHENTICATION_GUIDE.md) for testing procedures
 2. Check [JWT_AUTHENTICATION_CQRS_ARCHITECTURE.md](JWT_AUTHENTICATION_CQRS_ARCHITECTURE.md) for architecture details
 3. Review [CQRS Implementation Summaries](CQRS_LOGIN_IMPLEMENTATION_SUMMARY.md) for detailed guidance
-4. Open an [issue](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues) with label `security`
+4. Open an [issue](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate/issues) with label `security`
 
 ### **Support Channels**
 - 📧 **Email:** softevolutionsl@gmail.com
-- 💬 **GitHub Discussions:** [SecureCleanApiWaf Discussions](https://github.com/dariemcarlosdev/SecureCleanApiWaf/discussions)
-- 🐙 **GitHub Issues:** [Report Issues](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues)
+- 💬 **GitHub Discussions:** [CleanArchitecture.ApiTemplate Discussions](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate/discussions)
+- 🐙 **GitHub Issues:** [Report Issues](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate/issues)
 
 ### **Related Documentation**
 - 📖 [AUTHENT-AUTHORIT_README.md](AUTHENT-AUTHORIT_README.md) - Main authentication hub
@@ -456,4 +456,4 @@ For security implementation questions:
 
 ---
 
-*For the latest security updates and best practices, visit the [GitHub repository](https://github.com/dariemcarlosdev/SecureCleanApiWaf).*
+*For the latest security updates and best practices, visit the [GitHub repository](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate).*

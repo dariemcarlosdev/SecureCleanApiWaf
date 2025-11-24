@@ -1,9 +1,9 @@
-# 🚀 SecureCleanApiWaf - Deployment Documentation
+# 🚀 CleanArchitecture.ApiTemplate - Deployment Documentation
 
 > *"The journey of a thousand deployments begins with a single container."*  
 > — Inspired by DevOps wisdom
 
-**Complete deployment guide for SecureCleanApiWaf across multiple platforms and environments.**
+**Complete deployment guide for CleanArchitecture.ApiTemplate across multiple platforms and environments.**
 
 ---
 
@@ -48,7 +48,7 @@
 
 ## 📑 Overview
 
-This directory contains comprehensive deployment documentation for SecureCleanApiWaf across different platforms and technologies. Whether you're deploying to Azure PaaS, using Docker containers, or setting up Kubernetes, you'll find complete guides and quick-start instructions here.
+This directory contains comprehensive deployment documentation for CleanArchitecture.ApiTemplate across different platforms and technologies. Whether you're deploying to Azure PaaS, using Docker containers, or setting up Kubernetes, you'll find complete guides and quick-start instructions here.
 
 **What's included:**
 - ✅ Complete step-by-step deployment guides
@@ -64,7 +64,7 @@ This directory contains comprehensive deployment documentation for SecureCleanAp
 
 ### **Quick Start: Azure App Service**
 
-Deploy SecureCleanApiWaf to Azure App Service in **5 simple steps**:
+Deploy CleanArchitecture.ApiTemplate to Azure App Service in **5 simple steps**:
 
 #### **1. Prerequisites**
 ```bash
@@ -77,8 +77,8 @@ Deploy SecureCleanApiWaf to Azure App Service in **5 simple steps**:
 #### **2. Create Azure Resources**
 ```bash
 # Using Azure CLI (fastest)
-az webapp up --name SecureCleanApiWaf \
-  --resource-group SecureCleanApiWaf-RG \
+az webapp up --name CleanArchitecture.ApiTemplate \
+  --resource-group CleanArchitecture.ApiTemplate-RG \
   --runtime "DOTNETCORE:8.0" \
   --sku B1
 ```
@@ -93,8 +93,8 @@ az webapp up --name SecureCleanApiWaf \
 ```bash
 # Via Azure CLI
 az webapp identity assign \
-  --name SecureCleanApiWaf \
-  --resource-group SecureCleanApiWaf-RG
+  --name CleanArchitecture.ApiTemplate \
+  --resource-group CleanArchitecture.ApiTemplate-RG
 ```
 
 **Or via Azure Portal:**
@@ -106,7 +106,7 @@ Add these secrets to your GitHub repository (Settings → Secrets and variables 
 
 | Secret Name | Value | Where to Get It |
 |-------------|-------|-----------------|
-| `AZURE_WEBAPP_NAME` | `SecureCleanApiWaf` | Your App Service name |
+| `AZURE_WEBAPP_NAME` | `CleanArchitecture.ApiTemplate` | Your App Service name |
 | `AZURE_WEBAPP_PUBLISH_PROFILE` | Download from Azure Portal | App Service → Get publish profile |
 | `THIRDPARTY_API_BASEURL` | Your API URL | Your external API endpoint |
 
@@ -125,11 +125,11 @@ git push origin master
 #### **Verify Deployment**
 ```bash
 # Check your app is live
-curl https://SecureCleanApiWaf.azurewebsites.net/health
+curl https://CleanArchitecture.ApiTemplate.azurewebsites.net/health
 # Expected: Healthy
 
 # Or visit in browser
-https://SecureCleanApiWaf.azurewebsites.net
+https://CleanArchitecture.ApiTemplate.azurewebsites.net
 ```
 
 **⏱️ Total Time: ~10-15 minutes especially if Azure resources are pre-created**
@@ -140,7 +140,7 @@ https://SecureCleanApiWaf.azurewebsites.net
 
 ### **Quick Start: Docker Deployment**
 
-Deploy SecureCleanApiWaf using Docker in **4 simple steps**:
+Deploy CleanArchitecture.ApiTemplate using Docker in **4 simple steps**:
 
 #### **1. Prerequisites**
 ```bash
@@ -152,11 +152,11 @@ Deploy SecureCleanApiWaf using Docker in **4 simple steps**:
 #### **2. Build Docker Image**
 ```bash
 # Clone repository (if not already)
-git clone https://github.com/dariemcarlosdev/SecureCleanApiWaf.git
-cd SecureCleanApiWaf
+git clone https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate.git
+cd CleanArchitecture.ApiTemplate
 
 # Build the image
-docker build -t SecureCleanApiWaf:latest .
+docker build -t CleanArchitecture.ApiTemplate:latest .
 
 # Expected: Build succeeds in 2-3 minutes
 ```
@@ -167,20 +167,20 @@ docker build -t SecureCleanApiWaf:latest .
 docker-compose up -d
 
 # Or using Docker CLI
-docker run -d -p 8080:8080 --name SecureCleanApiWaf SecureCleanApiWaf:latest
+docker run -d -p 8080:8080 --name CleanArchitecture.ApiTemplate CleanArchitecture.ApiTemplate:latest
 ```
 
 #### **4. Verify & Test**
 ```bash
 # Check container is running
-docker ps | grep SecureCleanApiWaf
+docker ps | grep CleanArchitecture.ApiTemplate
 
 # Test the application
 curl http://localhost:8080/health
 # Expected: Healthy
 
 # View logs
-docker logs -f SecureCleanApiWaf
+docker logs -f CleanArchitecture.ApiTemplate
 
 # Access the app
 # Browser: http://localhost:8080
@@ -194,10 +194,10 @@ docker logs -f SecureCleanApiWaf
 docker login
 
 # Tag image
-docker tag SecureCleanApiWaf:latest yourdockerhubusername/SecureCleanApiWaf:latest
+docker tag CleanArchitecture.ApiTemplate:latest yourdockerhubusername/CleanArchitecture.ApiTemplate:latest
 
 # Push to Docker Hub
-docker push yourdockerhubusername/SecureCleanApiWaf:latest
+docker push yourdockerhubusername/CleanArchitecture.ApiTemplate:latest
 ```
 
 #### **Optional: Deploy to Cloud**
@@ -206,28 +206,28 @@ docker push yourdockerhubusername/SecureCleanApiWaf:latest
 ```bash
 az container create \
   --resource-group myResourceGroup \
-  --name SecureCleanApiWaf \
-  --image yourdockerhubusername/SecureCleanApiWaf:latest \
-  --dns-name-label SecureCleanApiWaf \
+  --name CleanArchitecture.ApiTemplate \
+  --image yourdockerhubusername/CleanArchitecture.ApiTemplate:latest \
+  --dns-name-label CleanArchitecture.ApiTemplate \
   --ports 8080
 ```
 
 **Azure Container Apps:**
 ```bash
 az containerapp create \
-  --name SecureCleanApiWaf \
+  --name CleanArchitecture.ApiTemplate \
   --resource-group myResourceGroup \
   --environment myEnvironment \
-  --image yourdockerhubusername/SecureCleanApiWaf:latest \
+  --image yourdockerhubusername/CleanArchitecture.ApiTemplate:latest \
   --target-port 8080 \
   --ingress external
 ```
 
 **Kubernetes:**
 ```bash
-kubectl create deployment SecureCleanApiWaf \
-  --image=yourdockerhubusername/SecureCleanApiWaf:latest
-kubectl expose deployment SecureCleanApiWaf \
+kubectl create deployment CleanArchitecture.ApiTemplate \
+  --image=yourdockerhubusername/CleanArchitecture.ApiTemplate:latest
+kubectl expose deployment CleanArchitecture.ApiTemplate \
   --type=LoadBalancer --port=80 --target-port=8080
 ```
 
@@ -253,7 +253,7 @@ kubectl expose deployment SecureCleanApiWaf \
 
 **Quick Deploy:**
 ```bash
-az webapp up --name SecureCleanApiWaf --resource-group myResourceGroup --runtime "DOTNETCORE:8.0"
+az webapp up --name CleanArchitecture.ApiTemplate --resource-group myResourceGroup --runtime "DOTNETCORE:8.0"
 ```
 
 📖 **Documentation:** [AzureAppService/](./AzureAppService/)
@@ -283,8 +283,8 @@ az webapp up --name SecureCleanApiWaf --resource-group myResourceGroup --runtime
 docker-compose up -d
 
 # Or
-docker build -t SecureCleanApiWaf:latest .
-docker run -d -p 8080:8080 SecureCleanApiWaf:latest
+docker build -t CleanArchitecture.ApiTemplate:latest .
+docker run -d -p 8080:8080 CleanArchitecture.ApiTemplate:latest
 ```
 
 📖 **Documentation:** [Docker/](./Docker/)
@@ -319,10 +319,10 @@ docker run -d -p 8080:8080 SecureCleanApiWaf:latest
 **Quick Deploy:**
 ```bash
 az containerapp create \
-  --name SecureCleanApiWaf \
+  --name CleanArchitecture.ApiTemplate \
   --resource-group myResourceGroup \
   --environment myEnvironment \
-  --image yourdockerhubusername/SecureCleanApiWaf:latest \
+  --image yourdockerhubusername/CleanArchitecture.ApiTemplate:latest \
   --target-port 8080 \
   --ingress external
 ```
@@ -346,11 +346,11 @@ az containerapp create \
 **Quick Deploy:**
 ```bash
 # Create deployment
-kubectl create deployment SecureCleanApiWaf \
-  --image=yourdockerhubusername/SecureCleanApiWaf:latest
+kubectl create deployment CleanArchitecture.ApiTemplate \
+  --image=yourdockerhubusername/CleanArchitecture.ApiTemplate:latest
 
 # Expose service
-kubectl expose deployment SecureCleanApiWaf \
+kubectl expose deployment CleanArchitecture.ApiTemplate \
   --type=LoadBalancer --port=80 --target-port=8080
 
 # Check status
@@ -379,7 +379,7 @@ kubectl get pods
 
 **Steps:**
 1. Publish: `dotnet publish -c Release`
-2. Copy to `/var/www/SecureCleanApiWaf`
+2. Copy to `/var/www/CleanArchitecture.ApiTemplate`
 3. Create systemd service
 4. Configure Nginx/Apache reverse proxy
 
@@ -463,8 +463,8 @@ ASPNETCORE_ENVIRONMENT=Production
 
 # JWT Authentication
 JwtSettings__SecretKey=your-secure-secret-key-here
-JwtSettings__Issuer=SecureCleanApiWaf
-JwtSettings__Audience=SecureCleanApiWaf.Api
+JwtSettings__Issuer=CleanArchitecture.ApiTemplate
+JwtSettings__Audience=CleanArchitecture.ApiTemplate.Api
 JwtSettings__ExpirationMinutes=20
 
 # External API
@@ -585,13 +585,13 @@ Before deploying to production:
 **View container logs:**
 ```bash
 # View logs
-docker logs SecureCleanApiWaf
+docker logs CleanArchitecture.ApiTemplate
 
 # Follow logs (real-time)
-docker logs -f SecureCleanApiWaf
+docker logs -f CleanArchitecture.ApiTemplate
 
 # View last 100 lines
-docker logs --tail 100 SecureCleanApiWaf
+docker logs --tail 100 CleanArchitecture.ApiTemplate
 
 # Docker Compose logs
 docker-compose logs -f
@@ -620,13 +620,13 @@ netstat -ano | findstr :8080  # Windows
 lsof -i :8080                  # Linux/Mac
 
 # Use different port
-docker run -d -p 8081:8080 SecureCleanApiWaf:latest
+docker run -d -p 8081:8080 CleanArchitecture.ApiTemplate:latest
 ```
 
 #### **Environment Variables Not Working:**
 ```bash
 # Verify inside container
-docker exec SecureCleanApiWaf printenv
+docker exec CleanArchitecture.ApiTemplate printenv
 
 # Check Azure App Service
 az webapp config appsettings list --name <app-name> --resource-group <rg-name>
@@ -637,10 +637,10 @@ az webapp config appsettings list --name <app-name> --resource-group <rg-name>
 #### **Container Won't Start:**
 ```bash
 # Check logs
-docker logs SecureCleanApiWaf
+docker logs CleanArchitecture.ApiTemplate
 
 # Inspect container
-docker inspect SecureCleanApiWaf
+docker inspect CleanArchitecture.ApiTemplate
 
 # Verify health
 curl http://localhost:8080/health
@@ -652,7 +652,7 @@ curl http://localhost:8080/health
 docker builder prune
 
 # Build without cache
-docker build --no-cache -t SecureCleanApiWaf:latest .
+docker build --no-cache -t CleanArchitecture.ApiTemplate:latest .
 ```
 
 ---
@@ -721,7 +721,7 @@ docker build --no-cache -t SecureCleanApiWaf:latest .
 - [Docker Documentation](https://docs.docker.com/)
 - [Kubernetes Documentation](https://kubernetes.io/docs/)
 
-### **SecureCleanApiWaf Specific:**
+### **CleanArchitecture.ApiTemplate Specific:**
 - [Project README](../../README.md) - Application overview
 - [Clean Architecture](../CleanArchitecture/) - Architecture documentation
 - [Security Implementation](../AuthenticationAuthorization/) - Security guides
@@ -740,8 +740,8 @@ docker build --no-cache -t SecureCleanApiWaf:latest .
 ### **1. Test Locally First**
 ```bash
 # Clone repository
-git clone https://github.com/dariemcarlosdev/SecureCleanApiWaf.git
-cd SecureCleanApiWaf
+git clone https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate.git
+cd CleanArchitecture.ApiTemplate
 
 # Run locally
 dotnet run
@@ -822,7 +822,7 @@ EOF
 **Need Help?**
 
 - 📖 **Documentation:** Start with the deployment guides above
-- 🐛 **Issues:** [GitHub Issues](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues)
+- 🐛 **Issues:** [GitHub Issues](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate/issues)
 - 📧 **Email:** softevolutionsl@gmail.com
 - 🐙 **GitHub:** [@dariemcarlosdev](https://github.com/dariemcarlosdev)
 
@@ -840,6 +840,6 @@ EOF
 
 **Last Updated:** November 2025  
 **Maintainer:** Dariemcarlos  
-**GitHub:** [SecureCleanApiWaf](https://github.com/dariemcarlosdev/SecureCleanApiWaf)
+**GitHub:** [CleanArchitecture.ApiTemplate](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate)
 
 

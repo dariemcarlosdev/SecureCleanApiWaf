@@ -1,16 +1,16 @@
 using System.Reflection;
 using AutoMapper;
 using MediatR;
-using SecureCleanApiWaf.Core.Application.Common.Behaviors;
-using SecureCleanApiWaf.Core.Application.Common.Mapping;
-using SecureCleanApiWaf.Core.Application.Features.SampleData.Queries;
-using SecureCleanApiWaf.Core.Application.Features.Authentication.Commands;
-using SecureCleanApiWaf.Core.Application.Features.Authentication.Queries;
-using SecureCleanApiWaf.Core.Application.Common.Models;
-using SecureCleanApiWaf.Core.Application.Common.DTOs;
-using SecureCleanApiWaf.Models;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Behaviors;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Mapping;
+using CleanArchitecture.ApiTemplate.Core.Application.Features.SampleData.Queries;
+using CleanArchitecture.ApiTemplate.Core.Application.Features.Authentication.Commands;
+using CleanArchitecture.ApiTemplate.Core.Application.Features.Authentication.Queries;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Models;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.DTOs;
+using CleanArchitecture.ApiTemplate.Models;
 
-namespace SecureCleanApiWaf.Presentation.Extensions.DependencyInjection
+namespace CleanArchitecture.ApiTemplate.Presentation.Extensions.DependencyInjection
 {
     /// <summary>
     /// Dependency injection setup for Application layer services

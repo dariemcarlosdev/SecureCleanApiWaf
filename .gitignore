@@ -363,3 +363,11 @@ MigrationBackup/
 FodyWeavers.xsd
 /appsettings.Development.json
 /appsettings.json
+
+# ================================================================================
+# PowerShell Scripts (Temporary/Helper Scripts)
+# ================================================================================
+# Exclude PowerShell script files used for project maintenance and automation
+# These scripts are typically one-time utilities or developer-specific helpers
+# Pattern: *.ps* covers .ps1, .psm1, .psd1, .ps1xml files
+*.ps*

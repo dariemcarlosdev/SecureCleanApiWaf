@@ -1,10 +1,10 @@
-# Clean Architecture & DDD Documentation - SecureCleanApiWaf
+# Clean Architecture & DDD Documentation - CleanArchitecture.ApiTemplate
 
 > **"Clean Architecture is not about perfection�it's about making code that's easy to change, test, and understand."**
 
 ## 📖 Overview
 
-Welcome to the **Clean Architecture & Domain-Driven Design (DDD)** documentation hub for SecureCleanApiWaf. This guide serves as your starting point to understand how this project implements industry-standard architectural patterns with a pragmatic, single-project approach.
+Welcome to the **Clean Architecture & Domain-Driven Design (DDD)** documentation hub for CleanArchitecture.ApiTemplate. This guide serves as your starting point to understand how this project implements industry-standard architectural patterns with a pragmatic, single-project approach.
 
 **📚 What You'll Find Here:**
 - Complete Clean Architecture implementation guide
@@ -87,7 +87,7 @@ This architecture demonstrates:
 ### **Current Implementation: Single-Project Clean Architecture**
 
 ```
-SecureCleanApiWaf.csproj (Single Project)
+CleanArchitecture.ApiTemplate.csproj (Single Project)
 ??? Core/
 ?   ??? Domain/              [? 85% Complete - Entities, Value Objects, Enums]
 ?   ??? Application/         [? 90% Complete - CQRS, MediatR, Pipeline Behaviors]
@@ -460,7 +460,7 @@ Located in **[Projects/](Projects/)** folder - Detailed implementation guides fo
 ### **Folder Structure**
 
 ```
-SecureCleanApiWaf/
+CleanArchitecture.ApiTemplate/
 ??? Core/
 ?   ??? Domain/                          [Business Logic]
 ?   ?   ??? Common/                      Base classes, interfaces
@@ -690,7 +690,7 @@ See [MIGRATION_GUIDE.md](MIGRATION_GUIDE.md) for detailed steps.
 ## 🆘 Contact & Support
 
 ### **Documentation Issues**
-- ?? **GitHub Issues:** [SecureCleanApiWaf Issues](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues)
+- ?? **GitHub Issues:** [CleanArchitecture.ApiTemplate Issues](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate/issues)
 - ?? **Email:** softevolutionsl@gmail.com
 - ?? **GitHub:** [@dariemcarlosdev](https://github.com/dariemcarlosdev)
 
@@ -738,7 +738,7 @@ See [MIGRATION_GUIDE.md](MIGRATION_GUIDE.md) for detailed steps.
 
 ## 📝 Summary
 
-**SecureCleanApiWaf demonstrates production-ready Clean Architecture with:**
+**CleanArchitecture.ApiTemplate demonstrates production-ready Clean Architecture with:**
 
 ? **Single-project structure** for fast development  
 ? **15+ interface abstractions** for testability  
@@ -754,7 +754,7 @@ See [MIGRATION_GUIDE.md](MIGRATION_GUIDE.md) for detailed steps.
 
 **Last Updated:** January 2025  
 **Maintainer:** Dariemcarlos  
-**Project:** [SecureCleanApiWaf](https://github.com/dariemcarlosdev/SecureCleanApiWaf)  
+**Project:** [CleanArchitecture.ApiTemplate](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate)  
 **License:** MIT
 
 ---

@@ -1,6 +1,6 @@
 using System.Net.Http.Headers;
 
-namespace SecureCleanApiWaf.Infrastructure.Handlers
+namespace CleanArchitecture.ApiTemplate.Infrastructure.Handlers
 {
     /// <summary>
     /// Provides an HTTP message handler that automatically adds an API key and standard headers to outgoing requests.
@@ -62,7 +62,7 @@ namespace SecureCleanApiWaf.Infrastructure.Handlers
 
             // Add additional security headers
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json")); // Expect JSON responses
-            request.Headers.UserAgent.ParseAdd("BlueTreadApp/1.0"); // Identify the client application
+            request.Headers.UserAgent.ParseAdd("CleanArchitecture.ApiTemplate/1.0"); // Identify the client application
 
             // Log request for monitoring
             _logger.LogInformation("Sending request to external API: {Method} {Uri}", 

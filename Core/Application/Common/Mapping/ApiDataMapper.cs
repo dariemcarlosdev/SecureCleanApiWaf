@@ -1,8 +1,8 @@
-using SecureCleanApiWaf.Core.Domain.Entities;
-using SecureCleanApiWaf.Core.Application.Common.DTOs;
+using CleanArchitecture.ApiTemplate.Core.Domain.Entities;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.DTOs;
 using Microsoft.Extensions.Logging;
 
-namespace SecureCleanApiWaf.Core.Application.Common.Mapping
+namespace CleanArchitecture.ApiTemplate.Core.Application.Common.Mapping
 {
     /// <summary>
     /// Custom mapper for converting **dynamic/unknown** external API responses to ApiDataItem domain entities.

@@ -1,8 +1,8 @@
-using SecureCleanApiWaf.Core.Domain.Entities;
-using SecureCleanApiWaf.Core.Domain.Enums;
-using SecureCleanApiWaf.Core.Application.Common.DTOs;
+using CleanArchitecture.ApiTemplate.Core.Domain.Entities;
+using CleanArchitecture.ApiTemplate.Core.Domain.Enums;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.DTOs;
 
-namespace SecureCleanApiWaf.Core.Application.Common.Interfaces
+namespace CleanArchitecture.ApiTemplate.Core.Application.Common.Interfaces
 {
     /// <summary>
     /// Repository interface for ApiDataItem aggregate root.

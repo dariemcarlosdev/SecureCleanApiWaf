@@ -1,5 +1,5 @@
-﻿################################################################################
-# 🐳 DOCKER COMPOSE CONFIGURATION FOR SECURECLEANAPIWAF
+################################################################################
+# ?? DOCKER COMPOSE CONFIGURATION FOR CleanArchitecture.ApiTemplate
 # For more details, see README.md and documentation at: Docs/Deployment/Docker/DEPLOYMENT_README.md
 ################################################################################
 #
@@ -14,18 +14,18 @@
 #
 # WHEN TO USE DOCKER COMPOSE?
 # =============================
-# ✅ USE FOR:
-#   • Local development environments (like this project)
-#   • Testing and QA workflows
-#   • CI/CD pipelines and automated testing
-#   • Single-host deployments
-#   • Team onboarding (everyone gets same environment)
-#   • Documentation (yml file shows architecture)
+# ? USE FOR:
+#   � Local development environments (like this project)
+#   � Testing and QA workflows
+#   � CI/CD pipelines and automated testing
+#   � Single-host deployments
+#   � Team onboarding (everyone gets same environment)
+#   � Documentation (yml file shows architecture)
 #
-# ❌ DON'T USE FOR:
-#   • Large-scale production deployments → Use Kubernetes instead
-#   • Multi-machine distributed systems → Use Docker Swarm or Kubernetes
-#   • Applications requiring auto-scaling → Use cloud platforms (Azure, AWS)
+# ? DON'T USE FOR:
+#   � Large-scale production deployments ? Use Kubernetes instead
+#   � Multi-machine distributed systems ? Use Docker Swarm or Kubernetes
+#   � Applications requiring auto-scaling ? Use cloud platforms (Azure, AWS)
 #
 # BEST PRACTICES FOR THIS PROJECT:
 # ==================================
@@ -41,10 +41,10 @@
 # Root key that defines all services in this application stack
 services:
 
-  # SERVICE: securecleanapiwaf
-  # Description: The main Blazor web application for SecureCleanApiWaf
+  # SERVICE: CleanArchitecture.ApiTemplate
+  # Description: The main Blazor web application for CleanArchitecture.ApiTemplate
   # Purpose: Serves the web UI and handles user interactions
-  securecleanapiwaf:
+  CleanArchitecture.ApiTemplate:
     
     # BUILD SECTION: Instructions for building the Docker image
     # This tells Docker how to create a custom image for this application
@@ -64,14 +64,14 @@ services:
     
     # Give the running container a meaningful, fixed name
     # This makes it easier to identify the container when running 'docker ps'
-    # Without this, Docker generates random names like 'securecleanapiwaf_securecleanapiwaf_1'
-    container_name: securecleanapiwaf
+    # Without this, Docker generates random names like 'CleanArchitecture.ApiTemplate_CleanArchitecture.ApiTemplate_1'
+    container_name: CleanArchitecture.ApiTemplate
     
     # Image name and tag format: repository:tag
     # ":latest" means it always uses the newest version built locally
-    # TIP: In production, use specific versions like "securecleanapiwaf:v1.0.0"
+    # TIP: In production, use specific versions like "CleanArchitecture.ApiTemplate:v1.0.0"
     #      This prevents unexpected changes when rebuilding
-    image: securecleanapiwaf:latest
+    image: CleanArchitecture.ApiTemplate:latest
     
     # PORT MAPPING: Make the application accessible from your computer
     # Format: "host_port:container_port"
@@ -115,8 +115,8 @@ services:
     # RESTART POLICY: What Docker does if the container crashes
     # Options: "no", "always", "unless-stopped", "on-failure"
     # "unless-stopped" means:
-    #   ✅ Auto-restart if container crashes unexpectedly
-    #   ✅ Stay stopped if you manually stop it (docker-compose stop)
+    #   ? Auto-restart if container crashes unexpectedly
+    #   ? Stay stopped if you manually stop it (docker-compose stop)
     #   This is the best default for development - prevents silent failures
     # BEST PRACTICE: Use "unless-stopped" for development, "always" for production
     restart: unless-stopped
@@ -134,7 +134,7 @@ services:
 #   docker-compose ps
 #
 # View application logs (helpful for debugging):
-#   docker-compose logs -f securecleanapiwaf
+#   docker-compose logs -f CleanArchitecture.ApiTemplate
 #
 # Stop all services (containers are kept, data preserved):
 #   docker-compose stop
@@ -167,7 +167,7 @@ services:
 # A: The DNS settings here should fix it. If not, check your network connection.
 #
 # Q: "Container crashes immediately"
-# A: Run "docker-compose logs securecleanapiwaf" to see error messages
+# A: Run "docker-compose logs CleanArchitecture.ApiTemplate" to see error messages
 #
 # Q: "Environment variable not applied"
 # A: Ensure no typos and restart container after changes

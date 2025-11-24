@@ -1,4 +1,4 @@
-namespace SecureCleanApiWaf.Core.Domain.Entities
+namespace CleanArchitecture.ApiTemplate.Core.Domain.Entities
 {
     /// <summary>
     /// Base entity class that provides common properties for all domain entities.

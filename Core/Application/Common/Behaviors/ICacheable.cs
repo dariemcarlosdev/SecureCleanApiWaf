@@ -1,4 +1,4 @@
-namespace SecureCleanApiWaf.Core.Application.Common.Behaviors
+namespace CleanArchitecture.ApiTemplate.Core.Application.Common.Behaviors
 {
     /// <summary>
     /// Defines members required for objects that support caching, including cache key identification and expiration

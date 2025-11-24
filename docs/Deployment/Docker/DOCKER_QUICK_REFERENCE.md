@@ -1,4 +1,4 @@
-# 📋 Docker Quick Reference - SecureCleanApiWaf
+# 📋 Docker Quick Reference - CleanArchitecture.ApiTemplate
 
 > *"Quick references are the lighthouses in the sea of commands."*  
 > — Developer's Wisdom
@@ -46,29 +46,29 @@
 
 ### Build
 ```bash
-docker build -t SecureCleanApiWaf:latest .
+docker build -t CleanArchitecture.ApiTemplate:latest .
 ```
 
 ### Run
 ```bash
-docker run -d -p 8080:8080 --name SecureCleanApiWaf SecureCleanApiWaf:latest
+docker run -d -p 8080:8080 --name CleanArchitecture.ApiTemplate CleanArchitecture.ApiTemplate:latest
 ```
 
 ### View Logs
 ```bash
-docker logs -f SecureCleanApiWaf
+docker logs -f CleanArchitecture.ApiTemplate
 ```
 
 ### Stop & Remove
 ```bash
-docker stop SecureCleanApiWaf && docker rm SecureCleanApiWaf
+docker stop CleanArchitecture.ApiTemplate && docker rm CleanArchitecture.ApiTemplate
 ```
 
 ### Push to Docker Hub
 ```bash
 # Replace 'yourdockerhubusername' with your actual username
-docker tag SecureCleanApiWaf:latest yourdockerhubusername/SecureCleanApiWaf:latest
-docker push yourdockerhubusername/SecureCleanApiWaf:latest
+docker tag CleanArchitecture.ApiTemplate:latest yourdockerhubusername/CleanArchitecture.ApiTemplate:latest
+docker push yourdockerhubusername/CleanArchitecture.ApiTemplate:latest
 ```
 
 ## Docker Compose
@@ -99,27 +99,27 @@ docker-compose logs -f
 ```bash
 az container create \
   --resource-group myResourceGroup \
-  --name SecureCleanApiWaf \
-  --image yourdockerhubusername/SecureCleanApiWaf:latest \
-  --dns-name-label SecureCleanApiWaf \
+  --name CleanArchitecture.ApiTemplate \
+  --image yourdockerhubusername/CleanArchitecture.ApiTemplate:latest \
+  --dns-name-label CleanArchitecture.ApiTemplate \
   --ports 8080
 ```
 
 ### Azure Container Apps
 ```bash
 az containerapp create \
-  --name SecureCleanApiWaf \
+  --name CleanArchitecture.ApiTemplate \
   --resource-group myResourceGroup \
   --environment myEnvironment \
-  --image yourdockerhubusername/SecureCleanApiWaf:latest \
+  --image yourdockerhubusername/CleanArchitecture.ApiTemplate:latest \
   --target-port 8080 \
   --ingress external
 ```
 
 ### Kubernetes
 ```bash
-kubectl create deployment SecureCleanApiWaf --image=yourdockerhubusername/SecureCleanApiWaf:latest
-kubectl expose deployment SecureCleanApiWaf --type=LoadBalancer --port=80 --target-port=8080
+kubectl create deployment CleanArchitecture.ApiTemplate --image=yourdockerhubusername/CleanArchitecture.ApiTemplate:latest
+kubectl expose deployment CleanArchitecture.ApiTemplate --type=LoadBalancer --port=80 --target-port=8080
 ```
 
 ## Environment Variables
@@ -138,22 +138,22 @@ kubectl expose deployment SecureCleanApiWaf --type=LoadBalancer --port=80 --targ
 
 ### Check Container Status
 ```bash
-docker ps -a | grep SecureCleanApiWaf
+docker ps -a | grep CleanArchitecture.ApiTemplate
 ```
 
 ### View Container Logs
 ```bash
-docker logs SecureCleanApiWaf
+docker logs CleanArchitecture.ApiTemplate
 ```
 
 ### Execute Shell Inside Container
 ```bash
-docker exec -it SecureCleanApiWaf sh
+docker exec -it CleanArchitecture.ApiTemplate sh
 ```
 
 ### Check Environment Variables
 ```bash
-docker exec SecureCleanApiWaf printenv
+docker exec CleanArchitecture.ApiTemplate printenv
 ```
 
 ### Check Health
@@ -164,7 +164,7 @@ curl http://localhost:8080/health
 ### Port Already in Use
 ```bash
 # Use different port
-docker run -d -p 8081:8080 --name SecureCleanApiWaf SecureCleanApiWaf:latest
+docker run -d -p 8081:8080 --name CleanArchitecture.ApiTemplate CleanArchitecture.ApiTemplate:latest
 ```
 
 ## Automated Scripts
@@ -199,11 +199,11 @@ chmod +x docker-build-push.sh
 ## Before Publishing
 
 1. ✅ Update Docker Hub username in all files
-2. ✅ Test build locally: `docker build -t SecureCleanApiWaf:latest .`
-3. ✅ Test run locally: `docker run -d -p 8080:8080 SecureCleanApiWaf:latest`
+2. ✅ Test build locally: `docker build -t CleanArchitecture.ApiTemplate:latest .`
+3. ✅ Test run locally: `docker run -d -p 8080:8080 CleanArchitecture.ApiTemplate:latest`
 4. ✅ Verify app works: http://localhost:8080
 5. ✅ Login to Docker Hub: `docker login`
-6. ✅ Push image: `docker push yourdockerhubusername/SecureCleanApiWaf:latest`
+6. ✅ Push image: `docker push yourdockerhubusername/CleanArchitecture.ApiTemplate:latest`
 
 ## Security Checklist
 
@@ -232,7 +232,7 @@ chmod +x docker-build-push.sh
 **Need Help?**
 
 - 📖 **Documentation:** Start with the deployment guides above
-- 🐛 **Issues:** [GitHub Issues](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues)
+- 🐛 **Issues:** [GitHub Issues](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate/issues)
 - 📧 **Email:** softevolutionsl@gmail.com
 - 🐙 **GitHub:** [@dariemcarlosdev](https://github.com/dariemcarlosdev)
 
@@ -244,10 +244,10 @@ chmod +x docker-build-push.sh
 
 ---
 
-** Enjoying SecureCleanApiWaf? ⭐ Star the repo on GitHub to support continued development! **
+** Enjoying CleanArchitecture.ApiTemplate? ⭐ Star the repo on GitHub to support continued development! **
 
 ---
 
 **Last Updated:** November 2025  
 **Maintainer:** Dariemcarlos  
-**GitHub:** [SecureCleanApiWaf](https://github.com/dariemcarlosdev/SecureCleanApiWaf)
+**GitHub:** [CleanArchitecture.ApiTemplate](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate)

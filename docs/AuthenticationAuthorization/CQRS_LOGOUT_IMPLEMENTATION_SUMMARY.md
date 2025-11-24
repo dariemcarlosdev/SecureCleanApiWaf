@@ -572,13 +572,13 @@ The JWT logout system now uses **CQRS pattern with MediatR** for all operations:
 ## 🆘 **Contact & Support**
 
 ### **Project Information**
-- **Project Name:** SecureCleanApiWaf - CQRS Logout Implementation
+- **Project Name:** CleanArchitecture.ApiTemplate - CQRS Logout Implementation
 - **Component:** Authentication & Authorization - Token Blacklisting
 - **Version:** 1.3.0 (CQRS Logout Complete)
 - **Framework:** .NET 8 with MediatR
 - **Pattern:** CQRS (Command Query Responsibility Segregation)
 - **Cache Strategy:** Dual Cache (Memory + Distributed)
-- **Repository:** [https://github.com/dariemcarlosdev/SecureCleanApiWaf](https://github.com/dariemcarlosdev/SecureCleanApiWaf)
+- **Repository:** [https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate)
 
 ### **Author & Maintainer**
 - **Name:** Dariem Carlos
@@ -594,7 +594,7 @@ For questions about the CQRS logout implementation:
 1. Review [JWT_AUTHENTICATION_CQRS_ARCHITECTURE.md](JWT_AUTHENTICATION_CQRS_ARCHITECTURE.md) for architecture details
 2. Check [API-SECURITY-IMPLEMENTATION-GUIDE.md](API-SECURITY-IMPLEMENTATION-GUIDE.md) for security context
 3. Review command/query handlers in `Core/Application/Features/Authentication/`
-4. Check [existing issues](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues?q=label%3Acqrs+label%3Alogout)
+4. Check [existing issues](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate/issues?q=label%3Acqrs+label%3Alogout)
 5. Create a new issue with:
    - Clear description of your question
    - Code snippets if applicable
@@ -632,7 +632,7 @@ If you find a bug in the logout implementation:
 
 #### 📖 **Documentation Improvements**
 To improve this implementation summary:
-1. Open a [pull request](https://github.com/dariemcarlosdev/SecureCleanApiWaf/pulls) with corrections
+1. Open a [pull request](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate/pulls) with corrections
 2. Include context and rationale
 3. Add code examples if helpful
 4. Update related documentation files
@@ -643,12 +643,12 @@ To improve this implementation summary:
 #### 📧 **Direct Contact**
 For private inquiries:
 - **Email:** softevolutionsl@gmail.com
-- **Subject:** `[SecureCleanApiWaf CQRS Logout] Your Question`
+- **Subject:** `[CleanArchitecture.ApiTemplate CQRS Logout] Your Question`
 - **Response Time:** 24-48 hours
 
 #### 💬 **GitHub Discussions**
 For general CQRS and logout questions:
-- Use [GitHub Discussions](https://github.com/dariemcarlosdev/SecureCleanApiWaf/discussions)
+- Use [GitHub Discussions](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate/discussions)
 - Tag with: `cqrs`, `logout`, `token-blacklisting`, `mediatr`, `caching`
 - Search existing discussions first
 
@@ -790,5 +790,5 @@ Contributions to improve the CQRS logout implementation are welcome!
 
 ---
 
-*This implementation summary is part of the SecureCleanApiWaf authentication system.*  
-*For the latest updates, visit the [GitHub repository](https://github.com/dariemcarlosdev/SecureCleanApiWaf).*
+*This implementation summary is part of the CleanArchitecture.ApiTemplate authentication system.*  
+*For the latest updates, visit the [GitHub repository](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate).*

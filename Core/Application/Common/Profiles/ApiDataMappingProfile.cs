@@ -1,9 +1,9 @@
 using AutoMapper;
-using SecureCleanApiWaf.Core.Domain.Entities;
-using SecureCleanApiWaf.Core.Application.Common.Mapping;
-using SecureCleanApiWaf.Core.Application.Common.DTOs;
+using CleanArchitecture.ApiTemplate.Core.Domain.Entities;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Mapping;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.DTOs;
 
-namespace SecureCleanApiWaf.Core.Application.Common.Profiles
+namespace CleanArchitecture.ApiTemplate.Core.Application.Common.Profiles
 {
     /// <summary>
     /// AutoMapper profile for mapping between API DTOs and domain entities.

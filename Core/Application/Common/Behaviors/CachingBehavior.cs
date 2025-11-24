@@ -7,7 +7,7 @@ using System.Text.Json;
 using System.Text;
 using System;
 
-namespace SecureCleanApiWaf.Core.Application.Common.Behaviors
+namespace CleanArchitecture.ApiTemplate.Core.Application.Common.Behaviors
 {
     /// <summary>
     /// Implements a MediatR pipeline behavior for response caching in the Blazor Server application's API integration layer.

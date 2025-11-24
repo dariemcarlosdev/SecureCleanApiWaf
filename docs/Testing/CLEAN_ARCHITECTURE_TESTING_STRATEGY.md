@@ -35,7 +35,7 @@ Read **[Architecture Patterns Explained](../ARCHITECTURE_PATTERNS_EXPLAINED.md)*
 ---
 
 ## ?? Overview
-A comprehensive testing strategy for the SecureCleanApiWaf Clean Architecture implementation. This document covers unit tests, integration tests, and functional tests across all layers.
+A comprehensive testing strategy for the CleanArchitecture.ApiTemplate Clean Architecture implementation. This document covers unit tests, integration tests, and functional tests across all layers.
 
 ---
 
@@ -64,7 +64,7 @@ A comprehensive testing strategy for the SecureCleanApiWaf Clean Architecture im
 
 ```
 tests/
-+-- SecureCleanApiWaf.Domain.UnitTests/
++-- CleanArchitecture.ApiTemplate.Domain.UnitTests/
 ¦   +-- Entities/
 ¦   ¦   +-- SampleEntityTests.cs
 ¦   ¦   +-- BaseEntityTests.cs
@@ -74,7 +74,7 @@ tests/
 ¦   +-- Exceptions/
 ¦       +-- DomainExceptionTests.cs
 ¦
-+-- SecureCleanApiWaf.Application.UnitTests/
++-- CleanArchitecture.ApiTemplate.Application.UnitTests/
 ¦   +-- Features/
 ¦   ¦   +-- SampleData/
 ¦   ¦       +-- Queries/
@@ -89,7 +89,7 @@ tests/
 ¦   +-- Common/
 ¦       +-- ResultTests.cs
 ¦
-+-- SecureCleanApiWaf.Infrastructure.IntegrationTests/
++-- CleanArchitecture.ApiTemplate.Infrastructure.IntegrationTests/
 ¦   +-- Persistence/
 ¦   ¦   +-- ApplicationDbContextTests.cs
 ¦   ¦   +-- RepositoryTests.cs
@@ -99,7 +99,7 @@ tests/
 ¦   +-- TestFixtures/
 ¦       +-- DatabaseFixture.cs
 ¦
-+-- SecureCleanApiWaf.Web.FunctionalTests/
++-- CleanArchitecture.ApiTemplate.Web.FunctionalTests/
 ¦   +-- Controllers/
 ¦   ¦   +-- SampleDataControllerTests.cs
 ¦   +-- Pages/
@@ -107,7 +107,7 @@ tests/
 ¦   +-- TestFixtures/
 ¦       +-- WebApplicationTestFixture.cs
 ¦
-+-- SecureCleanApiWaf.ArchitectureTests/
++-- CleanArchitecture.ApiTemplate.ArchitectureTests/
     +-- ArchitectureTests.cs
 ```
 
@@ -128,10 +128,10 @@ Test business rules and domain logic in complete isolation.
 ```csharp
 using Xunit;
 using FluentAssertions;
-using SecureCleanApiWaf.Domain.Entities;
-using SecureCleanApiWaf.Domain.Exceptions;
+using CleanArchitecture.ApiTemplate.Domain.Entities;
+using CleanArchitecture.ApiTemplate.Domain.Exceptions;
 
-namespace SecureCleanApiWaf.Domain.UnitTests.Entities;
+namespace CleanArchitecture.ApiTemplate.Domain.UnitTests.Entities;
 
 public class SampleEntityTests
 {
@@ -269,11 +269,11 @@ using Xunit;
 using Moq;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
-using SecureCleanApiWaf.Application.Features.SampleData.Queries;
-using SecureCleanApiWaf.Application.Common.Interfaces;
-using SecureCleanApiWaf.Application.Common.Models;
+using CleanArchitecture.ApiTemplate.Application.Features.SampleData.Queries;
+using CleanArchitecture.ApiTemplate.Application.Common.Interfaces;
+using CleanArchitecture.ApiTemplate.Application.Common.Models;
 
-namespace SecureCleanApiWaf.Application.UnitTests.Features.SampleData.Queries;
+namespace CleanArchitecture.ApiTemplate.Application.UnitTests.Features.SampleData.Queries;
 
 public class GetApiDataQueryHandlerTests
 {
@@ -507,10 +507,10 @@ Test infrastructure implementations against real external dependencies (database
 using Xunit;
 using Microsoft.EntityFrameworkCore;
 using FluentAssertions;
-using SecureCleanApiWaf.Infrastructure.Persistence;
-using SecureCleanApiWaf.Domain.Entities;
+using CleanArchitecture.ApiTemplate.Infrastructure.Persistence;
+using CleanArchitecture.ApiTemplate.Domain.Entities;
 
-namespace SecureCleanApiWaf.Infrastructure.IntegrationTests.Persistence;
+namespace CleanArchitecture.ApiTemplate.Infrastructure.IntegrationTests.Persistence;
 
 public class ApplicationDbContextTests : IClassFixture<DatabaseFixture>
 {
@@ -688,7 +688,7 @@ using FluentAssertions;
 using System.Net;
 using System.Net.Http.Json;
 
-namespace SecureCleanApiWaf.Web.FunctionalTests.Controllers;
+namespace CleanArchitecture.ApiTemplate.Web.FunctionalTests.Controllers;
 
 public class SampleDataControllerTests : IClassFixture<WebApplicationFactory<Program>>
 {
@@ -787,20 +787,20 @@ using NetArchTest.Rules;
 using Xunit;
 using FluentAssertions;
 
-namespace SecureCleanApiWaf.ArchitectureTests;
+namespace CleanArchitecture.ApiTemplate.ArchitectureTests;
 
 public class ArchitectureTests
 {
-    private const string DomainNamespace = "SecureCleanApiWaf.Domain";
-    private const string ApplicationNamespace = "SecureCleanApiWaf.Application";
-    private const string InfrastructureNamespace = "SecureCleanApiWaf.Infrastructure";
-    private const string WebNamespace = "SecureCleanApiWaf.Web";
+    private const string DomainNamespace = "CleanArchitecture.ApiTemplate.Domain";
+    private const string ApplicationNamespace = "CleanArchitecture.ApiTemplate.Application";
+    private const string InfrastructureNamespace = "CleanArchitecture.ApiTemplate.Infrastructure";
+    private const string WebNamespace = "CleanArchitecture.ApiTemplate.Web";
     
     [Fact]
     public void Domain_ShouldNotHaveDependencyOnOtherLayers()
     {
         // Arrange
-        var assembly = typeof(SecureCleanApiWaf.Domain.Entities.BaseEntity).Assembly;
+        var assembly = typeof(CleanArchitecture.ApiTemplate.Domain.Entities.BaseEntity).Assembly;
         
         // Act
         var result = Types.InAssembly(assembly)
@@ -818,7 +818,7 @@ public class ArchitectureTests
     public void Application_ShouldOnlyDependOnDomain()
     {
         // Arrange
-        var assembly = typeof(SecureCleanApiWaf.Application.DependencyInjection).Assembly;
+        var assembly = typeof(CleanArchitecture.ApiTemplate.Application.DependencyInjection).Assembly;
         
         // Act
         var result = Types.InAssembly(assembly)
@@ -835,7 +835,7 @@ public class ArchitectureTests
     public void Handlers_ShouldHaveDependencyOnMediatR()
     {
         // Arrange
-        var assembly = typeof(SecureCleanApiWaf.Application.DependencyInjection).Assembly;
+        var assembly = typeof(CleanArchitecture.ApiTemplate.Application.DependencyInjection).Assembly;
         
         // Act
         var result = Types.InAssembly(assembly)
@@ -877,10 +877,10 @@ Enforce DDD aggregate root rules and invariants with architecture tests.
 using NetArchTest.Rules;
 using Xunit;
 using FluentAssertions;
-using SecureCleanApiWaf.Core.Domain.Common;
-using SecureCleanApiWaf.Core.Domain.Entities;
+using CleanArchitecture.ApiTemplate.Core.Domain.Common;
+using CleanArchitecture.ApiTemplate.Core.Domain.Entities;
 
-namespace SecureCleanApiWaf.ArchitectureTests;
+namespace CleanArchitecture.ApiTemplate.ArchitectureTests;
 
 public class AggregateRootTests
 {
@@ -892,7 +892,7 @@ public class AggregateRootTests
         
         // Act
         var result = Types.InAssembly(assembly)
-            .That().ResideInNamespace("SecureCleanApiWaf.Core.Domain.Entities")
+            .That().ResideInNamespace("CleanArchitecture.ApiTemplate.Core.Domain.Entities")
             .And().DoNotHaveNameMatching("Base*") // Exclude BaseEntity itself
             .Should().ImplementInterface(typeof(IAggregateRoot))
             .GetResult();
@@ -1210,7 +1210,7 @@ public class NamingConventionTests
         var result = Types.InAssembly(assembly)
             .That().ImplementInterface(typeof(IAggregateRoot))
             .And().DoNotHaveNameMatching("Base*")
-            .Should().ResideInNamespace("SecureCleanApiWaf.Core.Domain.Entities")
+            .Should().ResideInNamespace("CleanArchitecture.ApiTemplate.Core.Domain.Entities")
             .GetResult();
         
         // Assert
@@ -1278,7 +1278,7 @@ public class ConsistencyRuleTests
 #### **Test Project Setup**
 
 ```xml
-<!-- tests/SecureCleanApiWaf.ArchitectureTests/SecureCleanApiWaf.ArchitectureTests.csproj -->
+<!-- tests/CleanArchitecture.ApiTemplate.ArchitectureTests/CleanArchitecture.ApiTemplate.ArchitectureTests.csproj -->
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
@@ -1297,9 +1297,9 @@ public class ConsistencyRuleTests
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\Domain\SecureCleanApiWaf.Core.Domain.csproj" />
-    <ProjectReference Include="..\..\Core\Application\SecureCleanApiWaf.Core.Application.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\SecureCleanApiWaf.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Core\Domain\CleanArchitecture.ApiTemplate.Core.Domain.csproj" />
+    <ProjectReference Include="..\..\Core\Application\CleanArchitecture.ApiTemplate.Core.Application.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\CleanArchitecture.ApiTemplate.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
@@ -1335,7 +1335,7 @@ jobs:
       run: dotnet restore
     
     - name: Run Architecture Tests
-      run: dotnet test tests/SecureCleanApiWaf.ArchitectureTests/SecureCleanApiWaf.ArchitectureTests.csproj --logger "console;verbosity=detailed"
+      run: dotnet test tests/CleanArchitecture.ApiTemplate.ArchitectureTests/CleanArchitecture.ApiTemplate.ArchitectureTests.csproj --logger "console;verbosity=detailed"
     
     - name: Fail build if architecture violations found
       if: failure()

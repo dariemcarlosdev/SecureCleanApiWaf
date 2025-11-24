@@ -1,10 +1,10 @@
-# API Testing Guide - SecureCleanApiWaf
+# API Testing Guide - CleanArchitecture.ApiTemplate
 
 > "Comprehensive testing is the cornerstone of reliable APIs—master local development, containerized deployment, and testing tools like Swagger and Postman to ensure your .NET 8 endpoints are production-ready."
 
 ## Overview
 
-This guide provides complete instructions for testing all SecureCleanApiWaf API endpoints using multiple approaches. Whether you're running the application locally, in a Docker container, or testing with Swagger UI or Postman, this guide covers everything you need to know.
+This guide provides complete instructions for testing all CleanArchitecture.ApiTemplate API endpoints using multiple approaches. Whether you're running the application locally, in a Docker container, or testing with Swagger UI or Postman, this guide covers everything you need to know.
 
 ---
 
@@ -88,7 +88,7 @@ Before testing, ensure:
 
 1. **Navigate to Project Directory**
    ```bash
-   cd "C:\DATA\MYSTUFFS\PROFESSIONAL STUFF\TECH CHALLENGE\SecureCleanApiWaf"
+   cd "C:\DATA\MYSTUFFS\PROFESSIONAL STUFF\TECH CHALLENGE\CleanArchitecture.ApiTemplate"
    ```
 
 2. **Restore Dependencies**
@@ -109,7 +109,7 @@ Before testing, ensure:
    ```
    
    **From Visual Studio:**
-   - Open `SecureCleanApiWaf.sln`
+   - Open `CleanArchitecture.ApiTemplate.sln`
    - Press `F5` (Debug) or `Ctrl+F5` (Run without debugging)
 
 4. **Application URLs**
@@ -166,7 +166,7 @@ Before testing, ensure:
    
    Docker uses pre-built binaries. First, publish the app:
    ```bash
-   cd "C:\DATA\MYSTUFFS\PROFESSIONAL STUFF\TECH CHALLENGE\SecureCleanApiWaf"
+   cd "C:\DATA\MYSTUFFS\PROFESSIONAL STUFF\TECH CHALLENGE\CleanArchitecture.ApiTemplate"
    dotnet restore
    dotnet build -c Release
    dotnet publish -c Release -o ./publish
@@ -176,7 +176,7 @@ Before testing, ensure:
 
 2. **Build Docker Image**
    ```bash
-   docker build -t SecureCleanApiWaf:latest .
+   docker build -t CleanArchitecture.ApiTemplate:latest .
    ```
    
    Expected output:
@@ -191,7 +191,7 @@ Before testing, ensure:
     => [2/3] WORKDIR /app
     => [3/3] COPY ./publish .
     => exporting to image
-    => => naming to docker.io/library/SecureCleanApiWaf:latest
+    => => naming to docker.io/library/CleanArchitecture.ApiTemplate:latest
    ```
 
 3. **Start Container with Docker Compose (Recommended)**
@@ -201,19 +201,19 @@ Before testing, ensure:
    
    Expected output:
    ```
-   Creating network "SecureCleanApiWaf_default" with the default driver
-   Creating SecureCleanApiWaf ... done
+   Creating network "CleanArchitecture.ApiTemplate_default" with the default driver
+   Creating CleanArchitecture.ApiTemplate ... done
    ```
 
    **OR Start Container Manually:**
    ```bash
    docker run -d \
-     --name SecureCleanApiWaf \
+     --name CleanArchitecture.ApiTemplate \
      -p 8080:8080 \
      -e ASPNETCORE_ENVIRONMENT=Development \
      -e ThirdPartyApi__BaseUrl=https://jsonplaceholder.typicode.com/ \
      --restart unless-stopped \
-     SecureCleanApiWaf:latest
+     CleanArchitecture.ApiTemplate:latest
    ```
 
 4. **Application URLs**
@@ -233,7 +233,7 @@ Before testing, ensure:
    Expected output:
    ```
    CONTAINER ID   IMAGE                  COMMAND                  STATUS         PORTS                    NAMES
-   abc123def456   SecureCleanApiWaf:latest   "dotnet SecureCleanApiWaf…"   Up 2 minutes   0.0.0.0:8080->8080/tcp   SecureCleanApiWaf
+   abc123def456   CleanArchitecture.ApiTemplate:latest   "dotnet CleanArchitecture.ApiTemplate…"   Up 2 minutes   0.0.0.0:8080->8080/tcp   CleanArchitecture.ApiTemplate
    ```
    
    **Test Health Endpoint:**
@@ -253,12 +253,12 @@ Before testing, ensure:
    
    **Docker Compose:**
    ```bash
-   docker-compose logs -f SecureCleanApiWaf
+   docker-compose logs -f CleanArchitecture.ApiTemplate
    ```
    
    **Docker:**
    ```bash
-   docker logs -f SecureCleanApiWaf
+   docker logs -f CleanArchitecture.ApiTemplate
    ```
    
    Press `Ctrl+C` to stop viewing logs (container keeps running).
@@ -273,8 +273,8 @@ docker-compose down     # Stop and remove containers
 
 **Docker:**
 ```bash
-docker stop SecureCleanApiWaf      # Stop container
-docker rm SecureCleanApiWaf        # Remove container
+docker stop CleanArchitecture.ApiTemplate      # Stop container
+docker rm CleanArchitecture.ApiTemplate        # Remove container
 ```
 
 **Rebuilding After Code Changes:**
@@ -569,7 +569,7 @@ Postman provides advanced API testing capabilities with collections, environment
 2. **Create Workspace**
    - Open Postman
    - Click **"Workspaces"** ? **"Create Workspace"**
-   - Name: `SecureCleanApiWaf Testing`
+   - Name: `CleanArchitecture.ApiTemplate Testing`
    - Visibility: `Personal`
 
 3. **Import SSL Certificate (Local HTTPS Only)**
@@ -586,8 +586,8 @@ Postman provides advanced API testing capabilities with collections, environment
 
 1. **Create New Collection**
    - Click **"Collections"** ? **"+"** (New Collection)
-   - Name: `SecureCleanApiWaf API`
-   - Description: `Complete API testing suite for SecureCleanApiWaf`
+   - Name: `CleanArchitecture.ApiTemplate API`
+   - Description: `Complete API testing suite for CleanArchitecture.ApiTemplate`
 
 2. **Collection-Level Authorization**
    - Select collection ? **"Authorization"** tab
@@ -897,7 +897,7 @@ pm.test("Response time is less than 2000ms", function () {
 **Run Collection:**
 1. Click collection ? **"Run"**
 2. Select requests to run
-3. Click **"Run SecureCleanApiWaf API"**
+3. Click **"Run CleanArchitecture.ApiTemplate API"**
 4. View results
 
 ---

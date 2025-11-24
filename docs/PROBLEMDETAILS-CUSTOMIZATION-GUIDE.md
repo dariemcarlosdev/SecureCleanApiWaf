@@ -1,12 +1,12 @@
-﻿# ProblemDetails Customization Guide
+# ProblemDetails Customization Guide
 
-## 📖 Overview
+## ?? Overview
 
-This guide explains how to customize the `ProblemDetails` responses in your SecureCleanApiWaf API. `ProblemDetails` is the standard error response format based on [RFC 7807](https://tools.ietf.org/html/rfc7807) that ASP.NET Core uses automatically for API errors.
+This guide explains how to customize the `ProblemDetails` responses in your CleanArchitecture.ApiTemplate API. `ProblemDetails` is the standard error response format based on [RFC 7807](https://tools.ietf.org/html/rfc7807) that ASP.NET Core uses automatically for API errors.
 
 ---
 
-## 🔍 What is ProblemDetails?
+## ?? What is ProblemDetails?
 
 `ProblemDetails` is a **standardized error response format** for HTTP APIs that includes:
 
@@ -20,7 +20,7 @@ This guide explains how to customize the `ProblemDetails` responses in your Secu
 
 ---
 
-## ❌ Default Behavior (No Customization)
+## ? Default Behavior (No Customization)
 
 **Without any customization**, your API automatically returns `ProblemDetails` for errors:
 
@@ -37,7 +37,7 @@ This happens automatically because of the `[ApiController]` attribute on your co
 
 ---
 
-## ✅ Method 1: CustomizeProblemDetails (Recommended) ⭐
+## ? Method 1: CustomizeProblemDetails (Recommended) ?
 
 **Location**: `Presentation/Extensions/DependencyInjection/PresentationServiceExtensions.cs`
 
@@ -82,7 +82,7 @@ services.AddProblemDetails(options =>
         // Add support contact
         ctx.ProblemDetails.Extensions.Add("supportContact", "softevolutionsl@gmail.com");
         ctx.ProblemDetails.Extensions.Add("documentationUrl", 
-            "https://github.com/dariemcarlosdev/SecureCleanApiWaf/wiki");
+            "https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate/wiki");
     };
 });
 ```
@@ -105,11 +105,11 @@ Your API will now return enriched error responses:
   "method": "GET",
   "userId": "testuser",
   "supportContact": "softevolutionsl@gmail.com",
-  "documentationUrl": "https://github.com/dariemcarlosdev/SecureCleanApiWaf/wiki"
+  "documentationUrl": "https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate/wiki"
 }
 ```
 
-### ✅ Benefits
+### ? Benefits
 
 - **Global**: Applies to ALL error responses
 - **Simple**: One place to configure all customizations
@@ -118,7 +118,7 @@ Your API will now return enriched error responses:
 
 ---
 
-## 🔧 Method 2: Custom ProblemDetailsFactory
+## ?? Method 2: Custom ProblemDetailsFactory
 
 **When to use**: Advanced scenarios where you need complete control over `ProblemDetails` creation.
 
@@ -131,7 +131,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace SecureCleanApiWaf.Infrastructure.Services;
+namespace CleanArchitecture.ApiTemplate.Infrastructure.Services;
 
 /// <summary>
 /// Custom ProblemDetailsFactory for advanced ProblemDetails customization
@@ -225,7 +225,7 @@ public static IServiceCollection AddInfrastructureServices(this IServiceCollecti
 }
 ```
 
-### ✅ Benefits
+### ? Benefits
 
 - **Full Control**: Control over ProblemDetails and ValidationProblemDetails creation
 - **Type Safety**: Strongly-typed custom properties
@@ -233,7 +233,7 @@ public static IServiceCollection AddInfrastructureServices(this IServiceCollecti
 
 ---
 
-## ⚙️ Method 3: Middleware-Based Customization
+## ?? Method 3: Middleware-Based Customization
 
 **When to use**: When you need to customize based on specific conditions or business logic.
 
@@ -244,7 +244,7 @@ Create a new file: `Presentation/Middleware/ProblemDetailsMiddleware.cs`
 ```csharp
 using Microsoft.AspNetCore.Http;
 
-namespace SecureCleanApiWaf.Presentation.Middleware;
+namespace CleanArchitecture.ApiTemplate.Presentation.Middleware;
 
 /// <summary>
 /// Middleware for advanced ProblemDetails customization based on request context
@@ -358,7 +358,7 @@ app.UseProblemDetailsMiddleware();
 app.UseCors("AllowSpecificOrigins");
 ```
 
-### ✅ Benefits
+### ? Benefits
 
 - **Conditional Logic**: Apply different customizations based on request context
 - **Business Logic**: Incorporate business rules into error responses
@@ -366,7 +366,7 @@ app.UseCors("AllowSpecificOrigins");
 
 ---
 
-## 🎨 Method 4: Controller-Specific Customization
+## ?? Method 4: Controller-Specific Customization
 
 **When to use**: Different error formats for different controllers or endpoints.
 
@@ -413,7 +413,7 @@ public async Task<IActionResult> GetDataById(string id)
 
 ---
 
-## 🔗 Swagger Integration
+## ?? Swagger Integration
 
 Your customized `ProblemDetails` will **automatically appear in Swagger UI** with the additional properties.
 
@@ -453,7 +453,7 @@ Your customized `ProblemDetails` will **automatically appear in Swagger UI** wit
 
 ---
 
-## 🧪 Testing Your Customizations
+## ?? Testing Your Customizations
 
 ### 1. Test with Swagger UI
 
@@ -486,27 +486,27 @@ curl -X GET "https://localhost:7000/api/v1/nonexistent" \
 
 ### 3. Test with Postman
 
-1. Import the SecureCleanApiWaf collection
+1. Import the CleanArchitecture.ApiTemplate collection
 2. Get a token from `/api/v1/auth/token`
 3. Try various endpoints with invalid inputs
 4. Check the response body for custom properties
 
 ---
 
-## 🎯 Recommended Approach for SecureCleanApiWaf
+## ?? Recommended Approach for CleanArchitecture.ApiTemplate
 
-**Use Method 1 (CustomizeProblemDetails)** - Already implemented! ✅
+**Use Method 1 (CustomizeProblemDetails)** - Already implemented! ?
 
 This approach is:
-- ✅ Simple to maintain
-- ✅ Consistent across all endpoints
-- ✅ Automatic - no changes needed in controllers
-- ✅ Visible in Swagger UI
-- ✅ Production-ready
+- ? Simple to maintain
+- ? Consistent across all endpoints
+- ? Automatic - no changes needed in controllers
+- ? Visible in Swagger UI
+- ? Production-ready
 
 ---
 
-## 🚀 Production Best Practices
+## ?? Production Best Practices
 
 ### 1. Environment-Specific Properties
 
@@ -539,23 +539,23 @@ options.CustomizeProblemDetails = ctx =>
 
 ### 2. Security Considerations
 
-⚠️ **Never include sensitive information in ProblemDetails:**
+?? **Never include sensitive information in ProblemDetails:**
 
-- ❌ Stack traces (only in Development)
-- ❌ Database connection strings
-- ❌ Internal server paths
-- ❌ API keys or secrets
-- ❌ User passwords
-- ❌ Detailed SQL queries
+- ? Stack traces (only in Development)
+- ? Database connection strings
+- ? Internal server paths
+- ? API keys or secrets
+- ? User passwords
+- ? Detailed SQL queries
 
-✅ **Safe to include:**
+? **Safe to include:**
 
-- ✅ Timestamp
-- ✅ TraceId (for correlation)
-- ✅ Status code
-- ✅ Generic error messages
-- ✅ Support contact information
-- ✅ Documentation links
+- ? Timestamp
+- ? TraceId (for correlation)
+- ? Status code
+- ? Generic error messages
+- ? Support contact information
+- ? Documentation links
 
 ### 3. Logging Integration
 
@@ -580,7 +580,7 @@ options.CustomizeProblemDetails = ctx =>
 
 ---
 
-## 📚 Additional Resources
+## ?? Additional Resources
 
 - [RFC 7807 - Problem Details for HTTP APIs](https://tools.ietf.org/html/rfc7807)
 - [ASP.NET Core Error Handling](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/error-handling)
@@ -588,9 +588,9 @@ options.CustomizeProblemDetails = ctx =>
 
 ---
 
-## 📝 Summary
+## ?? Summary
 
-Your SecureCleanApiWaf now has **customized ProblemDetails responses** with:
+Your CleanArchitecture.ApiTemplate now has **customized ProblemDetails responses** with:
 
 | Property | Description | Example |
 |----------|-------------|---------|
@@ -606,10 +606,10 @@ Your SecureCleanApiWaf now has **customized ProblemDetails responses** with:
 | `documentationUrl` | Documentation link | `"https://github.com/..."` |
 
 These customizations are:
-- ✅ Automatically applied to all API errors
-- ✅ Visible in Swagger UI
-- ✅ Helpful for debugging and support
-- ✅ Production-ready
+- ? Automatically applied to all API errors
+- ? Visible in Swagger UI
+- ? Helpful for debugging and support
+- ? Production-ready
 
 ---
 

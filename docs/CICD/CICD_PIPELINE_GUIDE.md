@@ -1,10 +1,10 @@
-# CI/CD Pipeline Guide - SecureCleanApiWaf
+# CI/CD Pipeline Guide - CleanArchitecture.ApiTemplate
 
 🤖 Remember: Automation in Action! 
 
 ## 📖 Overview
 
-This guide documents the complete CI/CD pipeline implementation for SecureCleanApiWaf using GitHub Actions. The pipeline automates building, testing, and deploying the application to Azure App Service, ensuring consistent and reliable deployments.
+This guide documents the complete CI/CD pipeline implementation for CleanArchitecture.ApiTemplate using GitHub Actions. The pipeline automates building, testing, and deploying the application to Azure App Service, ensuring consistent and reliable deployments.
 
 ---
 
@@ -106,7 +106,7 @@ Navigate to: **GitHub Repository ? Settings ? Secrets and variables ? Actions**
 #### **1. AZURE_WEBAPP_NAME**
 
 **Value:** Your Azure App Service name  
-**Example:** `SecureCleanApiWaf-prod`
+**Example:** `CleanArchitecture.ApiTemplate-prod`
 
 **How to find:**
 ```bash
@@ -136,8 +136,8 @@ App Service ? Overview ? Name
 **Using Azure CLI:**
 ```bash
 az webapp deployment list-publishing-profiles \
-  --name SecureCleanApiWaf-prod \
-  --resource-group SecureCleanApiWaf-rg \
+  --name CleanArchitecture.ApiTemplate-prod \
+  --resource-group CleanArchitecture.ApiTemplate-rg \
   --xml
 ```
 
@@ -175,7 +175,7 @@ az webapp deployment list-publishing-profiles \
 ```bash
 # Create service principal
 az ad sp create-for-rbac \
-  --name "SecureCleanApiWaf-deploy" \
+  --name "CleanArchitecture.ApiTemplate-deploy" \
   --role contributor \
   --scopes /subscriptions/{subscription-id}/resourceGroups/{resource-group} \
   --sdk-auth
@@ -784,12 +784,12 @@ dotnet publish -c Release -o ./publish
 ## 🆘 Contact & Support
 
 ### **Project Information**
-- **Project Name:** SecureCleanApiWaf - Clean Architecture Demo with CI/CD
+- **Project Name:** CleanArchitecture.ApiTemplate - Clean Architecture Demo with CI/CD
 - **Version:** 1.0.0 (CI/CD Pipeline Complete)
 - **Framework:** .NET 8
 - **CI/CD Platform:** GitHub Actions
 - **Deployment Target:** Azure App Service
-- **Repository:** [https://github.com/dariemcarlosdev/SecureCleanApiWaf](https://github.com/dariemcarlosdev/SecureCleanApiWaf)
+- **Repository:** [https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate)
 
 ### **Author & Maintainer**
 - **Name:** Dariem Carlos
@@ -802,10 +802,10 @@ dotnet publish -c Release -o ./publish
 
 #### 🐛 **CI/CD Issues**
 If you encounter issues with the pipeline:
-1. Check [GitHub Actions logs](https://github.com/dariemcarlosdev/SecureCleanApiWaf/actions) for detailed error messages
+1. Check [GitHub Actions logs](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate/actions) for detailed error messages
 2. Review the [Troubleshooting](#troubleshooting) section above
 3. Verify all [GitHub Secrets](#github-secrets-configuration) are correctly configured
-4. Check [existing issues](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues?q=label%3Aci%2Fcd)
+4. Check [existing issues](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate/issues?q=label%3Aci%2Fcd)
 5. Create a new issue with:
    - Workflow run URL
    - Error message from logs
@@ -822,7 +822,7 @@ For Azure-specific problems:
 
 #### 📖 **Documentation Questions**
 To improve this CI/CD documentation:
-1. Open a [discussion](https://github.com/dariemcarlosdev/SecureCleanApiWaf/discussions) with tag `cicd`
+1. Open a [discussion](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate/discussions) with tag `cicd`
 2. Submit a pull request with corrections
 3. Include rationale for changes
 4. Update related deployment documentation
@@ -831,7 +831,7 @@ To improve this CI/CD documentation:
 For security-related issues:
 1. **DO NOT** post sensitive information (secrets, credentials) in public issues
 2. Use GitHub's private vulnerability reporting
-3. Email directly: softevolutionsl@gmail.com with subject "Security - SecureCleanApiWaf"
+3. Email directly: softevolutionsl@gmail.com with subject "Security - CleanArchitecture.ApiTemplate"
 4. Review security scan results in GitHub Security tab
 
 ### **Support Channels**
@@ -839,12 +839,12 @@ For security-related issues:
 #### 📧 **Direct Contact**
 For private inquiries or urgent issues:
 - **Email:** softevolutionsl@gmail.com
-- **Subject Format:** `[SecureCleanApiWaf CI/CD] Your Issue`
+- **Subject Format:** `[CleanArchitecture.ApiTemplate CI/CD] Your Issue`
 - **Response Time:** 24-48 hours (typically)
 
 #### 💬 **Community Discussions**
 For general questions and best practices:
-- Use [GitHub Discussions](https://github.com/dariemcarlosdev/SecureCleanApiWaf/discussions)
+- Use [GitHub Discussions](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate/discussions)
 - Tag with: `cicd`, `github-actions`, `azure-deployment`
 - Search existing discussions before posting
 
@@ -927,5 +927,5 @@ Contributions to improve the CI/CD pipeline are welcome!
 
 ---
 
-*This CI/CD pipeline documentation is maintained as part of the SecureCleanApiWaf project.*  
-*For the latest updates, visit the [GitHub repository](https://github.com/dariemcarlosdev/SecureCleanApiWaf).*
+*This CI/CD pipeline documentation is maintained as part of the CleanArchitecture.ApiTemplate project.*  
+*For the latest updates, visit the [GitHub repository](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate).*

@@ -1,20 +1,20 @@
-﻿# ================================================================================
-# DOCKERFILE FOR SECURECLEANAPIWAF (BLAZOR APPLICATION)
+# ================================================================================
+# DOCKERFILE FOR CleanArchitecture.ApiTemplate (BLAZOR APPLICATION)
 # For more details, see README.md and documentation at: Docs/Deployment/Docker/DEPLOYMENT_README.md
 # ================================================================================
 # This Dockerfile uses a PRE-BUILT approach, meaning the application is built
 # locally on your development machine BEFORE being containerized.
 #
 # ADVANTAGES of this approach:
-#   ✅ Works in corporate environments with complex SSL/proxy configurations
-#   ✅ Faster builds if you're developing locally frequently
-#   ✅ Better control over the build process
-#   ✅ Useful when CI/CD handles the build separately
+#   ? Works in corporate environments with complex SSL/proxy configurations
+#   ? Faster builds if you're developing locally frequently
+#   ? Better control over the build process
+#   ? Useful when CI/CD handles the build separately
 #
 # DISADVANTAGES:
-#   ❌ Requires manual publish step before docker build
-#   ❌ Larger image size (includes all dependencies)
-#   ❌ Less reproducible (depends on local environment)
+#   ? Requires manual publish step before docker build
+#   ? Larger image size (includes all dependencies)
+#   ? Less reproducible (depends on local environment)
 #
 # ALTERNATIVE: Multi-stage build approach (see comments below)
 #
@@ -136,38 +136,38 @@ ENV ASPNETCORE_URLS=http://+:8080
 # ================================================================================
 # Purpose: Command that runs when the container starts
 #
-# ENTRYPOINT ["dotnet", "SecureCleanApiWaf.dll"]
+# ENTRYPOINT ["dotnet", "CleanArchitecture.ApiTemplate.dll"]
 #   - Runs the compiled Blazor application
 #   - Format: exec form (preferred over shell form)
-#     - Exec form: ["dotnet", "SecureCleanApiWaf.dll"] - runs directly
-#     - Shell form: dotnet SecureCleanApiWaf.dll - runs via /bin/sh
+#     - Exec form: ["dotnet", "CleanArchitecture.ApiTemplate.dll"] - runs directly
+#     - Shell form: dotnet CleanArchitecture.ApiTemplate.dll - runs via /bin/sh
 #   - Exec form is better because it passes signals correctly
 #
 # The DLL name must match:
-#   - Your .csproj file name: <ProjectName>SecureCleanApiWaf</ProjectName>
+#   - Your .csproj file name: <ProjectName>CleanArchitecture.ApiTemplate</ProjectName>
 #   - Ensure this matches your actual output assembly name
 # ================================================================================
 
-ENTRYPOINT ["dotnet", "SecureCleanApiWaf.dll"]
+ENTRYPOINT ["dotnet", "CleanArchitecture.ApiTemplate.dll"]
 
 # ================================================================================
 # QUICK REFERENCE: DOCKERFILE BEST PRACTICES
 # ================================================================================
 #
-# SECURITY ✅ IMPLEMENTED:
-#   ✅ Non-root user (appuser)
-#   ✅ Minimal base image (runtime only)
-#   ✅ No unnecessary tools
+# SECURITY ? IMPLEMENTED:
+#   ? Non-root user (appuser)
+#   ? Minimal base image (runtime only)
+#   ? No unnecessary tools
 #
-# SIZE OPTIMIZATION ✅ IMPLEMENTED:
-#   ✅ Uses runtime image instead of SDK
-#   ✅ Single stage (published files copied)
+# SIZE OPTIMIZATION ? IMPLEMENTED:
+#   ? Uses runtime image instead of SDK
+#   ? Single stage (published files copied)
 #
 # IMPROVEMENTS YOU COULD MAKE:
-#   □ Add .dockerignore file to exclude unnecessary files
-#   □ Add health checks to docker-compose.yml
-#   □ Use multi-stage build for fully automated builds
-#   □ Add labels for documentation
+#   ? Add .dockerignore file to exclude unnecessary files
+#   ? Add health checks to docker-compose.yml
+#   ? Use multi-stage build for fully automated builds
+#   ? Add labels for documentation
 #
 # ================================================================================
 
@@ -192,14 +192,14 @@ ENTRYPOINT ["dotnet", "SecureCleanApiWaf.dll"]
 # ENTRYPOINT ["dotnet", "BlueTreadApp.dll"]
 #
 # Advantages:
-#   ✅ Fully reproducible (no local build needed)
-#   ✅ Better for CI/CD pipelines
-#   ✅ Single docker build command does everything
+#   ? Fully reproducible (no local build needed)
+#   ? Better for CI/CD pipelines
+#   ? Single docker build command does everything
 #
 # Disadvantages:
-#   ❌ Slower builds (full compile every time)
-#   ❌ Won't work if your network has complex proxy/SSL setup
-#   ❌ Larger build context
+#   ? Slower builds (full compile every time)
+#   ? Won't work if your network has complex proxy/SSL setup
+#   ? Larger build context
 #
 # ================================================================================
 
@@ -208,13 +208,13 @@ ENTRYPOINT ["dotnet", "SecureCleanApiWaf.dll"]
 # ================================================================================
 #
 # STEP 1: Build the application locally
-#   cd C:\DATA\MYSTUFFS\PROFESSIONAL STUFF\TECH CHALLENGE\SecureCleanApiWaf
+#   cd C:\DATA\MYSTUFFS\PROFESSIONAL STUFF\TECH CHALLENGE\CleanArchitecture.ApiTemplate
 #   dotnet restore
 #   dotnet build -c Release
 #   dotnet publish -c Release -o ./publish
 #
 # STEP 2: Build the Docker image
-#   docker build -t securecleanapiwaf:latest .
+#   docker build -t CleanArchitecture.ApiTemplate:latest .
 #
 # STEP 3: Run with Docker Compose (recommended)
 #   docker-compose up -d
@@ -223,12 +223,12 @@ ENTRYPOINT ["dotnet", "SecureCleanApiWaf.dll"]
 #   Open browser: http://localhost:8080
 #
 # TROUBLESHOOTING:
-#   • If DLL name error: Check SecureCleanApiWaf.csproj for <AssemblyName>
-#   • If port in use: Change docker-compose.yml port mapping
-#   • If build fails: Ensure ./publish folder exists with compiled files
-#   • For logs: docker-compose logs -f
-#   • If Certificate errors: Use PRE-BUILT approach as shown
-#   • If you need HTTPS: Configure at reverse proxy/load balancer level
-#   • If you need to download your own certificates: Do it during local build step
+#   � If DLL name error: Check CleanArchitecture.ApiTemplate.csproj for <AssemblyName>
+#   � If port in use: Change docker-compose.yml port mapping
+#   � If build fails: Ensure ./publish folder exists with compiled files
+#   � For logs: docker-compose logs -f
+#   � If Certificate errors: Use PRE-BUILT approach as shown
+#   � If you need HTTPS: Configure at reverse proxy/load balancer level
+#   � If you need to download your own certificates: Do it during local build step
 #
 # ================================================================================

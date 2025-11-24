@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Caching.Memory;
 
-namespace SecureCleanApiWaf.Infrastructure.Caching
+namespace CleanArchitecture.ApiTemplate.Infrastructure.Caching
 {
     /// <summary>
     /// Implements the Cache-Aside pattern using in-memory caching for improved performance in the Blazor Server application.

@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SecureCleanApiWaf.Core.Domain.Entities;
-using SecureCleanApiWaf.Core.Domain.Enums;
+using CleanArchitecture.ApiTemplate.Core.Domain.Entities;
+using CleanArchitecture.ApiTemplate.Core.Domain.Enums;
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-namespace SecureCleanApiWaf.Infrastructure.Data.Configurations
+namespace CleanArchitecture.ApiTemplate.Infrastructure.Data.Configurations
 {
     /// <summary>
     /// Entity Framework Core configuration for ApiDataItem entity.

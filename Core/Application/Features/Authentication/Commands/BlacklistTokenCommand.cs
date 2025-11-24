@@ -1,7 +1,7 @@
 using MediatR;
-using SecureCleanApiWaf.Core.Application.Common.Models;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Models;
 
-namespace SecureCleanApiWaf.Core.Application.Features.Authentication.Commands
+namespace CleanArchitecture.ApiTemplate.Core.Application.Features.Authentication.Commands
 {
     /// <summary>
     /// Command to blacklist a JWT token during logout operation.

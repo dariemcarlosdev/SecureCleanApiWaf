@@ -1,10 +1,10 @@
-# Authentication & Authorization Documentation - SecureCleanApiWaf
+# Authentication & Authorization Documentation - CleanArchitecture.ApiTemplate
 
 > **"Security is not a feature�it's the foundation of trust in every API call."**
 
 ## 📖 Overview
 
-Welcome to the **Authentication & Authorization** documentation hub for SecureCleanApiWaf. This guide serves as your starting point to understand how this project implements industry-standard security patterns with JWT authentication, CQRS integration, and token blacklisting.
+Welcome to the **Authentication & Authorization** documentation hub for CleanArchitecture.ApiTemplate. This guide serves as your starting point to understand how this project implements industry-standard security patterns with JWT authentication, CQRS integration, and token blacklisting.
 
 **📚 What You'll Find Here:**
 - Complete CQRS-based JWT authentication implementation

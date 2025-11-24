@@ -1,4 +1,4 @@
-namespace SecureCleanApiWaf.Core.Domain.ValueObjects
+namespace CleanArchitecture.ApiTemplate.Core.Domain.ValueObjects
 {
     /// <summary>
     /// Base class for all value objects in the domain layer.

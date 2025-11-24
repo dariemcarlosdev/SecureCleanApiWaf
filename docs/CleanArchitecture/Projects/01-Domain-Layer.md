@@ -1,4 +1,4 @@
-# SecureCleanApiWaf.Domain Project
+# CleanArchitecture.ApiTemplate.Domain Project
 
 > *"The domain model is the heart of the software. It is where the business logic lives, and it should be protected from external concerns."*  
 > � **Eric Evans**, Domain-Driven Design
@@ -629,11 +629,11 @@ public class TrackRegistrationHandler : INotificationHandler<UserRegisteredEvent
 
 ```csharp
 using MediatR;
-using SecureCleanApiWaf.Core.Domain.Entities;
-using SecureCleanApiWaf.Core.Domain.ValueObjects;
-using SecureCleanApiWaf.Core.Application.Common.Models;
+using CleanArchitecture.ApiTemplate.Core.Domain.Entities;
+using CleanArchitecture.ApiTemplate.Core.Domain.ValueObjects;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Models;
 
-namespace SecureCleanApiWaf.Core.Application.Features.Users.Commands;
+namespace CleanArchitecture.ApiTemplate.Core.Application.Features.Users.Commands;
 
 public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, Result<Guid>>
 {
@@ -746,9 +746,9 @@ public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, R
 **Handler 1: Send Welcome Email**
 ```csharp
 using MediatR;
-using SecureCleanApiWaf.Core.Domain.Events;
+using CleanArchitecture.ApiTemplate.Core.Domain.Events;
 
-namespace SecureCleanApiWaf.Core.Application.Features.Users.EventHandlers;
+namespace CleanArchitecture.ApiTemplate.Core.Application.Features.Users.EventHandlers;
 
 /// <summary>
 /// Handles UserRegisteredEvent by sending welcome email to new users.
@@ -829,11 +829,11 @@ public class SendWelcomeEmailHandler : INotificationHandler<UserRegisteredEvent>
 ## 🆘 Contact & Support
 
 ### Project Information
-- **Project Name:** SecureCleanApiWaf - Clean Architecture Demo
+- **Project Name:** CleanArchitecture.ApiTemplate - Clean Architecture Demo
 - **Version:** 1.0.0 (Domain Layer Complete)
 - **Framework:** .NET 8
 - **Architecture:** Clean Architecture with DDD Patterns
-- **Repository:** [https://github.com/dariemcarlosdev/SecureCleanApiWaf](https://github.com/dariemcarlosdev/SecureCleanApiWaf)
+- **Repository:** [https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate)
 
 ### Author & Maintainer
 - **Name:** Dariem Carlos
@@ -845,7 +845,7 @@ public class SendWelcomeEmailHandler : INotificationHandler<UserRegisteredEvent>
 
 #### ?🐛 **Bug Reports**
 If you find a bug in the Domain Layer implementation:
-1. Check [existing issues](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues)
+1. Check [existing issues](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate/issues)
 2. Create a new issue with:
    - Clear description of the problem
    - Steps to reproduce
@@ -855,7 +855,7 @@ If you find a bug in the Domain Layer implementation:
 
 #### 💡 **Feature Requests**
 To suggest improvements or new domain features:
-1. Open a [new issue](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues/new)
+1. Open a [new issue](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate/issues/new)
 2. Label it as "enhancement"
 3. Describe:
    - The feature or improvement
@@ -929,7 +929,7 @@ For private inquiries or sensitive issues:
 
 #### 💡 **Community Discussions**
 For general questions and discussions:
-- Use [GitHub Discussions](https://github.com/dariemcarlosdev/SecureCleanApiWaf/discussions)
+- Use [GitHub Discussions](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate/discussions)
 - Tag appropriately: `domain-layer`, `architecture`, `ddd`
 - Search existing discussions before posting
 
@@ -1000,5 +1000,5 @@ For usage rights and licensing information, see the [LICENSE](../../LICENSE) fil
 
 ---
 
-*This documentation is maintained as part of the SecureCleanApiWaf Clean Architecture Demo project.*
-*For the latest updates, visit the [GitHub repository](https://github.com/dariemcarlosdev/SecureCleanApiWaf).*
+*This documentation is maintained as part of the CleanArchitecture.ApiTemplate Clean Architecture Demo project.*
+*For the latest updates, visit the [GitHub repository](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate).*

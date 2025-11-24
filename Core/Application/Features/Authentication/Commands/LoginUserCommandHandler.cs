@@ -1,14 +1,14 @@
 using MediatR;
-using SecureCleanApiWaf.Core.Application.Common.Models;
-using SecureCleanApiWaf.Core.Application.Common.Interfaces;
-using SecureCleanApiWaf.Core.Application.Common.DTOs;
-using SecureCleanApiWaf.Core.Domain.Entities;
-using SecureCleanApiWaf.Core.Domain.ValueObjects;
-using SecureCleanApiWaf.Infrastructure.Security;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Models;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Interfaces;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.DTOs;
+using CleanArchitecture.ApiTemplate.Core.Domain.Entities;
+using CleanArchitecture.ApiTemplate.Core.Domain.ValueObjects;
+using CleanArchitecture.ApiTemplate.Infrastructure.Security;
 using Microsoft.Extensions.Logging;
 using System.IdentityModel.Tokens.Jwt;
 
-namespace SecureCleanApiWaf.Core.Application.Features.Authentication.Commands
+namespace CleanArchitecture.ApiTemplate.Core.Application.Features.Authentication.Commands
 {
     /// <summary>
     /// Handler for LoginUserCommand that processes user authentication and JWT token generation.

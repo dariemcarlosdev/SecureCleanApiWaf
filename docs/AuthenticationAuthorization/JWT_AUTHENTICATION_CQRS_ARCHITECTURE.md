@@ -273,12 +273,12 @@ The solution seamlessly integrates with your existing architecture while providi
 ## 🆘 **Contact & Support**
 
 ### **Project Information**
-- **Project Name:** SecureCleanApiWaf - JWT Authentication with CQRS Architecture
+- **Project Name:** CleanArchitecture.ApiTemplate - JWT Authentication with CQRS Architecture
 - **Component:** Authentication & Authorization - CQRS Integration
 - **Version:** 1.3.0 (Complete CQRS Architecture)
 - **Framework:** .NET 8 with MediatR
 - **Patterns:** CQRS, Mediator, Repository, Result<T>
-- **Repository:** [https://github.com/dariemcarlosdev/SecureCleanApiWaf](https://github.com/dariemcarlosdev/SecureCleanApiWaf)
+- **Repository:** [https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate)
 
 ### **Author & Maintainer**
 - **Name:** Dariem Carlos
@@ -295,7 +295,7 @@ For questions about the CQRS architecture:
 2. Check [CQRS_LOGIN_IMPLEMENTATION_SUMMARY.md](CQRS_LOGIN_IMPLEMENTATION_SUMMARY.md) for login details
 3. Check [CQRS_LOGOUT_IMPLEMENTATION_SUMMARY.md](CQRS_LOGOUT_IMPLEMENTATION_SUMMARY.md) for logout details
 4. Review MediatR pipeline behaviors in `Common/Behaviors/`
-5. Check [existing issues](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues?q=label%3Acqrs+label%3Aarchitecture)
+5. Check [existing issues](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate/issues?q=label%3Acqrs+label%3Aarchitecture)
 
 #### 💻 **CQRS Implementation Questions**
 For CQRS pattern implementation questions:
@@ -327,7 +327,7 @@ If you find an architecture or integration issue:
 
 #### 📖 **Documentation Improvements**
 To improve this architecture guide:
-1. Open a [pull request](https://github.com/dariemcarlosdev/SecureCleanApiWaf/pulls) with improvements
+1. Open a [pull request](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate/pulls) with improvements
 2. Add diagrams or flow charts if helpful
 3. Include code examples for clarity
 4. Update related implementation summaries
@@ -337,12 +337,12 @@ To improve this architecture guide:
 #### 📧 **Direct Contact**
 For private inquiries:
 - **Email:** softevolutionsl@gmail.com
-- **Subject:** `[SecureCleanApiWaf CQRS Architecture] Your Question`
+- **Subject:** `[CleanArchitecture.ApiTemplate CQRS Architecture] Your Question`
 - **Response Time:** 24-48 hours
 
 #### 💬 **GitHub Discussions**
 For architecture and pattern discussions:
-- Use [GitHub Discussions](https://github.com/dariemcarlosdev/SecureCleanApiWaf/discussions)
+- Use [GitHub Discussions](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate/discussions)
 - Tag with: `cqrs`, `mediatr`, `architecture`, `authentication`, `patterns`
 - Share your architectural insights and experiences
 
@@ -513,5 +513,5 @@ Contributions to improve the CQRS architecture are welcome!
 
 ---
 
-*This architecture guide is part of the SecureCleanApiWaf authentication system.*  
-*For the latest updates, visit the [GitHub repository](https://github.com/dariemcarlosdev/SecureCleanApiWaf).*
+*This architecture guide is part of the CleanArchitecture.ApiTemplate authentication system.*  
+*For the latest updates, visit the [GitHub repository](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate).*

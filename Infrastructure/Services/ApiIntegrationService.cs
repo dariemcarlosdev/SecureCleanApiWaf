@@ -3,13 +3,13 @@ using System;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
-using SecureCleanApiWaf.Core.Application.Common.Models;
-using SecureCleanApiWaf.Core.Application.Common.Interfaces;
-using SecureCleanApiWaf.Core.Application.Common.Mapping;
-using SecureCleanApiWaf.Core.Application.Common.DTOs;
-using SecureCleanApiWaf.Core.Domain.Entities;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Models;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Interfaces;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Mapping;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.DTOs;
+using CleanArchitecture.ApiTemplate.Core.Domain.Entities;
 
-namespace SecureCleanApiWaf.Infrastructure.Services
+namespace CleanArchitecture.ApiTemplate.Infrastructure.Services
 {
     /// <summary>
     /// Service for business logic and third-party API integration using IHttpClientFactory.

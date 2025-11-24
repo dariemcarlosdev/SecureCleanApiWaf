@@ -4,7 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using AspNetCoreRateLimit;
 
-namespace SecureCleanApiWaf.Presentation.Extensions.DependencyInjection
+namespace CleanArchitecture.ApiTemplate.Presentation.Extensions.DependencyInjection
 {
     /// <summary>
     /// Dependency injection setup for Presentation layer services
@@ -107,7 +107,7 @@ namespace SecureCleanApiWaf.Presentation.Extensions.DependencyInjection
                     
                     // Optional: Add documentation link
                     ctx.ProblemDetails.Extensions.Add("documentationUrl", 
-                        "https://github.com/dariemcarlosdev/BlueTreadApp/wiki");
+                        "https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate/wiki");
                 };
             });
 
@@ -162,13 +162,13 @@ namespace SecureCleanApiWaf.Presentation.Extensions.DependencyInjection
                     // Verify token was created by trusted issuer (your application)
                     // Prevents tokens from other applications being accepted
                     ValidateIssuer = true,
-                    ValidIssuer = jwtSettings["Issuer"], // From appsettings.json (e.g., "BlueTreadApp")
+                    ValidIssuer = jwtSettings["Issuer"], // From appsettings.json (e.g., "CleanArchitecture.ApiTemplate")
                     
                     // ===== Audience Validation =====
                     // Verify token is intended for this API
                     // Prevents tokens meant for other APIs being used here
                     ValidateAudience = true,
-                    ValidAudience = jwtSettings["Audience"], // From appsettings.json (e.g., "BlueTreadApp.Api")
+                    ValidAudience = jwtSettings["Audience"], // From appsettings.json (e.g., "CleanArchitecture.ApiTemplate.Api")
                     
                     // ===== Lifetime Validation =====
                     // Verify token hasn't expired
@@ -371,7 +371,7 @@ namespace SecureCleanApiWaf.Presentation.Extensions.DependencyInjection
                 {
                     Version = "v1",
                     Title = "BlueTread API",
-                    Description = "REST API for BlueTreadApp - Clean Architecture Demo with JWT Security",
+                    Description = "REST API for CleanArchitecture.ApiTemplate - Clean Architecture Demo with JWT Security",
                     Contact = new OpenApiContact
                     {
                         Name = "Development Team",

@@ -1,4 +1,4 @@
-# SecureCleanApiWaf.Web Project (Presentation Layer)
+# CleanArchitecture.ApiTemplate.Web Project (Presentation Layer)
 
 > *"The user interface is the part of the system that the user sees and interacts with. Make it clean, make it intuitive, make it delightful."*  
 > � **Martin Fowler**, Software Architecture and Design
@@ -30,7 +30,7 @@ The **Presentation Layer** (Web project) is the entry point for users and extern
 ## 📁 Project Structure
 
 ```
-SecureCleanApiWaf.Web/
+CleanArchitecture.ApiTemplate.Web/
 +-- Components/                       # Blazor components
 �   +-- Layout/
 �   �   +-- MainLayout.razor         # Main application layout
@@ -87,7 +87,7 @@ SecureCleanApiWaf.Web/
 +-- appsettings.Development.json      # Development configuration
 +-- appsettings.Production.json       # Production configuration
 +-- Program.cs                        # Application entry point
-+-- SecureCleanApiWaf.Web.csproj
++-- CleanArchitecture.ApiTemplate.Web.csproj
 
 ```
 
@@ -98,10 +98,10 @@ SecureCleanApiWaf.Web/
 ### 1. **Program.cs (Application Entry Point)**
 
 ```csharp
-using SecureCleanApiWaf.Application;
-using SecureCleanApiWaf.Infrastructure;
-using SecureCleanApiWaf.Infrastructure.Azure;
-using SecureCleanApiWaf.Web.Extensions;
+using CleanArchitecture.ApiTemplate.Application;
+using CleanArchitecture.ApiTemplate.Infrastructure;
+using CleanArchitecture.ApiTemplate.Infrastructure.Azure;
+using CleanArchitecture.ApiTemplate.Web.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -142,12 +142,12 @@ builder.Services.AddSwaggerGen(options =>
     {
         Version = "v1",
         Title = "SecureClean API",
-        Description = "SecureCleanApiWaf REST API for sample data management",
+        Description = "CleanArchitecture.ApiTemplate REST API for sample data management",
         Contact = new OpenApiContact
         {
             Name = "Development Team",
             Email = "softevolutionsl@gmail.com",
-            Url = new Uri("https://github.com/dariemcarlosdev/SecureCleanApiWaf")
+            Url = new Uri("https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate")
         }
     });
 });
@@ -341,7 +341,7 @@ public class SampleDataController : ControllerBase
 
 ```razor
 @page "/sample-data"
-@using SecureCleanApiWaf.Application.Features.SampleData.Queries
+@using CleanArchitecture.ApiTemplate.Application.Features.SampleData.Queries
 @using MediatR
 @inject IMediator Mediator
 @inject ILogger<SampleData> Logger
@@ -595,9 +595,9 @@ public class ErrorResponse
 
 <!-- Project References -->
 <ItemGroup>
-  <ProjectReference Include="..\SecureCleanApiWaf.Application\SecureCleanApiWaf.Application.csproj" />
-  <ProjectReference Include="..\SecureCleanApiWaf.Infrastructure\SecureCleanApiWaf.Infrastructure.csproj" />
-  <ProjectReference Include="..\SecureCleanApiWaf.Infrastructure.Azure\SecureCleanApiWaf.Infrastructure.Azure.csproj" />
+  <ProjectReference Include="..\CleanArchitecture.ApiTemplate.Application\CleanArchitecture.ApiTemplate.Application.csproj" />
+  <ProjectReference Include="..\CleanArchitecture.ApiTemplate.Infrastructure\CleanArchitecture.ApiTemplate.Infrastructure.csproj" />
+  <ProjectReference Include="..\CleanArchitecture.ApiTemplate.Infrastructure.Azure\CleanArchitecture.ApiTemplate.Infrastructure.Azure.csproj" />
 </ItemGroup>
 ```
 
@@ -616,7 +616,7 @@ public class ErrorResponse
   },
   "AllowedHosts": "*",
   "ConnectionStrings": {
-    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=SecureCleanApiWafDb;Trusted_Connection=True;"
+    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=CleanArchitecture.ApiTemplateDb;Trusted_Connection=True;"
   },
   "ThirdPartyApi": {
     "BaseUrl": "https://api.example.com/"
@@ -637,7 +637,7 @@ public class ErrorResponse
     }
   },
   "ConnectionStrings": {
-    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=SecureCleanApiWafDb_Dev;Trusted_Connection=True;"
+    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=CleanArchitecture.ApiTemplateDb_Dev;Trusted_Connection=True;"
   },
   "ThirdPartyApi": {
     "BaseUrl": "https://dev-api.example.com/"

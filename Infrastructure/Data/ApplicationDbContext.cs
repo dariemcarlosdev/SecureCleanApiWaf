@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using SecureCleanApiWaf.Core.Domain.Entities;
+using CleanArchitecture.ApiTemplate.Core.Domain.Entities;
 
-namespace SecureCleanApiWaf.Infrastructure.Data
+namespace CleanArchitecture.ApiTemplate.Infrastructure.Data
 {
     /// <summary>
     /// Entity Framework Core database context for the application.

@@ -1,11 +1,11 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Text.Json;
-using SecureCleanApiWaf.Core.Application.Common.Interfaces;
-using SecureCleanApiWaf.Core.Domain.Entities;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Interfaces;
+using CleanArchitecture.ApiTemplate.Core.Domain.Entities;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 
-namespace SecureCleanApiWaf.Infrastructure.Services
+namespace CleanArchitecture.ApiTemplate.Infrastructure.Services
 {
     /// <summary>
     /// Implementation of token blacklisting service using Token entity and repository pattern.

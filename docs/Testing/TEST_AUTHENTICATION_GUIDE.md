@@ -42,8 +42,8 @@ Navigate to: `https://localhost:7178/swagger`
 ```json
 "JwtSettings": {
   "SecretKey": "YourSuperSecretKeyForJWT_MustBeAtLeast32CharactersLong!",
-  "Issuer": "SecureCleanApiWaf",
-  "Audience": "SecureCleanApiWaf.Api",
+  "Issuer": "CleanArchitecture.ApiTemplate",
+  "Audience": "CleanArchitecture.ApiTemplate.Api",
   "ExpirationMinutes": 60
 }
 ```
@@ -107,8 +107,8 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3Mzk4Zi4uLiJ9.dBjftJeZ4CVP-mB92K
   "nbf": 1705341600,
   "exp": 1705343400,
   "iat": 1705341600,
-  "iss": "SecureCleanApiWaf",
-  "aud": "SecureCleanApiWafUsers"
+  "iss": "CleanArchitecture.ApiTemplate",
+  "aud": "CleanArchitecture.ApiTemplateUsers"
 }
 ```
 
@@ -660,7 +660,7 @@ For complete details, see [API-SECURITY-IMPLEMENTATION-GUIDE.md](API-SECURITY-IM
 **Need Help?**
 
 - ?? **Documentation:** Start with deployment guides
-- ?? **Issues:** [GitHub Issues](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues)
+- ?? **Issues:** [GitHub Issues](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate/issues)
 - ?? **Email:** softevolutionsl@gmail.com
 - ?? **GitHub:** [@dariemcarlosdev](https://github.com/dariemcarlosdev)
 
@@ -668,7 +668,7 @@ For complete details, see [API-SECURITY-IMPLEMENTATION-GUIDE.md](API-SECURITY-IM
 
 **Last Updated:** January 2025  
 **Maintainer:** Dariemcarlos  
-**GitHub:** [SecureCleanApiWaf](https://github.com/dariemcarlosdev/SecureCleanApiWaf)  
+**GitHub:** [CleanArchitecture.ApiTemplate](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate)  
 **Version:** 1.2.0 - Unified and Simplified
 
 ---

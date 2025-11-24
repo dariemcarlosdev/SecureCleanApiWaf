@@ -1,4 +1,4 @@
-namespace SecureCleanApiWaf.Infrastructure.Data
+namespace CleanArchitecture.ApiTemplate.Infrastructure.Data
 {
     /// <summary>
     /// Configuration settings for database connection and Entity Framework Core.
@@ -17,7 +17,7 @@ namespace SecureCleanApiWaf.Infrastructure.Data
     /// ```json
     /// {
     ///   "DatabaseSettings": {
-    ///     "ConnectionString": "Server=localhost;Database=BlueTreadApp;Trusted_Connection=True;",
+    ///     "ConnectionString": "Server=localhost;Database=CleanArchitecture.ApiTemplate;Trusted_Connection=True;",
     ///     "EnableSensitiveDataLogging": false,
     ///     "EnableDetailedErrors": false,
     ///     "CommandTimeout": 30,
@@ -43,16 +43,16 @@ namespace SecureCleanApiWaf.Infrastructure.Data
         /// Connection String Format Examples:
         /// 
         /// SQL Server (Windows Authentication):
-        /// Server=localhost;Database=BlueTreadApp;Trusted_Connection=True;TrustServerCertificate=True;
+        /// Server=localhost;Database=CleanArchitecture.ApiTemplate;Trusted_Connection=True;TrustServerCertificate=True;
         /// 
         /// SQL Server (SQL Authentication):
-        /// Server=localhost;Database=BlueTreadApp;User Id=sa;Password=YourPassword;TrustServerCertificate=True;
+        /// Server=localhost;Database=CleanArchitecture.ApiTemplate;User Id=sa;Password=YourPassword;TrustServerCertificate=True;
         /// 
         /// Azure SQL Database:
-        /// Server=tcp:yourserver.database.windows.net,1433;Database=BlueTreadApp;User ID=yourusername;Password=yourpassword;Encrypt=True;
+        /// Server=tcp:yourserver.database.windows.net,1433;Database=CleanArchitecture.ApiTemplate;User ID=yourusername;Password=yourpassword;Encrypt=True;
         /// 
         /// SQL Server LocalDB (Development):
-        /// Server=(localdb)\\mssqllocaldb;Database=BlueTreadApp;Trusted_Connection=True;
+        /// Server=(localdb)\\mssqllocaldb;Database=CleanArchitecture.ApiTemplate;Trusted_Connection=True;
         /// 
         /// Important:
         /// - Always use encrypted connections in production (Encrypt=True)

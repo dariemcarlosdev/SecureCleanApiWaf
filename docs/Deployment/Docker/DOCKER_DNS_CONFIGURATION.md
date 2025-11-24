@@ -157,7 +157,7 @@ Instead of manual steps, run the provided PowerShell script:
 
 ```powershell
 # Navigate to project directory
-cd "C:\DATA\MYSTUFFS\PROFESSIONAL STUFF\TECH CHALLENGE\SecureCleanApiWaf"
+cd "C:\DATA\MYSTUFFS\PROFESSIONAL STUFF\TECH CHALLENGE\CleanArchitecture.ApiTemplate"
 
 # Run the fix script
 .\Fix-DockerBuild.ps1
@@ -293,7 +293,7 @@ docker-compose up -d
 
 
 **Last Updated**: 2025
-**For**: SecureCleanApiWaf - .NET 8 Blazor Application
+**For**: CleanArchitecture.ApiTemplate - .NET 8 Blazor Application
 
 ---
 
@@ -302,7 +302,7 @@ docker-compose up -d
 **Need Help?**
 
 - 📖 **Documentation:** Start with the deployment guides above
-- 🐛 **Issues:** [GitHub Issues](https://github.com/dariemcarlosdev/SecureCleanApiWaf/issues)
+- 🐛 **Issues:** [GitHub Issues](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate/issues)
 - 📧 **Email:** softevolutionsl@gmail.com
 - 🐙 **GitHub:** [@dariemcarlosdev](https://github.com/dariemcarlosdev)
 
@@ -320,5 +320,5 @@ docker-compose up -d
 
 **Last Updated:** November 2025  
 **Maintainer:** Dariemcarlos  
-**GitHub:** [SecureCleanApiWaf](https://github.com/dariemcarlosdev/SecureCleanApiWaf)
+**GitHub:** [CleanArchitecture.ApiTemplate](https://github.com/dariemcarlosdev/CleanArchitecture.ApiTemplate)
 

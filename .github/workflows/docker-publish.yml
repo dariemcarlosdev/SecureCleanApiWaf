@@ -1,7 +1,7 @@
 name: Docker Build and Push
 
 # ===========================================================================================
-# GitHub Actions Workflow - BlueTreadApp Docker Publishing
+# GitHub Actions Workflow - CleanArchitecture.ApiTemplate Docker Publishing
 # ===========================================================================================
 # This workflow automatically builds and pushes Docker images to Docker Hub
 # Triggers:
@@ -31,7 +31,7 @@ on:
 # Environment variables
 env:
   DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
-  IMAGE_NAME: bluetreadapp
+  IMAGE_NAME: CleanArchitecture.ApiTemplate
   DOTNET_VERSION: '8.0.x'
 
 jobs:
@@ -158,7 +158,7 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
           repository: ${{ env.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}
-          short-description: "BlueTreadApp - Blazor .NET 8 Application"
+          short-description: "CleanArchitecture.ApiTemplate - Blazor .NET 8 Application"
           readme-filepath: ./Docs/Deployment/Docker/DOCKER_DEPLOYMENT.md
         continue-on-error: true
 
@@ -215,6 +215,6 @@ jobs:
 # - GitHub repository > Actions tab
 #
 # View Docker images:
-# - https://hub.docker.com/r/yourusername/bluetreadapp
+# - https://hub.docker.com/r/yourusername/CleanArchitecture.ApiTemplate
 #
 # ===========================================================================================

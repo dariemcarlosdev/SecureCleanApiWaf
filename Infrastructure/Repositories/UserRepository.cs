@@ -1,10 +1,10 @@
-using SecureCleanApiWaf.Core.Application.Common.Interfaces;
-using SecureCleanApiWaf.Core.Domain.Entities;
-using SecureCleanApiWaf.Core.Domain.ValueObjects;
-using SecureCleanApiWaf.Infrastructure.Data;
+using CleanArchitecture.ApiTemplate.Core.Application.Common.Interfaces;
+using CleanArchitecture.ApiTemplate.Core.Domain.Entities;
+using CleanArchitecture.ApiTemplate.Core.Domain.ValueObjects;
+using CleanArchitecture.ApiTemplate.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace SecureCleanApiWaf.Infrastructure.Repositories
+namespace CleanArchitecture.ApiTemplate.Infrastructure.Repositories
 {
     /// <summary>
     /// Entity Framework Core implementation of IUserRepository.
